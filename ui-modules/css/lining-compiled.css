@@ -1,0 +1,343 @@
+/*
+
+  /) ,           /)         ,    /)                                
+ /    __    _  _(/   _   _   _/_(/      _   _   _   _              
+(/__(_/ (__(/_(_(_   (_(/ _(_(__/ )_   /_)_(_(_/_)_/_)_ o   o   o  
+
+http://sass-lang.com/
+ 
+
+*/
+/*heading (24-col liquid layout)
+----------------------------------*/
+.fullscreen {
+  width: 100%;
+  display: block;
+  float: left; }
+  .fullscreen .group {
+    width: 100%;
+    margin: 0 auto; }
+    .fullscreen .group .item {
+      float: left;
+      height: 100%;
+      width: 4.167%; }
+
+.fullscreen .group .span-1 {
+  width: 4.167%; }
+.fullscreen .group .span-2 {
+  width: 8.333%; }
+.fullscreen .group .span-3 {
+  width: 12.5%; }
+.fullscreen .group .span-4 {
+  width: 16.667%; }
+.fullscreen .group .span-5 {
+  width: 20.833%; }
+.fullscreen .group .span-6 {
+  width: 25%; }
+.fullscreen .group .span-7 {
+  width: 29.167%; }
+.fullscreen .group .span-8 {
+  width: 33.333%; }
+.fullscreen .group .span-9 {
+  width: 37.5%; }
+.fullscreen .group .span-10 {
+  width: 41.667%; }
+.fullscreen .group .span-11 {
+  width: 45.833%; }
+.fullscreen .group .span-12 {
+  width: 50%; }
+.fullscreen .group .span-13 {
+  width: 54.167%; }
+.fullscreen .group .span-14 {
+  width: 58.333%; }
+.fullscreen .group .span-15 {
+  width: 62.5%; }
+.fullscreen .group .span-16 {
+  width: 66.667%; }
+.fullscreen .group .span-17 {
+  width: 70.833%; }
+.fullscreen .group .span-18 {
+  width: 75%; }
+.fullscreen .group .span-19 {
+  width: 79.167%; }
+.fullscreen .group .span-20 {
+  width: 83.333%; }
+.fullscreen .group .span-21 {
+  width: 87.5%; }
+.fullscreen .group .span-22 {
+  width: 91.667%; }
+.fullscreen .group .span-23 {
+  width: 95.833%; }
+.fullscreen .group .span-24 {
+  width: 100%; }
+
+.fullscreen .group .skip-1 {
+  margin-left: 4.167%; }
+.fullscreen .group .skip-2 {
+  margin-left: 8.333%; }
+.fullscreen .group .skip-3 {
+  margin-left: 12.5%; }
+.fullscreen .group .skip-4 {
+  margin-left: 16.667%; }
+.fullscreen .group .skip-5 {
+  margin-left: 20.833%; }
+.fullscreen .group .skip-6 {
+  margin-left: 25%; }
+.fullscreen .group .skip-7 {
+  margin-left: 29.167%; }
+.fullscreen .group .skip-8 {
+  margin-left: 33.333%; }
+.fullscreen .group .skip-9 {
+  margin-left: 37.5%; }
+.fullscreen .group .skip-10 {
+  margin-left: 41.667%; }
+.fullscreen .group .skip-11 {
+  margin-left: 45.833%; }
+.fullscreen .group .skip-12 {
+  margin-left: 50%; }
+.fullscreen .group .skip-13 {
+  margin-left: 54.167%; }
+.fullscreen .group .skip-14 {
+  margin-left: 58.333%; }
+.fullscreen .group .skip-15 {
+  margin-left: 62.5%; }
+.fullscreen .group .skip-16 {
+  margin-left: 66.667%; }
+.fullscreen .group .skip-17 {
+  margin-left: 70.833%; }
+.fullscreen .group .skip-18 {
+  margin-left: 75%; }
+.fullscreen .group .skip-19 {
+  margin-left: 79.167%; }
+.fullscreen .group .skip-20 {
+  margin-left: 83.333%; }
+.fullscreen .group .skip-21 {
+  margin-left: 87.5%; }
+.fullscreen .group .skip-22 {
+  margin-left: 91.667%; }
+.fullscreen .group .skip-23 {
+  margin-left: 95.833%; }
+.fullscreen .group .skip-24 {
+  margin-left: 100%; }
+
+@media screen and (min-width: 770px) {
+  /*container (1-col liquid container)
+  ----------------------------------*/
+  .container {
+    width: 80%;
+    display: block;
+    float: left; }
+    .container .group {
+      width: 100%;
+      margin: 0 auto; }
+      .container .group .item {
+        float: left;
+        height: 100%;
+        width: 100%; }
+
+  .container .group .span-1 {
+    width: 100%; }
+
+  .container .group .skip-1 {
+    margin-left: 100%; }
+
+  /*heading (6-col liquid layout)
+  ----------------------------------*/
+  .heading {
+    width: 100%;
+    display: block;
+    float: left; }
+    .heading .group {
+      width: 100%;
+      margin: 0 auto; }
+      .heading .group .item {
+        float: left;
+        height: 100%;
+        width: 16.667%; }
+
+  .heading .group .span-1 {
+    width: 16.667%; }
+  .heading .group .span-2 {
+    width: 33.333%; }
+  .heading .group .span-3 {
+    width: 50%; }
+  .heading .group .span-4 {
+    width: 66.667%; }
+  .heading .group .span-5 {
+    width: 83.333%; }
+  .heading .group .span-6 {
+    width: 100%; }
+
+  .heading .group .skip-1 {
+    margin-left: 16.667%; }
+  .heading .group .skip-2 {
+    margin-left: 33.333%; }
+  .heading .group .skip-3 {
+    margin-left: 50%; }
+  .heading .group .skip-4 {
+    margin-left: 66.667%; }
+  .heading .group .skip-5 {
+    margin-left: 83.333%; }
+  .heading .group .skip-6 {
+    margin-left: 100%; }
+
+  /*content (6-col liquid layout)
+  ----------------------------------*/
+  .page-content {
+    width: 100%;
+    display: block;
+    float: left; }
+    .page-content .group {
+      width: 100%;
+      margin: 0 auto; }
+      .page-content .group .item {
+        float: left;
+        height: 100%;
+        width: 16.667%; }
+
+  .page-content .group .span-1 {
+    width: 16.667%; }
+  .page-content .group .span-2 {
+    width: 33.333%; }
+  .page-content .group .span-3 {
+    width: 50%; }
+  .page-content .group .span-4 {
+    width: 66.667%; }
+  .page-content .group .span-5 {
+    width: 83.333%; }
+  .page-content .group .span-6 {
+    width: 100%; }
+
+  .page-content .group .skip-1 {
+    margin-left: 16.667%; }
+  .page-content .group .skip-2 {
+    margin-left: 33.333%; }
+  .page-content .group .skip-3 {
+    margin-left: 50%; }
+  .page-content .group .skip-4 {
+    margin-left: 66.667%; }
+  .page-content .group .skip-5 {
+    margin-left: 83.333%; }
+  .page-content .group .skip-6 {
+    margin-left: 100%; }
+
+  /*page-block (6-col liquid layout)
+  ----------------------------------*/
+  .page-block {
+    width: 100%;
+    display: block;
+    float: left; }
+    .page-block .group {
+      width: 100%;
+      margin: 0 auto; }
+      .page-block .group .item {
+        float: left;
+        height: 100%;
+        width: 16.667%; }
+
+  .page-block .group .span-1 {
+    width: 16.667%; }
+  .page-block .group .span-2 {
+    width: 33.333%; }
+  .page-block .group .span-3 {
+    width: 50%; }
+  .page-block .group .span-4 {
+    width: 66.667%; }
+  .page-block .group .span-5 {
+    width: 83.333%; }
+  .page-block .group .span-6 {
+    width: 100%; }
+
+  .page-block .group .skip-1 {
+    margin-left: 16.667%; }
+  .page-block .group .skip-2 {
+    margin-left: 33.333%; }
+  .page-block .group .skip-3 {
+    margin-left: 50%; }
+  .page-block .group .skip-4 {
+    margin-left: 66.667%; }
+  .page-block .group .skip-5 {
+    margin-left: 83.333%; }
+  .page-block .group .skip-6 {
+    margin-left: 100%; }
+
+  /*form-block (6-col liquid layout)
+  ----------------------------------*/
+  .form-block {
+    width: 100%;
+    display: block;
+    float: left; }
+    .form-block .group {
+      width: 100%;
+      margin: 0 auto; }
+      .form-block .group .item {
+        float: left;
+        height: 100%;
+        width: 16.667%; }
+
+  .form-block .group .span-1 {
+    width: 16.667%; }
+  .form-block .group .span-2 {
+    width: 33.333%; }
+  .form-block .group .span-3 {
+    width: 50%; }
+  .form-block .group .span-4 {
+    width: 66.667%; }
+  .form-block .group .span-5 {
+    width: 83.333%; }
+  .form-block .group .span-6 {
+    width: 100%; }
+
+  .form-block .group .skip-1 {
+    margin-left: 16.667%; }
+  .form-block .group .skip-2 {
+    margin-left: 33.333%; }
+  .form-block .group .skip-3 {
+    margin-left: 50%; }
+  .form-block .group .skip-4 {
+    margin-left: 66.667%; }
+  .form-block .group .skip-5 {
+    margin-left: 83.333%; }
+  .form-block .group .skip-6 {
+    margin-left: 100%; }
+
+  /*footing (6-col liquid layout)
+  ----------------------------------*/
+  .footing {
+    width: 100%;
+    display: block;
+    float: left; }
+    .footing .group {
+      width: 100%;
+      margin: 0 auto; }
+      .footing .group .item {
+        float: left;
+        height: 100%;
+        width: 16.667%; }
+
+  .footing .group .span-1 {
+    width: 16.667%; }
+  .footing .group .span-2 {
+    width: 33.333%; }
+  .footing .group .span-3 {
+    width: 50%; }
+  .footing .group .span-4 {
+    width: 66.667%; }
+  .footing .group .span-5 {
+    width: 83.333%; }
+  .footing .group .span-6 {
+    width: 100%; }
+
+  .footing .group .skip-1 {
+    margin-left: 16.667%; }
+  .footing .group .skip-2 {
+    margin-left: 33.333%; }
+  .footing .group .skip-3 {
+    margin-left: 50%; }
+  .footing .group .skip-4 {
+    margin-left: 66.667%; }
+  .footing .group .skip-5 {
+    margin-left: 83.333%; }
+  .footing .group .skip-6 {
+    margin-left: 100%; } }
+/*end of 770px*/
