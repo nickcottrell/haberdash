@@ -6,12 +6,11 @@ modular UI base
 
 TO DO:
 ------
-* factor out modular elements from scaffolding and other layout elements
-* add slideshows
-* add modal modules
-* remove unneeded items
+* develop screens from scratch and use flexbox
+* develop js components for UI elements
 * sassify
-* set up public access to the css
+* minify
+* publish everything to github pages
 
 ---
 
