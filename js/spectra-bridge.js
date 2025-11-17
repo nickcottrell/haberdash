@@ -4,9 +4,23 @@
  */
 
 (function() {
-  // Wait for Spectra theme to load
-  window.addEventListener('spectra-theme-loaded', (e) => {
+  console.log('🔗 Spectra Bridge: Script loaded');
+
+  let spectraReady = false;
+  let cssReady = false;
+
+  // Function to apply Spectra theme to Haberdash
+  function applyTheme() {
+    if (!spectraReady) {
+      console.log('⏳ Spectra Bridge: Waiting for Spectra theme...');
+      return;
+    }
+
     console.log('🌈 Spectra theme loaded, applying to Haberdash...');
+
+    // Remove old override if exists
+    const oldStyle = document.getElementById('spectra-override');
+    if (oldStyle) oldStyle.remove();
 
     const root = document.documentElement;
     const computed = getComputedStyle(root);
@@ -23,111 +37,96 @@
     const spectraText = computed.getPropertyValue('--color-text').trim();
     const spectraTextDim = computed.getPropertyValue('--color-text-dim').trim();
 
-    if (spectraPrimary) {
-      root.style.setProperty('--primary', spectraPrimary);
-      root.style.setProperty('--primary-hover', spectraPrimaryDark);
-      root.style.setProperty('--primary-light', spectraPrimaryLight);
-
-      // Update gradient to use new primary colors
-      root.style.setProperty('--gradient-primary',
-        `linear-gradient(135deg, ${spectraPrimary} 0%, ${spectraPrimaryDark} 100%)`);
-    }
-
-    if (spectraBackground) {
-      root.style.setProperty('--background', spectraBackground);
-    }
-
-    if (spectraSurface) {
-      root.style.setProperty('--surface', spectraSurface);
-
-      // Generate lighter surface variations based on Spectra surface
-      const surfaceRGB = hexToRGB(spectraSurface);
-      if (surfaceRGB) {
-        const lighter = lightenRGB(surfaceRGB, 10);
-        const lightest = lightenRGB(surfaceRGB, 20);
-        root.style.setProperty('--surface-light', rgbToHex(lighter.r, lighter.g, lighter.b));
-        root.style.setProperty('--surface-lighter', rgbToHex(lightest.r, lightest.g, lightest.b));
-      }
-    }
-
-    if (spectraText) {
-      root.style.setProperty('--text', spectraText);
-    }
-
-    if (spectraTextDim) {
-      root.style.setProperty('--text-secondary', spectraTextDim);
-    }
-
     // Border Radius
     const spectraBorderBase = computed.getPropertyValue('--border-radius-base').trim();
     const spectraBorderLg = computed.getPropertyValue('--border-radius-lg').trim();
-
-    if (spectraBorderBase) {
-      root.style.setProperty('--radius-sm', `${parseInt(spectraBorderBase) / 2}px`);
-      root.style.setProperty('--radius-md', spectraBorderBase);
-    }
-
-    if (spectraBorderLg) {
-      root.style.setProperty('--radius-lg', spectraBorderLg);
-      root.style.setProperty('--radius-xl', `${parseInt(spectraBorderLg) * 1.33}px`);
-    }
 
     // Shadows
     const spectraShadowSm = computed.getPropertyValue('--shadow-sm').trim();
     const spectraShadowMd = computed.getPropertyValue('--shadow-md').trim();
 
+    // Build CSS override string
+    let css = ':root {\n';
+
+    if (spectraPrimary) {
+      css += `  --primary: ${spectraPrimary} !important;\n`;
+      css += `  --primary-hover: ${spectraPrimaryDark} !important;\n`;
+      css += `  --primary-light: ${spectraPrimaryLight} !important;\n`;
+      css += `  --gradient-primary: linear-gradient(135deg, ${spectraPrimary} 0%, ${spectraPrimaryDark} 100%) !important;\n`;
+    }
+
+    if (spectraBackground) {
+      css += `  --background: ${spectraBackground} !important;\n`;
+    }
+
+    if (spectraSurface) {
+      css += `  --surface: ${spectraSurface} !important;\n`;
+      const surfaceRGB = hexToRGB(spectraSurface);
+      if (surfaceRGB) {
+        const lighter = lightenRGB(surfaceRGB, 10);
+        const lightest = lightenRGB(surfaceRGB, 20);
+        css += `  --surface-light: ${rgbToHex(lighter.r, lighter.g, lighter.b)} !important;\n`;
+        css += `  --surface-lighter: ${rgbToHex(lightest.r, lightest.g, lightest.b)} !important;\n`;
+      }
+    }
+
+    if (spectraText) {
+      css += `  --text: ${spectraText} !important;\n`;
+    }
+
+    if (spectraTextDim) {
+      css += `  --text-secondary: ${spectraTextDim} !important;\n`;
+    }
+
+    if (spectraBorderBase) {
+      css += `  --radius-sm: ${parseInt(spectraBorderBase) / 2}px !important;\n`;
+      css += `  --radius-md: ${spectraBorderBase} !important;\n`;
+    }
+
+    if (spectraBorderLg) {
+      css += `  --radius-lg: ${spectraBorderLg} !important;\n`;
+      css += `  --radius-xl: ${parseInt(spectraBorderLg) * 1.33}px !important;\n`;
+    }
+
     if (spectraShadowSm) {
-      root.style.setProperty('--shadow-sm', spectraShadowSm);
+      css += `  --shadow-sm: ${spectraShadowSm} !important;\n`;
     }
 
     if (spectraShadowMd) {
-      root.style.setProperty('--shadow-md', spectraShadowMd);
-      // Generate larger shadows based on md
+      css += `  --shadow-md: ${spectraShadowMd} !important;\n`;
       const blur = parseInt(spectraShadowMd.match(/(\d+)px/)?.[1] || '12');
-      root.style.setProperty('--shadow-lg', `0 ${blur * 2}px ${blur * 2}px rgba(0,0,0,0.4)`);
-      root.style.setProperty('--shadow-xl', `0 ${blur * 3}px ${blur * 3}px rgba(0,0,0,0.5)`);
+      css += `  --shadow-lg: 0 ${blur * 2}px ${blur * 2}px rgba(0,0,0,0.4) !important;\n`;
+      css += `  --shadow-xl: 0 ${blur * 3}px ${blur * 3}px rgba(0,0,0,0.5) !important;\n`;
     }
 
-    // Spacing
-    const spectraSpaceUnit = computed.getPropertyValue('--space-unit').trim();
+    css += '}\n';
 
-    if (spectraSpaceUnit) {
-      const baseValue = parseFloat(spectraSpaceUnit);
-      root.style.setProperty('--space-xs', `${baseValue * 0.25}rem`);
-      root.style.setProperty('--space-sm', `${baseValue * 0.5}rem`);
-      root.style.setProperty('--space-md', `${baseValue * 0.75}rem`);
-      root.style.setProperty('--space-lg', `${baseValue}rem`);
-      root.style.setProperty('--space-xl', `${baseValue * 1.5}rem`);
-      root.style.setProperty('--space-2xl', `${baseValue * 2}rem`);
-      root.style.setProperty('--space-3xl', `${baseValue * 3}rem`);
-      root.style.setProperty('--space-4xl', `${baseValue * 4}rem`);
-    }
+    // Inject CSS
+    const style = document.createElement('style');
+    style.id = 'spectra-override';
+    style.textContent = css;
+    document.head.appendChild(style);
 
-    // Typography
-    const spectraTypeRatio = computed.getPropertyValue('--type-ratio').trim();
-    const spectraFontWeightHeading = computed.getPropertyValue('--font-weight-heading').trim();
+    console.log('✅ Spectra Bridge: Theme applied to Haberdash via CSS injection');
+    console.log('CSS injected:\n' + css);
+  }
 
-    if (spectraTypeRatio) {
-      const ratio = parseFloat(spectraTypeRatio);
-      const base = 1; // 1rem = 16px
-
-      root.style.setProperty('--font-size-xs', `${base * 0.75}rem`);
-      root.style.setProperty('--font-size-sm', `${base * 0.875}rem`);
-      root.style.setProperty('--font-size-base', `${base}rem`);
-      root.style.setProperty('--font-size-lg', `${base * ratio}rem`);
-      root.style.setProperty('--font-size-xl', `${base * Math.pow(ratio, 1.5)}rem`);
-      root.style.setProperty('--font-size-2xl', `${base * Math.pow(ratio, 2)}rem`);
-      root.style.setProperty('--font-size-3xl', `${base * Math.pow(ratio, 2.5)}rem`);
-      root.style.setProperty('--font-size-4xl', `${base * Math.pow(ratio, 3)}rem`);
-    }
-
-    if (spectraFontWeightHeading) {
-      root.style.setProperty('--font-weight-semibold', spectraFontWeightHeading);
-      root.style.setProperty('--font-weight-bold', Math.min(parseInt(spectraFontWeightHeading) + 100, 900));
-    }
-
-    console.log('✅ Spectra theme applied to Haberdash');
+  // Wait for Spectra theme to load
+  window.addEventListener('spectra-theme-loaded', (e) => {
+    console.log('🌈 Spectra Bridge: Theme loaded event received!');
+    spectraReady = true;
+    applyTheme();
   });
+
+  // Also apply after all CSS loads
+  window.addEventListener('load', () => {
+    console.log('🔗 Spectra Bridge: Window loaded, re-applying theme...');
+    if (spectraReady) {
+      applyTheme();
+    }
+  });
+
+  console.log('🔗 Spectra Bridge: Event listeners registered');
 
   // Helper functions
   function hexToRGB(hex) {
