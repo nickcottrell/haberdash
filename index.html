@@ -5,9 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Haberdash - Modular UI Component Library</title>
     <link rel="stylesheet" href="css/haberdash.css">
+    <style>
+        body {
+            padding-top: var(--space-2xl);
+            padding-bottom: var(--space-2xl);
+        }
+        @media (max-width: 640px) {
+            body {
+                padding-top: var(--space-lg);
+                padding-bottom: var(--space-lg);
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container container-sm">
         <header>
             <h1 class="text-gradient">Haberdash</h1>
             <p class="subtitle">A modular, Apple-inspired UI component library for building beautiful dashboards and interfaces</p>
@@ -103,6 +115,31 @@
                     <input type="text" class="input" placeholder="Search...">
                 </div>
             </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- File Upload Section -->
+        <section class="section-sm">
+            <h2>Drag-and-Drop File Upload</h2>
+
+            <div class="upload-box" id="demo-upload-box">
+                <span class="upload-icon">📁</span>
+                <h3>Drop your file here</h3>
+                <p>or click to browse</p>
+                <label for="demo-file-input" class="file-input-label">
+                    Choose File
+                </label>
+                <input type="file" id="demo-file-input" />
+
+                <div id="demo-selected-file" style="display: none;" class="selected-file">
+                    <strong>Selected:</strong> <span id="demo-filename"></span>
+                </div>
+            </div>
+
+            <button id="demo-upload-btn" class="btn btn-primary btn-block" style="display: none;">
+                Upload File
+            </button>
         </section>
 
         <div class="divider"></div>
@@ -374,6 +411,22 @@
 
         // Initialize preset buttons
         Haberdash.preset.init('.presets');
+
+        // Initialize drag-and-drop upload demo
+        const demoUploadBtn = document.getElementById('demo-upload-btn');
+        const demoSelectedFileDiv = document.getElementById('demo-selected-file');
+        const demoFilenameSpan = document.getElementById('demo-filename');
+
+        Haberdash.upload.init('#demo-upload-box', '#demo-file-input', (file) => {
+            demoFilenameSpan.textContent = file.name;
+            demoSelectedFileDiv.style.display = 'block';
+            demoUploadBtn.style.display = 'block';
+        });
+
+        // Demo upload button handler
+        demoUploadBtn.addEventListener('click', () => {
+            Haberdash.toast.success('File upload demo - this would upload: ' + demoFilenameSpan.textContent);
+        });
     </script>
 </body>
 </html>
