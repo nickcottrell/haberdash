@@ -252,6 +252,19 @@
     gap: var(--space-xl);
 }
 
+/* Dashboard Grid (vertical stacking with gaps) */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
 /* Card variants */
 .card-compact {
     padding: var(--space-lg);
