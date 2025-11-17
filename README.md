@@ -2,6 +2,8 @@
 
 A modular UI component library for building beautiful dashboards and panel-based interfaces with HTML, CSS, and JavaScript.
 
+**[View Live Demo](https://nickcottrell.github.io/haberdash/)**
+
 ## Features
 
 - 🎨 **Clean Design** - Minimalist aesthetic with smooth animations
