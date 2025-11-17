@@ -1,10 +1,10 @@
 # Haberdash
 
-A modular, Apple-inspired UI component library for building beautiful dashboards and panel-based interfaces with HTML, CSS, and JavaScript.
+A modular UI component library for building beautiful dashboards and panel-based interfaces with HTML, CSS, and JavaScript.
 
 ## Features
 
-- 🎨 **Apple-esque Design** - Clean, minimalist aesthetic with smooth animations
+- 🎨 **Clean Design** - Minimalist aesthetic with smooth animations
 - 📱 **Mobile-First & Responsive** - Works seamlessly from 320px to 4K displays
 - 🧩 **Modular Components** - Use only what you need
 - 🎯 **Zero Dependencies** - Pure HTML, CSS, and vanilla JavaScript
