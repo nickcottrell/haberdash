@@ -2,23 +2,23 @@
 /* Apple-inspired design tokens and CSS variables */
 
 :root {
-    /* Color Palette - Dark Theme */
-    --primary: #5b6ef5;
-    --primary-hover: #764ba2;
-    --primary-light: #8fa3ff;
+    /* Color Palette - Neutral Default (before Spectra loads) */
+    --primary: #888888;
+    --primary-hover: #666666;
+    --primary-light: #aaaaaa;
 
-    --background: #0b0d12;
-    --surface: #1a1d25;
-    --surface-light: #252831;
-    --surface-lighter: #2a2e3a;
+    --background: #f5f5f5;
+    --surface: #fafafa;
+    --surface-light: #ffffff;
+    --surface-lighter: #ffffff;
 
-    --text: #f5f5f7;
-    --text-secondary: #a0a8b8;
-    --text-tertiary: #6e7681;
+    --text: #333333;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
 
-    --border: #2a2e3a;
-    --border-light: rgba(255, 255, 255, 0.1);
-    --border-focus: rgba(91, 110, 245, 0.5);
+    --border: #e0e0e0;
+    --border-light: rgba(0, 0, 0, 0.1);
+    --border-focus: rgba(136, 136, 136, 0.5);
 
     /* Semantic Colors */
     --success: #10b981;
@@ -27,8 +27,8 @@
     --info: #3b82f6;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #5b6ef5 0%, #764ba2 100%);
-    --gradient-surface: linear-gradient(135deg, rgba(91, 110, 245, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    --gradient-primary: linear-gradient(135deg, #888888 0%, #666666 100%);
+    --gradient-surface: linear-gradient(135deg, rgba(136, 136, 136, 0.1) 0%, rgba(102, 102, 102, 0.1) 100%);
 
     /* Spacing Scale (Apple-like) */
     --space-xs: 0.25rem;    /* 4px */
@@ -48,12 +48,12 @@
     --radius-full: 9999px;
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.4);
-    --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.5);
-    --shadow-focus: 0 0 0 3px rgba(91, 110, 245, 0.3);
-    --shadow-primary: 0 8px 20px rgba(91, 110, 245, 0.4);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.12);
+    --shadow-focus: 0 0 0 3px rgba(136, 136, 136, 0.2);
+    --shadow-primary: 0 8px 20px rgba(136, 136, 136, 0.15);
 
     /* Typography */
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
