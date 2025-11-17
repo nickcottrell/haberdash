@@ -45,6 +45,13 @@
     const spectraShadowSm = computed.getPropertyValue('--shadow-sm').trim();
     const spectraShadowMd = computed.getPropertyValue('--shadow-md').trim();
 
+    // Spacing
+    const spectraSpaceUnit = computed.getPropertyValue('--space-unit').trim();
+
+    // Typography
+    const spectraTypeRatio = computed.getPropertyValue('--type-ratio').trim();
+    const spectraFontWeightHeading = computed.getPropertyValue('--font-weight-heading').trim();
+
     // Build CSS override string
     let css = ':root {\n';
 
@@ -97,6 +104,39 @@
       const blur = parseInt(spectraShadowMd.match(/(\d+)px/)?.[1] || '12');
       css += `  --shadow-lg: 0 ${blur * 2}px ${blur * 2}px rgba(0,0,0,0.4) !important;\n`;
       css += `  --shadow-xl: 0 ${blur * 3}px ${blur * 3}px rgba(0,0,0,0.5) !important;\n`;
+    }
+
+    // Spacing scale
+    if (spectraSpaceUnit) {
+      const baseValue = parseFloat(spectraSpaceUnit);
+      css += `  --space-xs: ${baseValue * 0.25}rem !important;\n`;
+      css += `  --space-sm: ${baseValue * 0.5}rem !important;\n`;
+      css += `  --space-md: ${baseValue * 0.75}rem !important;\n`;
+      css += `  --space-lg: ${baseValue}rem !important;\n`;
+      css += `  --space-xl: ${baseValue * 1.5}rem !important;\n`;
+      css += `  --space-2xl: ${baseValue * 2}rem !important;\n`;
+      css += `  --space-3xl: ${baseValue * 3}rem !important;\n`;
+      css += `  --space-4xl: ${baseValue * 4}rem !important;\n`;
+    }
+
+    // Typography scale
+    if (spectraTypeRatio) {
+      const ratio = parseFloat(spectraTypeRatio);
+      const base = 1; // 1rem = 16px
+      css += `  --font-size-xs: ${base * 0.75}rem !important;\n`;
+      css += `  --font-size-sm: ${base * 0.875}rem !important;\n`;
+      css += `  --font-size-base: ${base}rem !important;\n`;
+      css += `  --font-size-lg: ${base * ratio}rem !important;\n`;
+      css += `  --font-size-xl: ${base * Math.pow(ratio, 1.5)}rem !important;\n`;
+      css += `  --font-size-2xl: ${base * Math.pow(ratio, 2)}rem !important;\n`;
+      css += `  --font-size-3xl: ${base * Math.pow(ratio, 2.5)}rem !important;\n`;
+      css += `  --font-size-4xl: ${base * Math.pow(ratio, 3)}rem !important;\n`;
+    }
+
+    // Font weights
+    if (spectraFontWeightHeading) {
+      css += `  --font-weight-semibold: ${spectraFontWeightHeading} !important;\n`;
+      css += `  --font-weight-bold: ${Math.min(parseInt(spectraFontWeightHeading) + 100, 900)} !important;\n`;
     }
 
     css += '}\n';
