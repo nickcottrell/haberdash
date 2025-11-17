@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haberdash - Modular UI Component Library</title>
+    <link rel="stylesheet" href="css/haberdash.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="text-gradient">Haberdash</h1>
+            <p class="subtitle">A modular, Apple-inspired UI component library for building beautiful dashboards and interfaces</p>
+        </header>
+
+        <div class="info-banner">
+            <h3>📦 Component Showcase</h3>
+            <p>This page demonstrates all available components. Each component is modular and can be used independently in your projects.</p>
+        </div>
+
+        <!-- Buttons Section -->
+        <section class="section-sm">
+            <h2>Buttons</h2>
+            <div class="cluster">
+                <button class="btn btn-primary">Primary Button</button>
+                <button class="btn btn-secondary">Secondary Button</button>
+                <button class="btn btn-tertiary">Tertiary Button</button>
+            </div>
+            <div class="cluster mt-md">
+                <button class="btn btn-success">Success</button>
+                <button class="btn btn-warning">Warning</button>
+                <button class="btn btn-error">Error</button>
+            </div>
+            <div class="cluster mt-md">
+                <button class="btn btn-primary btn-sm">Small</button>
+                <button class="btn btn-primary">Default</button>
+                <button class="btn btn-primary btn-lg">Large</button>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Form Elements Section -->
+        <section class="section-sm">
+            <h2>Form Elements</h2>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Text Input</label>
+                    <input type="text" class="input" placeholder="Enter your name">
+                    <span class="form-hint">This is a helpful hint</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Input</label>
+                    <input type="email" class="input" placeholder="you@example.com">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Dropdown Select</label>
+                <select class="select">
+                    <option>Choose an option</option>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Textarea</label>
+                <textarea class="textarea" placeholder="Enter your message..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox">
+                    <input type="checkbox">
+                    <span>Checkbox option</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="radio">
+                    <input type="radio" name="radio-demo">
+                    <span>Radio option 1</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radio-demo">
+                    <span>Radio option 2</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="toggle">
+                    <input type="checkbox">
+                    <span>Toggle switch</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Search Input</label>
+                <div class="search-input">
+                    <input type="text" class="input" placeholder="Search...">
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Cards Section -->
+        <section class="section-sm">
+            <h2>Dashboard Cards</h2>
+            <div class="card-grid">
+                <div class="dashboard-card">
+                    <div class="card-icon">📊</div>
+                    <h3>Analytics</h3>
+                    <p>View detailed analytics and insights about your data</p>
+                    <button class="btn btn-primary">View Analytics</button>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>Settings</h3>
+                    <p>Configure your preferences and customize your experience</p>
+                    <button class="btn btn-primary">Open Settings</button>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">📤</div>
+                    <h3>Upload</h3>
+                    <p>Upload files and documents for processing</p>
+                    <button class="btn btn-primary">Upload Files</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Dimension Card -->
+        <section class="section-sm">
+            <h2>Dimension Card with Slider</h2>
+            <div class="dimension-card">
+                <div class="dimension-header">
+                    <div class="dimension-info">
+                        <h2 class="dimension-title">🎯 Analysis Intensity</h2>
+                        <p class="dimension-description">
+                            Control the depth and detail level of analysis. Higher values provide more comprehensive results.
+                        </p>
+                    </div>
+                    <div class="dimension-icon">⚡</div>
+                </div>
+
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>🟢 Light</span>
+                        <span>🟡 Moderate</span>
+                        <span>🔴 Deep</span>
+                    </div>
+                    <div class="slider-track">
+                        <div class="slider-gradient gradient-risk"></div>
+                        <div class="slider-wrapper">
+                            <input type="range" id="intensity-slider" min="0" max="100" value="50" step="1">
+                        </div>
+                    </div>
+                    <div class="value-display" id="intensity-slider-display">Moderate Analysis</div>
+                </div>
+
+                <div class="presets">
+                    <button class="preset-button" onclick="setIntensityPreset('quick')">
+                        <div class="preset-label">⚡ Quick</div>
+                        <div class="preset-description">Fast scan</div>
+                    </button>
+                    <button class="preset-button active" onclick="setIntensityPreset('balanced')">
+                        <div class="preset-label">⚖️ Balanced</div>
+                        <div class="preset-description">Recommended</div>
+                    </button>
+                    <button class="preset-button" onclick="setIntensityPreset('deep')">
+                        <div class="preset-label">🔍 Deep</div>
+                        <div class="preset-description">Thorough analysis</div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Result Card with Details -->
+        <section class="section-sm">
+            <h2>Result Card</h2>
+            <div class="result-card">
+                <h2>📊 Analysis Results</h2>
+                <p>Your analysis has been completed successfully. Here are the key findings:</p>
+
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Total Items</div>
+                        <div class="detail-value">1,247</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Success Rate</div>
+                        <div class="detail-value">98.5%</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Processing Time</div>
+                        <div class="detail-value">2.3s</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Status</div>
+                        <div class="detail-value">
+                            <span class="badge badge-success">Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- List Cards -->
+        <section class="section-sm">
+            <h2>List Cards</h2>
+            <div class="list-card">
+                <div class="list-card-header">
+                    <div class="list-card-title">Analysis Report #1234</div>
+                    <span class="badge badge-success">Completed</span>
+                </div>
+                <div class="list-card-meta">Created on November 16, 2025 at 8:30 PM</div>
+                <div class="list-card-content">
+                    Comprehensive analysis of data set with 1,247 items processed successfully.
+                </div>
+            </div>
+
+            <div class="list-card">
+                <div class="list-card-header">
+                    <div class="list-card-title">Analysis Report #1235</div>
+                    <span class="badge badge-warning">Processing</span>
+                </div>
+                <div class="list-card-meta">Created on November 16, 2025 at 8:45 PM</div>
+                <div class="list-card-content">
+                    Currently processing data set with estimated completion in 2 minutes.
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Utilities Section -->
+        <section class="section-sm">
+            <h2>Utilities</h2>
+
+            <h3>Badges</h3>
+            <div class="cluster">
+                <span class="badge badge-primary">Primary</span>
+                <span class="badge badge-success">Success</span>
+                <span class="badge badge-warning">Warning</span>
+                <span class="badge badge-error">Error</span>
+                <span class="badge badge-info">Info</span>
+                <span class="badge badge-neutral">Neutral</span>
+            </div>
+
+            <h3 class="mt-lg">Status Badges</h3>
+            <div class="cluster">
+                <span class="status-badge status-normal">Normal</span>
+                <span class="status-badge status-low">Low</span>
+                <span class="status-badge status-high">High</span>
+                <span class="status-badge status-pending">Pending</span>
+                <span class="status-badge status-completed">Completed</span>
+            </div>
+
+            <h3 class="mt-lg">Rank Badges</h3>
+            <div class="cluster">
+                <span class="rank-badge rank-1">1</span>
+                <span class="rank-badge rank-2">2</span>
+                <span class="rank-badge rank-3">3</span>
+                <span class="rank-badge">4</span>
+            </div>
+
+            <h3 class="mt-lg">Loading Spinner</h3>
+            <div class="cluster">
+                <div class="spinner-sm"></div>
+                <div class="spinner"></div>
+                <div class="spinner-lg"></div>
+            </div>
+
+            <h3 class="mt-lg">Progress Bar</h3>
+            <div class="progress">
+                <div class="progress-bar" style="width: 65%"></div>
+            </div>
+
+            <h3 class="mt-lg">Alerts</h3>
+            <div class="alert alert-success">
+                <strong>Success!</strong> Your changes have been saved.
+            </div>
+            <div class="alert alert-warning">
+                <strong>Warning!</strong> Please review your settings.
+            </div>
+            <div class="alert alert-error">
+                <strong>Error!</strong> Something went wrong.
+            </div>
+            <div class="alert alert-info">
+                <strong>Info:</strong> Here's some helpful information.
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Interactive Demo Section -->
+        <section class="section-sm">
+            <h2>Interactive Demos</h2>
+
+            <div class="card">
+                <h3>Toast Notifications</h3>
+                <p>Click the buttons below to see toast notifications in action:</p>
+                <div class="cluster mt-md">
+                    <button class="btn btn-success" onclick="Haberdash.toast.success('Operation completed successfully!')">
+                        Show Success Toast
+                    </button>
+                    <button class="btn btn-error" onclick="Haberdash.toast.error('An error occurred!')">
+                        Show Error Toast
+                    </button>
+                    <button class="btn btn-warning" onclick="Haberdash.toast.warning('Warning message!')">
+                        Show Warning Toast
+                    </button>
+                    <button class="btn btn-primary" onclick="Haberdash.toast.info('Information message')">
+                        Show Info Toast
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Typography Section -->
+        <section class="section-sm">
+            <h2>Typography</h2>
+            <h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <h4>Heading 4</h4>
+            <h5>Heading 5</h5>
+            <h6>Heading 6</h6>
+            <p>This is a paragraph with <a href="#">a link</a>, <strong>bold text</strong>, <em>italic text</em>, and <code>inline code</code>.</p>
+            <p class="text-gradient">This is gradient text using the Apple-inspired gradient.</p>
+        </section>
+
+        <footer class="section-sm text-center">
+            <p class="text-secondary">
+                Built with Haberdash - A modular UI component library
+            </p>
+        </footer>
+    </div>
+
+    <script src="js/haberdash.js"></script>
+    <script>
+        // Initialize slider with display mapping
+        Haberdash.slider.init('intensity-slider', (value) => {
+            if (value < 33) return '🟢 Light Analysis';
+            if (value < 66) return '🟡 Moderate Analysis';
+            return '🔴 Deep Analysis';
+        });
+
+        // Preset functions
+        function setIntensityPreset(preset) {
+            const presets = {
+                quick: 20,
+                balanced: 50,
+                deep: 85
+            };
+
+            const slider = document.getElementById('intensity-slider');
+            slider.value = presets[preset];
+            slider.dispatchEvent(new Event('input'));
+        }
+
+        // Initialize preset buttons
+        Haberdash.preset.init('.presets');
+    </script>
+</body>
+</html>

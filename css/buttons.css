@@ -1,0 +1,222 @@
+/* Haberdash Buttons */
+/* Apple-inspired button components */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-2xl);
+    font-family: var(--font-sans);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    white-space: nowrap;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.btn:focus-visible {
+    box-shadow: var(--shadow-focus);
+}
+
+/* Primary Button - Gradient (Apple style) */
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Secondary Button - Outlined */
+.btn-secondary {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+    background: var(--surface-light);
+    border-color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+    background: var(--surface);
+}
+
+/* Tertiary Button - Text only */
+.btn-tertiary {
+    background: transparent;
+    color: var(--primary-light);
+    padding: var(--space-sm) var(--space-lg);
+}
+
+.btn-tertiary:hover {
+    background: rgba(91, 110, 245, 0.1);
+    color: var(--primary);
+}
+
+.btn-tertiary:active {
+    background: rgba(91, 110, 245, 0.15);
+}
+
+/* Button Sizes */
+.btn-sm {
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--font-size-sm);
+}
+
+.btn-lg {
+    padding: var(--space-lg) var(--space-3xl);
+    font-size: var(--font-size-lg);
+}
+
+.btn-xl {
+    padding: var(--space-xl) var(--space-4xl);
+    font-size: var(--font-size-xl);
+}
+
+/* Button with icon */
+.btn-icon {
+    padding: var(--space-md);
+    border-radius: var(--radius-full);
+}
+
+.btn-icon.btn-sm {
+    padding: var(--space-sm);
+}
+
+.btn-icon.btn-lg {
+    padding: var(--space-lg);
+}
+
+/* Full width button */
+.btn-block {
+    display: flex;
+    width: 100%;
+}
+
+/* Button variants */
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.btn-success:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-warning {
+    background: var(--warning);
+    color: white;
+}
+
+.btn-warning:hover {
+    background: #d97706;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+}
+
+.btn-error {
+    background: var(--error);
+    color: white;
+}
+
+.btn-error:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+}
+
+/* Button Group */
+.btn-group {
+    display: inline-flex;
+    gap: var(--space-sm);
+}
+
+.btn-group-vertical {
+    flex-direction: column;
+}
+
+/* Preset Button (special variant for settings) */
+.preset-button {
+    padding: var(--space-md);
+    background: var(--surface-light);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.preset-button:hover {
+    border-color: var(--primary);
+    background: var(--surface);
+    transform: translateY(-2px);
+}
+
+.preset-button.active {
+    border-color: var(--primary);
+    background: rgba(91, 110, 245, 0.2);
+    color: var(--primary-light);
+}
+
+.preset-label {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+}
+
+.preset-description {
+    color: var(--text-secondary);
+    font-size: var(--font-size-xs);
+}
+
+/* Action buttons section */
+.actions {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: flex-end;
+    margin-top: var(--space-2xl);
+}
+
+@media (max-width: 640px) {
+    .actions {
+        flex-direction: column-reverse;
+    }
+
+    .actions .btn {
+        width: 100%;
+    }
+}
