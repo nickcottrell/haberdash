@@ -277,6 +277,61 @@ const Haberdash = {
     },
 
     /**
+     * File upload with drag-and-drop
+     */
+    upload: {
+        /**
+         * Initialize drag-and-drop upload on an element
+         * @param {string} boxSelector - CSS selector for upload box
+         * @param {string} inputSelector - CSS selector for file input
+         * @param {function} onFileSelect - Callback when file is selected
+         */
+        init(boxSelector, inputSelector, onFileSelect) {
+            const uploadBox = document.querySelector(boxSelector);
+            const fileInput = document.querySelector(inputSelector);
+
+            if (!uploadBox || !fileInput) {
+                console.warn('Upload box or file input not found');
+                return;
+            }
+
+            // Drag and drop
+            uploadBox.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadBox.classList.add('drag-over');
+            });
+
+            uploadBox.addEventListener('dragleave', () => {
+                uploadBox.classList.remove('drag-over');
+            });
+
+            uploadBox.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadBox.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    if (onFileSelect) onFileSelect(files[0]);
+                }
+            });
+
+            // File selection via input
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length > 0 && onFileSelect) {
+                    onFileSelect(fileInput.files[0]);
+                }
+            });
+
+            // Click to browse
+            uploadBox.addEventListener('click', (e) => {
+                if (e.target !== fileInput && !e.target.classList.contains('file-input-label')) {
+                    fileInput.click();
+                }
+            });
+        }
+    },
+
+    /**
      * Utility functions
      */
     utils: {
