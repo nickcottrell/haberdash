@@ -1,9 +1,14 @@
 /**
- * Spectra Theme Bridge
- * Fetches UI theme parameters from Spectra node and applies to CSS
+ * Spectra Theme Bridge - Direct HSL Component Mapping
+ * Each F dimension's H/S/L components directly control specific design outputs
+ *
+ * F1 Origin: Chromatic base (hue → primary color, sat/light → palette tone)
+ * F2 Contrast: Edge definition (sat → sharpness, light → shadow depth)
+ * F3 Density: Spatial field (hue → spacing, sat → padding, light → roundness)
+ * F4 Hierarchy: Visual impact (light → type scale, sat → weight variation)
  *
  * Usage:
- *   <script src="spectra-theme.js" data-node-id="ui-theme-001"></script>
+ *   <script src="spectra-theme.js" data-node-id="haberdash-ui-theme"></script>
  */
 
 (async function() {
@@ -31,134 +36,130 @@
     const root = document.documentElement;
 
     // Get HSL values for all dimensions (support multiple naming schemes)
-    const d1 = metadata['F1 Origin']?.hsl || metadata.primary_anchor?.hsl || metadata.d1?.hsl;
-    const d2 = metadata['F2 Contrast']?.hsl || metadata.relational_modifier?.hsl || metadata.d2?.hsl;
-    const d3 = metadata['F3 Density']?.hsl || metadata.intensity_vector?.hsl || metadata.d3?.hsl;
-    const d4 = metadata['F4 Hierarchy']?.hsl || metadata.opposition_point?.hsl || metadata.d4?.hsl;
+    const f1 = metadata['F1 Origin']?.hsl || metadata.primary_anchor?.hsl || metadata.d1?.hsl;
+    const f2 = metadata['F2 Contrast']?.hsl || metadata.relational_modifier?.hsl || metadata.d2?.hsl;
+    const f3 = metadata['F3 Density']?.hsl || metadata.intensity_vector?.hsl || metadata.d3?.hsl;
+    const f4 = metadata['F4 Hierarchy']?.hsl || metadata.opposition_point?.hsl || metadata.d4?.hsl;
 
-    if (!d1 || !d2 || !d3 || !d4) {
+    if (!f1 || !f2 || !f3 || !f4) {
       throw new Error('Missing dimension data');
     }
 
-    // === OUTPUT 1: COLOR PALETTE TONE ===
-    // Detect dark mode vs light mode based on average lightness
-    const avgLightness = (d1.l + d2.l + d3.l + d4.l) / 4;
-    const isDarkMode = avgLightness < 50; // Dark if average lightness below 50%
+    // Helper: Map range linearly
+    const mapRange = (value, inMin, inMax, outMin, outMax) => {
+      return outMin + ((value - inMin) / (inMax - inMin)) * (outMax - outMin);
+    };
 
-    // Primary color - boost brightness in dark mode for visibility
+    // === F1 ORIGIN: COLOR PALETTE ===
+    // F1.H → Primary hue
+    // F1.S → Color saturation strength
+    // F1.L → Dark/light mode detection
+
+    const isDarkMode = f1.l < 50;
+
     if (isDarkMode) {
-      // In dark mode, boost saturation and lightness for vibrant colors
-      root.style.setProperty('--color-primary', `hsl(${d1.h}, ${Math.min(d1.s + 30, 100)}%, ${Math.min(d1.l + 50, 70)}%)`);
-      root.style.setProperty('--color-primary-dark', `hsl(${d1.h}, ${Math.min(d1.s + 20, 90)}%, ${Math.min(d1.l + 40, 60)}%)`);
-      root.style.setProperty('--color-primary-light', `hsl(${d1.h}, ${Math.min(d1.s + 40, 100)}%, ${Math.min(d1.l + 65, 85)}%)`);
+      root.style.setProperty('--color-primary', `hsl(${f1.h}, ${Math.min(f1.s + 30, 100)}%, ${Math.min(f1.l + 50, 70)}%)`);
+      root.style.setProperty('--color-primary-dark', `hsl(${f1.h}, ${Math.min(f1.s + 20, 90)}%, ${Math.min(f1.l + 40, 60)}%)`);
+      root.style.setProperty('--color-primary-light', `hsl(${f1.h}, ${Math.min(f1.s + 40, 100)}%, ${Math.min(f1.l + 65, 85)}%)`);
     } else {
-      // Light mode - use colors as-is or slightly adjusted
-      root.style.setProperty('--color-primary', `hsl(${d1.h}, ${d1.s}%, ${Math.max(d1.l, 40)}%)`);
-      root.style.setProperty('--color-primary-dark', `hsl(${d1.h}, ${d1.s}%, ${Math.max(d1.l - 15, 30)}%)`);
-      root.style.setProperty('--color-primary-light', `hsl(${d1.h}, ${d1.s}%, ${Math.min(d1.l + 20, 80)}%)`);
+      root.style.setProperty('--color-primary', `hsl(${f1.h}, ${f1.s}%, ${Math.max(f1.l, 40)}%)`);
+      root.style.setProperty('--color-primary-dark', `hsl(${f1.h}, ${f1.s}%, ${Math.max(f1.l - 15, 30)}%)`);
+      root.style.setProperty('--color-primary-light', `hsl(${f1.h}, ${f1.s}%, ${Math.min(f1.l + 20, 80)}%)`);
     }
 
-    // Accent from D1 hue relationship
-    const accentHue = (d1.h + 30) % 360;
-    const accentLightness = isDarkMode ? Math.min(d1.l + 55, 75) : Math.min(d1.l + 10, 70);
-    root.style.setProperty('--color-accent', `hsl(${accentHue}, ${d1.s}%, ${accentLightness}%)`);
+    // Accent color
+    const accentHue = (f1.h + 30) % 360;
+    const accentLightness = isDarkMode ? Math.min(f1.l + 55, 75) : Math.min(f1.l + 10, 70);
+    root.style.setProperty('--color-accent', `hsl(${accentHue}, ${f1.s}%, ${accentLightness}%)`);
 
-    // Background/surface - respect dark mode vs light mode
+    // Background/surface
     if (isDarkMode) {
-      // Dark mode: use low lightness values
-      root.style.setProperty('--color-background', `hsl(${d1.h}, ${Math.max(d1.s - 30, 5)}%, ${d1.l + 2}%)`);
-      root.style.setProperty('--color-surface', `hsl(${d1.h}, ${Math.max(d1.s - 25, 10)}%, ${d1.l + 6}%)`);
-      // Light text for dark backgrounds
-      root.style.setProperty('--color-text', `hsl(${d1.h}, 10%, 95%)`);
-      root.style.setProperty('--color-text-dim', `hsl(${d1.h}, 8%, 70%)`);
+      root.style.setProperty('--color-background', `hsl(${f1.h}, ${Math.max(f1.s - 30, 5)}%, ${f1.l + 2}%)`);
+      root.style.setProperty('--color-surface', `hsl(${f1.h}, ${Math.max(f1.s - 25, 10)}%, ${f1.l + 6}%)`);
+      root.style.setProperty('--color-text', `hsl(${f1.h}, 10%, 95%)`);
+      root.style.setProperty('--color-text-dim', `hsl(${f1.h}, 8%, 70%)`);
     } else {
-      // Light mode: use high lightness values
-      root.style.setProperty('--color-background', `hsl(${d1.h}, ${Math.max(d1.s - 50, 5)}%, 98%)`);
-      root.style.setProperty('--color-surface', `hsl(${d1.h}, ${Math.max(d1.s - 45, 10)}%, 95%)`);
-      // Dark text for light backgrounds
-      root.style.setProperty('--color-text', `hsl(${d1.h}, 10%, 20%)`);
-      root.style.setProperty('--color-text-dim', `hsl(${d1.h}, 8%, 50%)`);
+      root.style.setProperty('--color-background', `hsl(${f1.h}, ${Math.max(f1.s - 50, 5)}%, 98%)`);
+      root.style.setProperty('--color-surface', `hsl(${f1.h}, ${Math.max(f1.s - 45, 10)}%, 95%)`);
+      root.style.setProperty('--color-text', `hsl(${f1.h}, 10%, 20%)`);
+      root.style.setProperty('--color-text-dim', `hsl(${f1.h}, 8%, 50%)`);
     }
 
-    if (debug) console.log('🎨 Palette:', { primary: `hsl(${d1.h}, ${d1.s}%, ${d1.l}%)` });
+    if (debug) console.log('🎨 F1 Palette:', { hue: f1.h, sat: f1.s, light: f1.l, darkMode: isDarkMode });
 
-    // === OUTPUT 2: BORDER RADIUS & CONTRAST (SHARPNESS) ===
-    // Average saturation across all dimensions
-    const avgSaturation = (d1.s + d2.s + d3.s + d4.s) / 4;
+    // === F2 CONTRAST: EDGE DEFINITION ===
+    // F2.S → Border sharpness (0 = soft/round, 100 = sharp/defined)
+    // F2.L → Shadow depth (0 = deep shadows, 100 = light shadows)
 
-    // Lightness range (max - min)
-    const lightnessRange = Math.max(d1.l, d2.l, d3.l, d4.l) - Math.min(d1.l, d2.l, d3.l, d4.l);
+    // Border radius inversely proportional to saturation (high sat = sharp = small radius)
+    const borderRadiusBase = Math.round(mapRange(f2.s, 0, 100, 16, 4));
+    root.style.setProperty('--border-radius-base', `${borderRadiusBase}px`);
+    root.style.setProperty('--border-radius-lg', `${Math.round(borderRadiusBase * 1.5)}px`);
 
-    // Sharpness score: 0 = soft/rounded, 1 = sharp/defined
-    const sharpness = (avgSaturation / 100) * (lightnessRange / 100);
-
-    // Border radius inversely proportional to sharpness
-    const borderRadius = Math.round(16 * (1 - sharpness));
-    root.style.setProperty('--border-radius-base', `${borderRadius}px`);
-    root.style.setProperty('--border-radius-lg', `${Math.round(borderRadius * 1.5)}px`);
-
-    // Shadow blur inversely proportional to sharpness
-    const shadowBlur = Math.round(20 * (1 - sharpness));
+    // Shadow blur based on lightness (high lightness = lighter/softer shadows)
+    const shadowBlur = Math.round(mapRange(f2.l, 0, 100, 24, 8));
     root.style.setProperty('--shadow-sm', `0 2px ${shadowBlur}px rgba(0,0,0,0.1)`);
     root.style.setProperty('--shadow-md', `0 4px ${Math.round(shadowBlur * 1.5)}px rgba(0,0,0,0.15)`);
 
-    // Border opacity proportional to sharpness
-    const borderOpacity = 0.1 + (sharpness * 0.5);
+    // Border opacity based on saturation (high sat = more defined borders)
+    const borderOpacity = mapRange(f2.s, 0, 100, 0.1, 0.6);
     root.style.setProperty('--border-opacity', borderOpacity.toFixed(2));
 
-    if (debug) console.log('✂️  Sharpness:', sharpness.toFixed(2), 'radius:', borderRadius);
+    if (debug) console.log('✂️  F2 Contrast:', { sat: f2.s, light: f2.l, borderRadius: borderRadiusBase, shadowBlur });
 
-    // === OUTPUT 3: SPACE AROUND OBJECTS (DENSITY) ===
-    // Saturation variance across dimensions
-    const saturations = [d1.s, d2.s, d3.s, d4.s];
-    const avgSat = saturations.reduce((a, b) => a + b) / 4;
-    const satVariance = saturations.reduce((sum, val) => sum + Math.pow(val - avgSat, 2), 0) / 4;
+    // === F3 DENSITY: SPATIAL FIELD ===
+    // F3.H → Spacing/margins (0° = tight, 360° = airy)
+    // F3.S → Padding (0% = minimal, 100% = generous)
+    // F3.L → Border radius override (additional roundness control)
 
-    // Hue spread (max distance between any two hues)
-    const hues = [d1.h, d2.h, d3.h, d4.h];
-    let maxHueDist = 0;
-    for (let i = 0; i < hues.length; i++) {
-      for (let j = i + 1; j < hues.length; j++) {
-        const dist = Math.min(Math.abs(hues[i] - hues[j]), 360 - Math.abs(hues[i] - hues[j]));
-        maxHueDist = Math.max(maxHueDist, dist);
-      }
-    }
-    const hueSpread = maxHueDist / 180; // 0 to 1
-
-    // Spaciousness: higher variance + wider spread = more spacious
-    const spaciousness = (Math.sqrt(satVariance) / 100) * hueSpread;
-
-    // Space unit: 0.3rem (tight) to 2.0rem (airy) - WIDENED RANGE
-    const spaceUnit = 0.3 + (spaciousness * 1.7);
+    // Spacing: 0.5rem (tight) to 1.5rem (airy)
+    const spaceUnit = mapRange(f3.h, 0, 360, 0.5, 1.5);
     root.style.setProperty('--space-unit', `${spaceUnit.toFixed(3)}rem`);
-    root.style.setProperty('--gap-scale', (1 + spaciousness * 1.5).toFixed(2));
-    root.style.setProperty('--padding-scale', (1 + spaciousness * 0.8).toFixed(2));
 
-    if (debug) console.log('📏 Spaciousness:', spaciousness.toFixed(2), 'space-unit:', spaceUnit.toFixed(3));
+    // Padding multiplier: 0.6× (minimal) to 1.4× (generous)
+    const paddingScale = mapRange(f3.s, 0, 100, 0.6, 1.4);
+    root.style.setProperty('--padding-scale', paddingScale.toFixed(2));
 
-    // === OUTPUT 4: TYPE SIZE & HIERARCHY ===
-    // Lightness ratios between dimensions
-    const l1 = Math.max(d1.l, 1); // Avoid division by zero
-    const l4 = Math.max(d4.l, 1);
-    const lightnessRatios = [d1.l / l4, d2.l / l4, d3.l / l4];
+    // Gap multiplier tied to spacing
+    const gapScale = mapRange(f3.h, 0, 360, 0.8, 1.2);
+    root.style.setProperty('--gap-scale', gapScale.toFixed(2));
 
-    // Variance in ratios = hierarchy strength
-    const avgRatio = lightnessRatios.reduce((a, b) => a + b) / 3;
-    const ratioVariance = lightnessRatios.reduce((sum, val) => sum + Math.pow(val - avgRatio, 2), 0) / 3;
-    const hierarchyStrength = Math.sqrt(ratioVariance);
+    // F3.L can add extra roundness (combines with F2 for total roundness)
+    const extraRoundness = Math.round(mapRange(f3.l, 0, 100, 0, 8));
+    const totalBorderRadius = borderRadiusBase + extraRoundness;
+    root.style.setProperty('--border-radius-base', `${totalBorderRadius}px`);
+    root.style.setProperty('--border-radius-lg', `${Math.round(totalBorderRadius * 1.5)}px`);
 
-    // Type ratio: 1.15 (flat) to 2.5 (extreme) - WIDENED RANGE
-    const typeRatio = 1.15 + (hierarchyStrength * 1.35);
+    if (debug) console.log('📏 F3 Density:', {
+      hue: f3.h,
+      sat: f3.s,
+      light: f3.l,
+      spaceUnit: spaceUnit.toFixed(3),
+      paddingScale: paddingScale.toFixed(2),
+      roundness: totalBorderRadius
+    });
+
+    // === F4 HIERARCHY: VISUAL IMPACT ===
+    // F4.L → Type scale ratio (0% = flat/uniform, 100% = dramatic)
+    // F4.S → Font weight variation (0% = uniform weights, 100% = bold contrast)
+
+    // Type ratio: 1.2 (flat) to 1.618 (golden ratio, dramatic)
+    const typeRatio = mapRange(f4.l, 0, 100, 1.2, 1.618);
     root.style.setProperty('--type-ratio', typeRatio.toFixed(3));
 
-    // Font weight contrast: 300-900 based on hierarchy - WIDENED RANGE
-    const fontWeightContrast = Math.round(300 + (hierarchyStrength * 600));
-    root.style.setProperty('--font-weight-heading', fontWeightContrast);
+    // Font weight for headings: 400 (normal, flat) to 700 (bold, dramatic)
+    const fontWeightHeading = Math.round(mapRange(f4.s, 0, 100, 400, 700));
+    root.style.setProperty('--font-weight-heading', fontWeightHeading);
     root.style.setProperty('--font-weight-body', 400);
 
-    if (debug) console.log('📐 Hierarchy:', hierarchyStrength.toFixed(2), 'ratio:', typeRatio.toFixed(3));
+    if (debug) console.log('📐 F4 Hierarchy:', {
+      light: f4.l,
+      sat: f4.s,
+      typeRatio: typeRatio.toFixed(3),
+      fontWeight: fontWeightHeading
+    });
 
-    // Add a CSS class to indicate theme is loaded
+    // Add CSS class to indicate theme is loaded
     document.documentElement.classList.add('spectra-theme-loaded');
 
     if (debug) console.log('✅ Spectra Theme: Applied successfully');
