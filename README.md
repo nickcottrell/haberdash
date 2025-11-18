@@ -3,6 +3,7 @@
 A modular UI component library for building beautiful dashboards and panel-based interfaces with HTML, CSS, and JavaScript. Features a unique **Spectra** theme system that uses color encoding to control design parameters across all your applications.
 
 **[View Component Library Demo](https://nickcottrell.github.io/haberdash/)** - Browse all UI components
+**[Portfolio Showcase Demo](https://nickcottrell.github.io/haberdash/portfolio-showcase.html)** - 16:9 scaled component showcase
 **[Login to Spectra Theme Editor](https://d1dys716o168zx.cloudfront.net/)** - Adjust the visual theme in real-time across all demos
 
 ## Features
