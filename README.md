@@ -62,14 +62,18 @@ When a user adjusts the theme in the Spectra Editor, all pages using these scrip
 
 ### How Spectra Uses Color
 
-The system interprets color values as **semantic encodings**, not just visual styling:
+The system interprets color values as **semantic encodings**, not just visual styling. Four fundamental parameters (F1-F4) work together as a coordinated system:
 
-- **D1 (Primary Anchor)** - Hue defines primary color; relationships between D1-D4 determine color harmony (complementary, analogous, triadic)
-- **D2 (Relational Modifier)** - Saturation + lightness determine edge sharpness (high sat = sharp, low sat = soft)
-- **D3 (Intensity Vector)** - Distance from neutral gray affects density (saturation variance determines spacing)
-- **D4 (Opposition Point)** - Lightness ratios between dimensions determine typography hierarchy strength
+- **F1 Origin** - Chromatic base: primary hue anchor point
+- **F2 Contrast** - Edge definition: contributes to sharpness calculations
+- **F3 Density** - Spatial field: contributes to spacing calculations
+- **F4 Hierarchy** - Opposition point: contributes to typography calculations
 
-This approach allows **4 colors to control dozens of design parameters** through mathematical relationships rather than manual configuration.
+**Key insight:** These dimensions don't work independently. The system calculates outputs using **variance across all four dimensions**:
+- Spacing = saturation variance across F1-F4 × hue spread
+- Typography = lightness ratios between F1/F2/F3 relative to F4
+
+Use the **coordinated presets** (Compact, Balanced, Editorial, etc.) for reliable results. Individual dimension tweaking is for fine-tuning only.
 
 ## Quick Start
 
