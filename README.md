@@ -1,8 +1,9 @@
 # Haberdash
 
-A modular UI component library for building beautiful dashboards and panel-based interfaces with HTML, CSS, and JavaScript.
+A modular UI component library for building beautiful dashboards and panel-based interfaces with HTML, CSS, and JavaScript. Features a unique **Spectra** theme system that uses color encoding to control design parameters across all your applications.
 
-**[View Live Demo](https://nickcottrell.github.io/haberdash/)**
+**[View Component Library Demo](https://nickcottrell.github.io/haberdash/)** - Browse all UI components
+**[Login to Spectra Theme Editor](https://d1dys716o168zx.cloudfront.net/)** - Adjust the visual theme in real-time across all demos
 
 ## Features
 
@@ -11,8 +12,63 @@ A modular UI component library for building beautiful dashboards and panel-based
 - 🧩 **Modular Components** - Use only what you need
 - 🎯 **Zero Dependencies** - Pure HTML, CSS, and vanilla JavaScript
 - ♿ **Accessible** - Built with accessibility in mind
-- 🎭 **Dark Theme** - Beautiful dark mode out of the box
+- 🎭 **Dynamic Theming** - Spectra system for real-time theme changes
 - ⚡ **Lightweight** - Minimal CSS and JS footprint
+
+## What is Spectra?
+
+**Spectra** is a unique theme system that uses color encoding to control visual design parameters. Instead of manually setting dozens of CSS variables, you adjust just **4 color dimensions** that automatically generate:
+
+- **Color Palette** - Primary, accent, and semantic colors
+- **Border Radius & Contrast** - Sharp vs. soft edges
+- **Spacing Scale** - Compact vs. spacious layouts
+- **Type Hierarchy** - Subtle vs. strong typography scale
+
+### How It Works
+
+1. Four abstract color dimensions (D1-D4) serve as input parameters
+2. Each dimension encodes multiple design decisions through color relationships
+3. The system uses **vector mathematics** in color space to generate CSS variables
+4. All applications using Haberdash respond to theme changes in real-time
+
+### Live Demo
+
+**[Login to Spectra](https://d1dys716o168zx.cloudfront.net/)** - Adjust the 4 color sliders to see instant theme changes across all demo applications.
+
+**Example Applications:**
+- Magic Fridge - Recipe filtering with preference encoding
+- Property Finder - Real estate investment analysis
+- Blood Scanner - Health data visualization
+
+All three applications share the same visual theme controlled through Spectra.
+
+### Integrating Spectra Theme System
+
+Add these scripts to any HTML page to enable dynamic theming:
+
+```html
+<!-- Spectra Theme System -->
+<script src="https://nickcottrell.github.io/haberdash/js/spectra-theme.js?v=3"
+        data-node-id="haberdash-ui-theme"
+        data-api="https://zf8klzvd4k.execute-api.us-east-2.amazonaws.com/prod/blend">
+</script>
+<script src="https://nickcottrell.github.io/haberdash/js/spectra-bridge.js?v=3"></script>
+
+<link rel="stylesheet" href="https://nickcottrell.github.io/haberdash/css/haberdash.css?v=5">
+```
+
+When a user adjusts the theme in the Spectra Editor, all pages using these scripts will automatically update to reflect the new theme.
+
+### How Spectra Uses Color
+
+The system interprets color values as **semantic encodings**, not just visual styling:
+
+- **D1 (Primary Anchor)** - Hue defines primary color; relationships between D1-D4 determine color harmony (complementary, analogous, triadic)
+- **D2 (Relational Modifier)** - Saturation + lightness determine edge sharpness (high sat = sharp, low sat = soft)
+- **D3 (Intensity Vector)** - Distance from neutral gray affects density (saturation variance determines spacing)
+- **D4 (Opposition Point)** - Lightness ratios between dimensions determine typography hierarchy strength
+
+This approach allows **4 colors to control dozens of design parameters** through mathematical relationships rather than manual configuration.
 
 ## Quick Start
 
@@ -309,6 +365,8 @@ Haberdash.utils.copyToClipboard('Text to copy');
 
 ## CSS Variables
 
+### Static Customization
+
 Customize the theme by overriding CSS variables:
 
 ```css
@@ -320,6 +378,18 @@ Customize the theme by overriding CSS variables:
     /* See theme.css for all available variables */
 }
 ```
+
+### Dynamic Theming with Spectra
+
+When using the Spectra system, these CSS variables are **automatically generated** from the 4 color dimensions. The system calculates:
+
+- Color palette (primary, accent, background, surface)
+- Spacing scale (--space-xs through --space-2xl)
+- Border radius (--radius-sm through --radius-xl)
+- Typography scale (--text-xs through --text-2xl)
+- Shadows, borders, and semantic colors
+
+All values update in real-time when theme settings change in the Spectra Editor.
 
 ## Browser Support
 
@@ -336,6 +406,33 @@ MIT License - feel free to use in your projects!
 
 This is a personal project, but suggestions and feedback are welcome.
 
+## Architecture Philosophy
+
+Haberdash + Spectra demonstrates a novel approach to theme management:
+
+**Traditional Approach:**
+- Manually set 50+ CSS variables
+- Changes require updating multiple values
+- Inconsistencies creep in over time
+- Hard to maintain design system coherence
+
+**Spectra Approach:**
+- Define 4 color dimensions as input
+- Mathematical relationships generate all CSS variables
+- Single source of truth for design decisions
+- Color space encodes semantic meaning, not just appearance
+
+The system uses **low-dimensional scaffolding** - a minimal set of abstract parameters that expand into a full design system through mathematical transformation. This is similar to how neural networks compress high-dimensional data into latent representations.
+
+### Key Insight
+
+**Color is used as an encoding mechanism**, not just for visual styling. The hue, saturation, and lightness relationships between the 4 dimensions encode design decisions (spacing, borders, typography) that get decoded into CSS variables. This allows:
+
+- Consistent design systems that maintain mathematical relationships
+- Theme changes that preserve design coherence
+- Single-point control over complex multi-parameter systems
+- A/B testing design variations with 4 parameters instead of 50+
+
 ## Credits
 
-Built by analyzing and consolidating UI patterns from multiple demo applications to create a unified, reusable component system.
+Built by analyzing and consolidating UI patterns from multiple demo applications to create a unified, reusable component system. The Spectra theme system extends this with a novel approach to design parameter encoding using color space mathematics.
