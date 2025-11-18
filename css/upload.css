@@ -1,0 +1,114 @@
+/* Haberdash Upload Components */
+/* Drag-and-drop file upload */
+
+/* File Upload Box */
+.upload-box {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3xl);
+    text-align: center;
+    background: var(--surface);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    margin-bottom: var(--space-xl);
+}
+
+.upload-box:hover {
+    border-color: var(--primary);
+    background: var(--surface-light);
+}
+
+.upload-box.drag-over {
+    border-color: var(--primary);
+    background: rgba(91, 110, 245, 0.1);
+    transform: scale(1.02);
+}
+
+.upload-box h3 {
+    margin-bottom: var(--space-sm);
+    color: var(--text);
+}
+
+.upload-box p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+}
+
+/* Hide default file input */
+.upload-box input[type="file"] {
+    display: none;
+}
+
+/* File input label styled as button */
+.file-input-label {
+    display: inline-block;
+    padding: var(--space-md) var(--space-2xl);
+    background: var(--surface-light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-weight: var(--font-weight-medium);
+}
+
+.file-input-label:hover {
+    background: var(--surface-lighter);
+    border-color: var(--primary);
+}
+
+/* Selected file display */
+.selected-file {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    background: var(--surface-light);
+    border-radius: var(--radius-md);
+    color: var(--text);
+}
+
+.selected-file strong {
+    color: var(--primary-light);
+}
+
+/* Upload icon */
+.upload-icon {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--space-lg);
+    display: block;
+    opacity: 0.6;
+}
+
+/* Compact upload box */
+.upload-box.compact {
+    padding: var(--space-xl);
+}
+
+/* Upload status messages */
+.upload-status {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.upload-status.uploading {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--info);
+}
+
+.upload-status.success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+}
+
+.upload-status.error {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .upload-box {
+        padding: var(--space-2xl);
+    }
+}
