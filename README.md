@@ -62,14 +62,18 @@ When a user adjusts the theme in the Spectra Editor, all pages using these scrip
 
 ### How Spectra Uses Color
 
-The system interprets color values as **semantic encodings**, not just visual styling. Four fundamental parameters (F1-F4) define the complete design system:
+The system interprets color values as **semantic encodings**, not just visual styling. Four fundamental parameters (F1-F4) work together as a coordinated system:
 
-- **F1 Origin** - Chromatic base: source of hue from which all palette relationships derive
-- **F2 Contrast** - Edge definition: saturation and luminance variance controlling surface sharpness and border clarity
-- **F3 Density** - Spatial scale: controls element sizing and spacing distribution across the interface
-- **F4 Hierarchy** - Typographic contrast: font size and weight progression between heading and body text
+- **F1 Origin** - Chromatic base: primary hue anchor point
+- **F2 Contrast** - Edge definition: contributes to sharpness calculations
+- **F3 Density** - Spatial field: contributes to spacing calculations
+- **F4 Hierarchy** - Opposition point: contributes to typography calculations
 
-This approach allows **4 fundamental signals to control dozens of design parameters** through mathematical relationships rather than manual configuration.
+**Key insight:** These dimensions don't work independently. The system calculates outputs using **variance across all four dimensions**:
+- Spacing = saturation variance across F1-F4 × hue spread
+- Typography = lightness ratios between F1/F2/F3 relative to F4
+
+Use the **coordinated presets** (Compact, Balanced, Editorial, etc.) for reliable results. Individual dimension tweaking is for fine-tuning only.
 
 ## Quick Start
 
