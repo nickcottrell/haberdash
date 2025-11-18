@@ -128,11 +128,11 @@
     // Spaciousness: higher variance + wider spread = more spacious
     const spaciousness = (Math.sqrt(satVariance) / 100) * hueSpread;
 
-    // Space unit: 0.5rem (compact) to 1.25rem (spacious)
-    const spaceUnit = 0.5 + (spaciousness * 0.75);
+    // Space unit: 0.3rem (tight) to 2.0rem (airy) - WIDENED RANGE
+    const spaceUnit = 0.3 + (spaciousness * 1.7);
     root.style.setProperty('--space-unit', `${spaceUnit.toFixed(3)}rem`);
-    root.style.setProperty('--gap-scale', (1 + spaciousness).toFixed(2));
-    root.style.setProperty('--padding-scale', (1 + spaciousness * 0.5).toFixed(2));
+    root.style.setProperty('--gap-scale', (1 + spaciousness * 1.5).toFixed(2));
+    root.style.setProperty('--padding-scale', (1 + spaciousness * 0.8).toFixed(2));
 
     if (debug) console.log('📏 Spaciousness:', spaciousness.toFixed(2), 'space-unit:', spaceUnit.toFixed(3));
 
@@ -147,12 +147,12 @@
     const ratioVariance = lightnessRatios.reduce((sum, val) => sum + Math.pow(val - avgRatio, 2), 0) / 3;
     const hierarchyStrength = Math.sqrt(ratioVariance);
 
-    // Type ratio: 1.2 (subtle) to 1.618 (dramatic golden ratio)
-    const typeRatio = 1.2 + (hierarchyStrength * 0.418);
+    // Type ratio: 1.15 (flat) to 2.5 (extreme) - WIDENED RANGE
+    const typeRatio = 1.15 + (hierarchyStrength * 1.35);
     root.style.setProperty('--type-ratio', typeRatio.toFixed(3));
 
-    // Font weight contrast: 300-700 based on hierarchy
-    const fontWeightContrast = Math.round(300 + (hierarchyStrength * 400));
+    // Font weight contrast: 300-900 based on hierarchy - WIDENED RANGE
+    const fontWeightContrast = Math.round(300 + (hierarchyStrength * 600));
     root.style.setProperty('--font-weight-heading', fontWeightContrast);
     root.style.setProperty('--font-weight-body', 400);
 
