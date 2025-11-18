@@ -30,11 +30,11 @@
     const metadata = spectraData.metadata;
     const root = document.documentElement;
 
-    // Get HSL values for all dimensions
-    const d1 = metadata.primary_anchor?.hsl || metadata.d1?.hsl;
-    const d2 = metadata.relational_modifier?.hsl || metadata.d2?.hsl;
-    const d3 = metadata.intensity_vector?.hsl || metadata.d3?.hsl;
-    const d4 = metadata.opposition_point?.hsl || metadata.d4?.hsl;
+    // Get HSL values for all dimensions (support multiple naming schemes)
+    const d1 = metadata['F1 Origin']?.hsl || metadata.primary_anchor?.hsl || metadata.d1?.hsl;
+    const d2 = metadata['F2 Contrast']?.hsl || metadata.relational_modifier?.hsl || metadata.d2?.hsl;
+    const d3 = metadata['F3 Density']?.hsl || metadata.intensity_vector?.hsl || metadata.d3?.hsl;
+    const d4 = metadata['F4 Hierarchy']?.hsl || metadata.opposition_point?.hsl || metadata.d4?.hsl;
 
     if (!d1 || !d2 || !d3 || !d4) {
       throw new Error('Missing dimension data');
