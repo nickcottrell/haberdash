@@ -66,8 +66,8 @@ The system interprets color values as **semantic encodings**, not just visual st
 
 - **F1 Origin** - Chromatic base: source of hue from which all palette relationships derive
 - **F2 Contrast** - Edge definition: saturation and luminance variance controlling surface sharpness and border clarity
-- **F3 Density** - Spatial field: hue and saturation dispersion determining object packing and spacing
-- **F4 Hierarchy** - Scale weight: lightness variance defining size progression and visual hierarchy strength
+- **F3 Density** - Spatial scale: controls element sizing and spacing distribution across the interface
+- **F4 Hierarchy** - Typographic contrast: font size and weight progression between heading and body text
 
 This approach allows **4 fundamental signals to control dozens of design parameters** through mathematical relationships rather than manual configuration.
 
