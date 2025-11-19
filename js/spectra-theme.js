@@ -90,9 +90,15 @@
       light: lightVariance.toFixed(1) + '% (hierarchy)'
     });
 
+    // === DARK MODE DETECTION ===
+    // Based on average lightness of all 4 colors
+    const avgLightness = (f1.l + f2.l + f3.l + f4.l) / 4;
+    const isDarkMode = avgLightness < 50;
+
+    if (debug) console.log('🌓 Dark Mode:', { avgLightness: avgLightness.toFixed(1), isDarkMode });
+
     // === F1: MONOCHROME ←→ POLYCHROME (COLOR PALETTE) ===
     // Use F1 as primary color base
-    const isDarkMode = f1.l < 50;
 
     if (isDarkMode) {
       root.style.setProperty('--color-primary', `hsl(${f1.h}, ${Math.min(f1.s + 30, 100)}%, ${Math.min(f1.l + 50, 70)}%)`);
@@ -112,15 +118,11 @@
     const accentLightness = isDarkMode ? Math.min(f1.l + 55, 75) : Math.min(f1.l + 10, 70);
     root.style.setProperty('--color-accent', `hsl(${accentHue}, ${f1.s}%, ${accentLightness}%)`);
 
-    // Background/surface
+    // Base text colors (not contrast-adjusted, used for UI chrome)
     if (isDarkMode) {
-      root.style.setProperty('--color-background', `hsl(${f1.h}, ${Math.max(f1.s - 30, 5)}%, ${f1.l + 2}%)`);
-      root.style.setProperty('--color-surface', `hsl(${f1.h}, ${Math.max(f1.s - 25, 10)}%, ${f1.l + 6}%)`);
       root.style.setProperty('--color-text', `hsl(${f1.h}, 10%, 95%)`);
       root.style.setProperty('--color-text-dim', `hsl(${f1.h}, 8%, 70%)`);
     } else {
-      root.style.setProperty('--color-background', `hsl(${f1.h}, ${Math.max(f1.s - 50, 5)}%, 98%)`);
-      root.style.setProperty('--color-surface', `hsl(${f1.h}, ${Math.max(f1.s - 45, 10)}%, 95%)`);
       root.style.setProperty('--color-text', `hsl(${f1.h}, 10%, 20%)`);
       root.style.setProperty('--color-text-dim', `hsl(${f1.h}, 8%, 50%)`);
     }
@@ -135,10 +137,14 @@
     root.style.setProperty('--border-radius-base', `${borderRadiusBase}px`);
     root.style.setProperty('--border-radius-lg', `${Math.round(borderRadiusBase * 1.5)}px`);
 
-    // Shadow blur inversely proportional to variance
+    // Shadow prominence proportional to variance
+    // High variance = sharp/defined = dark prominent shadows
+    // Low variance = soft/diffuse = subtle or no shadows
+    const shadowOpacity = mapRange(satVariance, 0, 100, 0.02, 0.25);
     const shadowBlur = Math.round(mapRange(satVariance, 0, 100, 24, 8));
-    root.style.setProperty('--shadow-sm', `0 2px ${shadowBlur}px rgba(0,0,0,0.1)`);
-    root.style.setProperty('--shadow-md', `0 4px ${Math.round(shadowBlur * 1.5)}px rgba(0,0,0,0.15)`);
+    root.style.setProperty('--shadow-sm', `0 2px ${shadowBlur}px rgba(0,0,0,${shadowOpacity.toFixed(3)})`);
+    root.style.setProperty('--shadow-md', `0 4px ${Math.round(shadowBlur * 1.5)}px rgba(0,0,0,${(shadowOpacity * 1.5).toFixed(3)})`);
+    root.style.setProperty('--shadow-lg', `0 8px ${Math.round(shadowBlur * 2)}px rgba(0,0,0,${(shadowOpacity * 2).toFixed(3)})`);
 
     // Border opacity proportional to variance
     const borderOpacity = mapRange(satVariance, 0, 100, 0.1, 0.6);
@@ -150,7 +156,28 @@
     const borderWidth = mapRange(satVariance, 0, 100, 1, 3);
     root.style.setProperty('--border-width', `${borderWidth.toFixed(1)}px`);
 
-    if (debug) console.log('✂️  F2 Sharp:', { satVariance: satVariance.toFixed(1), borderRadius: borderRadiusBase, shadowBlur, borderWidth: borderWidth.toFixed(1) });
+    // Background/text contrast proportional to variance
+    // High variance = sharp contrast between surfaces
+    // Low variance = subtle ambient backgrounds
+    if (isDarkMode) {
+      const bgLightness = mapRange(satVariance, 0, 100, 15, 8); // Soft = lighter bg, Sharp = darker bg
+      const surfaceLightness = mapRange(satVariance, 0, 100, 18, 12);
+      root.style.setProperty('--color-background', `hsl(${f1.h}, ${Math.max(f1.s - 30, 5)}%, ${bgLightness}%)`);
+      root.style.setProperty('--color-surface', `hsl(${f1.h}, ${Math.max(f1.s - 25, 10)}%, ${surfaceLightness}%)`);
+    } else {
+      const bgLightness = mapRange(satVariance, 0, 100, 96, 99); // Soft = darker bg, Sharp = brighter bg
+      const surfaceLightness = mapRange(satVariance, 0, 100, 92, 96);
+      root.style.setProperty('--color-background', `hsl(${f1.h}, ${Math.max(f1.s - 50, 5)}%, ${bgLightness}%)`);
+      root.style.setProperty('--color-surface', `hsl(${f1.h}, ${Math.max(f1.s - 45, 10)}%, ${surfaceLightness}%)`);
+    }
+
+    if (debug) console.log('✂️  F2 Sharp:', {
+      satVariance: satVariance.toFixed(1),
+      borderRadius: borderRadiusBase,
+      shadowBlur,
+      shadowOpacity: shadowOpacity.toFixed(3),
+      borderWidth: borderWidth.toFixed(1)
+    });
 
     // === F3: COMPACT ←→ SPACIOUS (SPATIAL DENSITY) ===
     // Spacing proportional to saturation variance
@@ -184,7 +211,8 @@
     root.style.setProperty('--type-ratio', typeRatio.toFixed(3));
 
     // Font weight variation proportional to lightness variance
-    const fontWeightHeading = Math.round(mapRange(lightVariance, 0, 100, 400, 700));
+    // Default is bold (700), less hierarchy = lighter, more hierarchy = bolder
+    const fontWeightHeading = Math.round(mapRange(lightVariance, 0, 100, 300, 900));
     root.style.setProperty('--font-weight-heading', fontWeightHeading);
     root.style.setProperty('--font-weight-body', 400);
 
