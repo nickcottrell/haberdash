@@ -144,7 +144,13 @@
     const borderOpacity = mapRange(satVariance, 0, 100, 0.1, 0.6);
     root.style.setProperty('--border-opacity', borderOpacity.toFixed(2));
 
-    if (debug) console.log('✂️  F2 Sharp:', { satVariance: satVariance.toFixed(1), borderRadius: borderRadiusBase, shadowBlur });
+    // Border thickness proportional to variance
+    // High variance = sharp/defined = thick borders (2-3px)
+    // Low variance = soft/diffuse = thin borders (1px)
+    const borderWidth = mapRange(satVariance, 0, 100, 1, 3);
+    root.style.setProperty('--border-width', `${borderWidth.toFixed(1)}px`);
+
+    if (debug) console.log('✂️  F2 Sharp:', { satVariance: satVariance.toFixed(1), borderRadius: borderRadiusBase, shadowBlur, borderWidth: borderWidth.toFixed(1) });
 
     // === F3: COMPACT ←→ SPACIOUS (SPATIAL DENSITY) ===
     // Spacing proportional to saturation variance
@@ -181,6 +187,23 @@
     const fontWeightHeading = Math.round(mapRange(lightVariance, 0, 100, 400, 700));
     root.style.setProperty('--font-weight-heading', fontWeightHeading);
     root.style.setProperty('--font-weight-body', 400);
+
+    // Text color boldness proportional to lightness variance
+    // High variance = dramatic contrast = dark headings (#000), medium body (#444)
+    // Low variance = subtle/flat = gray headings (#666), light body (#888)
+    if (isDarkMode) {
+      // Dark mode: Higher variance = brighter contrast
+      const headingLightness = Math.round(mapRange(lightVariance, 0, 100, 75, 98));
+      const bodyLightness = Math.round(mapRange(lightVariance, 0, 100, 65, 85));
+      root.style.setProperty('--text-heading', `hsl(${f1.h}, 10%, ${headingLightness}%)`);
+      root.style.setProperty('--text-body', `hsl(${f1.h}, 8%, ${bodyLightness}%)`);
+    } else {
+      // Light mode: Higher variance = darker contrast
+      const headingLightness = Math.round(mapRange(lightVariance, 0, 100, 40, 10));
+      const bodyLightness = Math.round(mapRange(lightVariance, 0, 100, 55, 30));
+      root.style.setProperty('--text-heading', `hsl(${f1.h}, 10%, ${headingLightness}%)`);
+      root.style.setProperty('--text-body', `hsl(${f1.h}, 8%, ${bodyLightness}%)`);
+    }
 
     if (debug) console.log('📐 F4 Dramatic:', {
       lightVariance: lightVariance.toFixed(1),
