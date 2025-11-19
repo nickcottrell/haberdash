@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haberdash - UI Component Showcase</title>
+
+    <!-- Spectra Theme System -->
+    <script src="js/spectra-theme.js?v=3"
+            data-node-id="haberdash-ui-theme"
+            data-api="https://zf8klzvd4k.execute-api.us-east-2.amazonaws.com/prod/blend"
+            data-debug>
+    </script>
+    <script src="js/spectra-bridge.js?v=3"></script>
+
+    <link rel="stylesheet" href="css/haberdash.css?v=5">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: var(--background);
+        }
+
+        /* 16:9 Aspect Ratio Container */
+        .showcase-container {
+            position: relative;
+            width: 100vw;
+            height: 56.25vw; /* 16:9 ratio */
+            max-height: 100vh;
+            max-width: 177.78vh; /* 16:9 ratio */
+            background: var(--background);
+            overflow: hidden;
+        }
+
+        /* Scaled content wrapper */
+        .showcase-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1920px; /* Base width */
+            height: 1080px; /* Base height (16:9) */
+            transform-origin: top left;
+            padding: 40px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        /* Grid layout for components */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto;
+            gap: 24px;
+            height: 100%;
+        }
+
+        .showcase-section {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .showcase-section h3 {
+            margin: 0 0 16px 0;
+            font-size: 18px;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        .showcase-section-content {
+            flex: 1;
+            overflow: auto;
+        }
+
+        /* Compact styles for showcase */
+        .showcase-section .btn {
+            font-size: 12px;
+            padding: 6px 12px;
+            margin: 4px;
+        }
+
+        .showcase-section .input,
+        .showcase-section .select,
+        .showcase-section .textarea {
+            font-size: 12px;
+            padding: 6px 10px;
+            margin: 6px 0;
+        }
+
+        .showcase-section .form-label {
+            font-size: 11px;
+            margin-bottom: 4px;
+        }
+
+        .showcase-section .badge {
+            font-size: 10px;
+            padding: 3px 8px;
+            margin: 3px;
+        }
+
+        .compact-card {
+            background: var(--surface-light);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin: 8px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .compact-card h4 {
+            margin: 0 0 6px 0;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .compact-card p {
+            margin: 0;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .slider-compact {
+            margin: 12px 0;
+        }
+
+        .slider-compact .slider-label {
+            font-size: 10px;
+            margin-bottom: 4px;
+        }
+
+        .slider-compact .value-display {
+            font-size: 11px;
+            margin-top: 6px;
+        }
+
+        .preset-compact {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .preset-compact .preset-button {
+            flex: 1;
+            padding: 6px;
+            font-size: 10px;
+        }
+
+        .preset-compact .preset-label {
+            font-size: 11px;
+        }
+
+        .preset-compact .preset-description {
+            font-size: 9px;
+        }
+
+        .detail-grid-compact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .detail-item-compact {
+            background: var(--surface);
+            padding: 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .detail-item-compact .detail-label {
+            font-size: 9px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .detail-item-compact .detail-value {
+            font-size: 14px;
+            font-weight: var(--font-weight-semibold);
+            color: var(--text);
+        }
+
+        .alert-compact {
+            padding: 8px 12px;
+            margin: 6px 0;
+            font-size: 11px;
+        }
+
+        .spinner-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin: 12px 0;
+        }
+
+        .form-compact {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Tall sections */
+        .tall-section {
+            grid-row: span 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase-container">
+        <div class="showcase-content" id="showcase-content">
+            <div class="showcase-grid">
+                <!-- Buttons & Controls -->
+                <div class="showcase-section">
+                    <h3>Buttons & Controls</h3>
+                    <div class="showcase-section-content">
+                        <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px;">
+                            <button class="btn btn-primary">Primary</button>
+                            <button class="btn btn-secondary">Secondary</button>
+                            <button class="btn btn-tertiary">Tertiary</button>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px;">
+                            <button class="btn btn-success">Success</button>
+                            <button class="btn btn-warning">Warning</button>
+                            <button class="btn btn-error">Error</button>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                            <button class="btn btn-primary btn-sm">Small</button>
+                            <button class="btn btn-primary">Default</button>
+                            <button class="btn btn-primary btn-lg">Large</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Inputs -->
+                <div class="showcase-section tall-section">
+                    <h3>Form Elements</h3>
+                    <div class="showcase-section-content">
+                        <div class="form-compact">
+                            <div>
+                                <label class="form-label">Text Input</label>
+                                <input type="text" class="input" placeholder="Enter text">
+                            </div>
+                            <div>
+                                <label class="form-label">Email</label>
+                                <input type="email" class="input" placeholder="email@example.com">
+                            </div>
+                            <div>
+                                <label class="form-label">Select</label>
+                                <select class="select">
+                                    <option>Option 1</option>
+                                    <option>Option 2</option>
+                                    <option>Option 3</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label">Textarea</label>
+                                <textarea class="textarea" rows="2" placeholder="Enter message..."></textarea>
+                            </div>
+                            <label class="checkbox">
+                                <input type="checkbox" checked>
+                                <span style="font-size: 11px;">Checkbox option</span>
+                            </label>
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span style="font-size: 11px;">Toggle switch</span>
+                            </label>
+                            <div style="display: flex; gap: 8px;">
+                                <label class="radio">
+                                    <input type="radio" name="demo" checked>
+                                    <span style="font-size: 11px;">Option 1</span>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="demo">
+                                    <span style="font-size: 11px;">Option 2</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Badges & Status -->
+                <div class="showcase-section">
+                    <h3>Badges & Status</h3>
+                    <div class="showcase-section-content">
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 10px; margin-bottom: 4px; color: var(--text-secondary);">Badges</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                <span class="badge badge-primary">Primary</span>
+                                <span class="badge badge-success">Success</span>
+                                <span class="badge badge-warning">Warning</span>
+                                <span class="badge badge-error">Error</span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 10px; margin-bottom: 4px; color: var(--text-secondary);">Status</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                <span class="status-badge status-normal">Normal</span>
+                                <span class="status-badge status-low">Low</span>
+                                <span class="status-badge status-high">High</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-size: 10px; margin-bottom: 4px; color: var(--text-secondary);">Ranks</div>
+                            <div style="display: flex; gap: 4px;">
+                                <span class="rank-badge rank-1">1</span>
+                                <span class="rank-badge rank-2">2</span>
+                                <span class="rank-badge rank-3">3</span>
+                                <span class="rank-badge">4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cards -->
+                <div class="showcase-section">
+                    <h3>Cards</h3>
+                    <div class="showcase-section-content">
+                        <div class="compact-card">
+                            <h4>Analytics Dashboard</h4>
+                            <p>View your data insights</p>
+                            <button class="btn btn-primary" style="margin-top: 8px; width: 100%;">View</button>
+                        </div>
+                        <div class="compact-card">
+                            <h4>Settings Panel</h4>
+                            <p>Configure preferences</p>
+                            <button class="btn btn-secondary" style="margin-top: 8px; width: 100%;">Configure</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slider & Presets -->
+                <div class="showcase-section tall-section">
+                    <h3>Sliders & Controls</h3>
+                    <div class="showcase-section-content">
+                        <div class="slider-compact">
+                            <div class="slider-container">
+                                <div class="slider-label" style="justify-content: space-between; display: flex;">
+                                    <span>Low</span>
+                                    <span>Medium</span>
+                                    <span>High</span>
+                                </div>
+                                <div class="slider-track">
+                                    <div class="slider-gradient gradient-risk"></div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" id="demo-slider" min="0" max="100" value="50" step="1">
+                                    </div>
+                                </div>
+                                <div class="value-display" id="demo-slider-display">Medium</div>
+                            </div>
+                        </div>
+
+                        <div class="preset-compact">
+                            <button class="preset-button">
+                                <div class="preset-label">Quick</div>
+                                <div class="preset-description">Fast</div>
+                            </button>
+                            <button class="preset-button active">
+                                <div class="preset-label">Balanced</div>
+                                <div class="preset-description">Default</div>
+                            </button>
+                            <button class="preset-button">
+                                <div class="preset-label">Deep</div>
+                                <div class="preset-description">Thorough</div>
+                            </button>
+                        </div>
+
+                        <div style="margin-top: 12px;">
+                            <div style="font-size: 10px; margin-bottom: 6px; color: var(--text-secondary);">Progress Bar</div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 65%"></div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 12px;">
+                            <div style="font-size: 10px; margin-bottom: 6px; color: var(--text-secondary);">Loading States</div>
+                            <div class="spinner-row">
+                                <div class="spinner-sm"></div>
+                                <div class="spinner"></div>
+                                <div class="spinner-lg"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Display -->
+                <div class="showcase-section">
+                    <h3>Data Display</h3>
+                    <div class="showcase-section-content">
+                        <div class="detail-grid-compact">
+                            <div class="detail-item-compact">
+                                <div class="detail-label">Total Items</div>
+                                <div class="detail-value">1,247</div>
+                            </div>
+                            <div class="detail-item-compact">
+                                <div class="detail-label">Success Rate</div>
+                                <div class="detail-value">98.5%</div>
+                            </div>
+                            <div class="detail-item-compact">
+                                <div class="detail-label">Time</div>
+                                <div class="detail-value">2.3s</div>
+                            </div>
+                            <div class="detail-item-compact">
+                                <div class="detail-label">Status</div>
+                                <div class="detail-value">
+                                    <span class="badge badge-success">Done</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alerts & Notifications -->
+                <div class="showcase-section">
+                    <h3>Alerts</h3>
+                    <div class="showcase-section-content">
+                        <div class="alert alert-success alert-compact">
+                            <strong>Success!</strong> Changes saved.
+                        </div>
+                        <div class="alert alert-warning alert-compact">
+                            <strong>Warning!</strong> Review settings.
+                        </div>
+                        <div class="alert alert-error alert-compact">
+                            <strong>Error!</strong> Something failed.
+                        </div>
+                        <div class="alert alert-info alert-compact">
+                            <strong>Info:</strong> Helpful tip here.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typography -->
+                <div class="showcase-section">
+                    <h3>Typography</h3>
+                    <div class="showcase-section-content">
+                        <h1 style="margin: 4px 0; font-size: 24px;">Heading 1</h1>
+                        <h2 style="margin: 4px 0; font-size: 20px;">Heading 2</h2>
+                        <h3 style="margin: 4px 0; font-size: 16px;">Heading 3</h3>
+                        <h4 style="margin: 4px 0; font-size: 14px;">Heading 4</h4>
+                        <p style="margin: 8px 0; font-size: 11px;">
+                            Regular paragraph with <a href="#">link</a>, <strong>bold</strong>, <em>italic</em>, and <code>code</code>.
+                        </p>
+                        <p class="text-gradient" style="margin: 4px 0; font-size: 12px;">Gradient Text</p>
+                    </div>
+                </div>
+
+                <!-- List Items -->
+                <div class="showcase-section">
+                    <h3>List Cards</h3>
+                    <div class="showcase-section-content">
+                        <div class="list-card" style="margin-bottom: 8px;">
+                            <div class="list-card-header">
+                                <div class="list-card-title" style="font-size: 12px;">Report #1234</div>
+                                <span class="badge badge-success">Done</span>
+                            </div>
+                            <div class="list-card-meta" style="font-size: 9px;">Nov 16, 2025</div>
+                            <div class="list-card-content" style="font-size: 10px;">
+                                Analysis completed successfully.
+                            </div>
+                        </div>
+                        <div class="list-card">
+                            <div class="list-card-header">
+                                <div class="list-card-title" style="font-size: 12px;">Report #1235</div>
+                                <span class="badge badge-warning">Processing</span>
+                            </div>
+                            <div class="list-card-meta" style="font-size: 9px;">Nov 16, 2025</div>
+                            <div class="list-card-content" style="font-size: 10px;">
+                                Currently processing data.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/haberdash.js"></script>
+    <script>
+        // Calculate and apply scale to fit 16:9 container
+        function scaleShowcase() {
+            const container = document.querySelector('.showcase-container');
+            const content = document.getElementById('showcase-content');
+
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
+
+            const scaleX = containerWidth / 1920;
+            const scaleY = containerHeight / 1080;
+            const scale = Math.min(scaleX, scaleY);
+
+            content.style.transform = `scale(${scale})`;
+        }
+
+        // Initialize slider
+        if (typeof Haberdash !== 'undefined' && Haberdash.slider) {
+            Haberdash.slider.init('demo-slider', (value) => {
+                if (value < 33) return 'Low';
+                if (value < 66) return 'Medium';
+                return 'High';
+            });
+        }
+
+        // Scale on load and resize
+        window.addEventListener('load', scaleShowcase);
+        window.addEventListener('resize', scaleShowcase);
+
+        // Initial scale
+        scaleShowcase();
+    </script>
+</body>
+</html>

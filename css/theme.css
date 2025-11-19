@@ -15,10 +15,13 @@
     --text: #333333;
     --text-secondary: #666666;
     --text-tertiary: #999999;
+    --text-heading: #333333; /* Default, overridden by Spectra (light mode: #666→#000, dark mode: 75%→98%) */
+    --text-body: #333333; /* Default, overridden by Spectra (light mode: #888→#444, dark mode: 65%→85%) */
 
     --border: #e0e0e0;
     --border-light: rgba(0, 0, 0, 0.1);
     --border-focus: rgba(136, 136, 136, 0.5);
+    --border-width: 1px; /* Default, overridden by Spectra (1-3px) */
 
     /* Semantic Colors */
     --success: #10b981;
@@ -30,15 +33,19 @@
     --gradient-primary: linear-gradient(135deg, #888888 0%, #666666 100%);
     --gradient-surface: linear-gradient(135deg, rgba(136, 136, 136, 0.1) 0%, rgba(102, 102, 102, 0.1) 100%);
 
-    /* Spacing Scale (Apple-like) */
-    --space-xs: 0.25rem;    /* 4px */
-    --space-sm: 0.5rem;     /* 8px */
-    --space-md: 0.75rem;    /* 12px */
-    --space-lg: 1rem;       /* 16px */
-    --space-xl: 1.5rem;     /* 24px */
-    --space-2xl: 2rem;      /* 32px */
-    --space-3xl: 3rem;      /* 48px */
-    --space-4xl: 4rem;      /* 64px */
+    /* Spacing Scale (Spectra-driven, fallback: 1rem base) */
+    --space-unit: 1rem; /* Default, overridden by Spectra (0.3-2.0rem) */
+    --gap-scale: 1; /* Default, overridden by Spectra */
+    --padding-scale: 1; /* Default, overridden by Spectra */
+
+    --space-xs: calc(var(--space-unit) * 0.25);
+    --space-sm: calc(var(--space-unit) * 0.5);
+    --space-md: calc(var(--space-unit) * 0.75);
+    --space-lg: var(--space-unit);
+    --space-xl: calc(var(--space-unit) * 1.5);
+    --space-2xl: calc(var(--space-unit) * 2);
+    --space-3xl: calc(var(--space-unit) * 3);
+    --space-4xl: calc(var(--space-unit) * 4);
 
     /* Border Radius */
     --radius-sm: 4px;
@@ -55,23 +62,30 @@
     --shadow-focus: 0 0 0 3px rgba(136, 136, 136, 0.2);
     --shadow-primary: 0 8px 20px rgba(136, 136, 136, 0.15);
 
-    /* Typography */
+    /* Typography (Spectra-driven) */
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-mono: "SF Mono", Monaco, "Cascadia Code", "Courier New", monospace;
 
-    --font-size-xs: 0.75rem;    /* 12px */
-    --font-size-sm: 0.875rem;   /* 14px */
-    --font-size-base: 1rem;     /* 16px */
-    --font-size-lg: 1.125rem;   /* 18px */
-    --font-size-xl: 1.25rem;    /* 20px */
-    --font-size-2xl: 1.5rem;    /* 24px */
-    --font-size-3xl: 2rem;      /* 32px */
-    --font-size-4xl: 2.5rem;    /* 40px */
+    /* Type Scale - Additive steps for rational sizes */
+    --type-step: 0.25rem; /* Default, overridden by Spectra (0.125-0.5rem) */
+    --type-ratio: 1.25; /* Deprecated - kept for compatibility */
+    --font-weight-heading: 600; /* Default, overridden by Spectra (400-700) */
+    --font-weight-body: 400;
+
+    /* Rational additive scale - base + (step × n) */
+    --font-size-base: 1rem;     /* 16px - body text anchor */
+    --font-size-sm: calc(1rem - var(--type-step) * 0.5);   /* 0.875rem default */
+    --font-size-xs: calc(1rem - var(--type-step));   /* 0.75rem default */
+    --font-size-lg: calc(1rem + var(--type-step) * 0.5);   /* 1.125rem default */
+    --font-size-xl: calc(1rem + var(--type-step));   /* 1.25rem default */
+    --font-size-2xl: calc(1rem + var(--type-step) * 2);   /* 1.5rem default */
+    --font-size-3xl: calc(1rem + var(--type-step) * 3);   /* 1.75rem default */
+    --font-size-4xl: calc(1rem + var(--type-step) * 4);   /* 2rem default */
 
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
-    --font-weight-bold: 700;
+    --font-weight-bold: var(--font-weight-heading);
 
     --line-height-tight: 1.25;
     --line-height-normal: 1.5;
@@ -112,7 +126,7 @@ body {
     font-family: var(--font-sans);
     font-size: var(--font-size-base);
     line-height: var(--line-height-normal);
-    color: var(--text);
+    color: var(--text-body);
     background: var(--background);
 }
 
