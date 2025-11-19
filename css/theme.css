@@ -67,9 +67,9 @@
     --font-mono: "SF Mono", Monaco, "Cascadia Code", "Courier New", monospace;
 
     /* Type Scale - Additive steps for rational sizes */
-    --type-step: 0.25rem; /* Default, overridden by Spectra (0.125-0.5rem) */
+    --type-step: 0.375rem; /* Default, overridden by Spectra (0.125-0.5rem) */
     --type-ratio: 1.25; /* Deprecated - kept for compatibility */
-    --font-weight-heading: 600; /* Default, overridden by Spectra (400-700) */
+    --font-weight-heading: 700; /* Default, overridden by Spectra (400-700) */
     --font-weight-body: 400;
 
     /* Rational additive scale - base + (step × n) */
