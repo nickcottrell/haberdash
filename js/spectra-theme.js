@@ -140,11 +140,17 @@
     });
 
     // === F4 HIERARCHY: VISUAL IMPACT ===
-    // F4.L → Type scale ratio (0% = flat/uniform, 100% = dramatic)
+    // F4.L → Type scale (0% = flat/uniform, 100% = dramatic)
     // F4.S → Font weight variation (0% = uniform weights, 100% = bold contrast)
 
-    // Type ratio: 1.2 (flat) to 1.618 (golden ratio, dramatic)
-    const typeRatio = mapRange(f4.l, 0, 100, 1.2, 1.618);
+    // Type step: Additive increments for rational scale
+    // Flat (0%) = 0.125rem steps → h1 = 1.5rem
+    // Dramatic (100%) = 0.5rem steps → h1 = 3rem
+    const typeStep = mapRange(f4.l, 0, 100, 0.125, 0.5);
+    root.style.setProperty('--type-step', `${typeStep.toFixed(3)}rem`);
+
+    // Keep ratio for backwards compatibility (derived from step size)
+    const typeRatio = 1 + (typeStep / 1); // Approximate ratio
     root.style.setProperty('--type-ratio', typeRatio.toFixed(3));
 
     // Font weight for headings: 400 (normal, flat) to 700 (bold, dramatic)
@@ -155,7 +161,7 @@
     if (debug) console.log('📐 F4 Hierarchy:', {
       light: f4.l,
       sat: f4.s,
-      typeRatio: typeRatio.toFixed(3),
+      typeStep: `${typeStep.toFixed(3)}rem`,
       fontWeight: fontWeightHeading
     });
 
