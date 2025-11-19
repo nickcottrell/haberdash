@@ -53,7 +53,7 @@
 .btn-secondary {
     background: var(--surface);
     color: var(--text);
-    border: var(--border-width) solid var(--border);
+    border: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
 }
 
@@ -169,7 +169,7 @@
 .preset-button {
     padding: var(--space-md);
     background: var(--surface-light);
-    border: var(--border-width) solid var(--border);
+    border: 2px solid var(--border);
     border-radius: var(--radius-md);
     color: var(--text);
     cursor: pointer;

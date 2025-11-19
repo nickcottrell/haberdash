@@ -4,7 +4,7 @@
 /* Base Card */
 .card {
     background: var(--surface);
-    border: var(--border-width) solid var(--border);
+    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: var(--space-2xl);
     box-shadow: var(--shadow-md);
@@ -60,7 +60,7 @@
     border-radius: var(--radius-lg);
     padding: var(--space-2xl);
     margin-bottom: var(--space-2xl);
-    border: var(--border-width) solid var(--border);
+    border: 1px solid var(--border);
     box-shadow: var(--shadow-md);
 }
 
@@ -97,7 +97,7 @@
     border-radius: var(--radius-lg);
     padding: var(--space-2xl);
     margin-bottom: var(--space-xl);
-    border: var(--border-width) solid var(--border);
+    border: 1px solid var(--border);
 }
 
 .result-card h2 {
@@ -139,7 +139,7 @@
 /* List Card - For history/list views */
 .list-card {
     background: var(--surface);
-    border: var(--border-width) solid var(--border);
+    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
     margin-bottom: var(--space-lg);

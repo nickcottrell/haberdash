@@ -3,50 +3,46 @@
 
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-tight);
-    color: var(--text-heading);
+    color: var(--text);
 }
 
 h1 {
     font-size: var(--font-size-4xl);
-    font-weight: var(--font-weight-h1);
+    font-weight: var(--font-weight-bold);
     margin-bottom: var(--space-lg);
 }
 
 h2 {
     font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-h2);
     margin-bottom: var(--space-md);
 }
 
 h3 {
     font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-h3);
     margin-bottom: var(--space-md);
 }
 
 h4 {
     font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-h4);
     margin-bottom: var(--space-sm);
 }
 
 h5 {
     font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-h5);
     margin-bottom: var(--space-sm);
 }
 
 h6 {
     font-size: var(--font-size-base);
-    font-weight: var(--font-weight-h6);
     margin-bottom: var(--space-sm);
 }
 
 p {
     margin: 0 0 var(--space-lg) 0;
     line-height: var(--line-height-relaxed);
-    color: var(--text-body);
+    color: var(--text-secondary);
 }
 
 /* Gradient Text (Apple style) */
