@@ -15,10 +15,13 @@
     --text: #333333;
     --text-secondary: #666666;
     --text-tertiary: #999999;
+    --text-heading: #333333; /* Default, overridden by Spectra (light mode: #666→#000, dark mode: 75%→98%) */
+    --text-body: #333333; /* Default, overridden by Spectra (light mode: #888→#444, dark mode: 65%→85%) */
 
     --border: #e0e0e0;
     --border-light: rgba(0, 0, 0, 0.1);
     --border-focus: rgba(136, 136, 136, 0.5);
+    --border-width: 1px; /* Default, overridden by Spectra (1-3px) */
 
     /* Semantic Colors */
     --success: #10b981;
@@ -123,7 +126,7 @@ body {
     font-family: var(--font-sans);
     font-size: var(--font-size-base);
     line-height: var(--line-height-normal);
-    color: var(--text);
+    color: var(--text-body);
     background: var(--background);
 }
 

@@ -38,7 +38,7 @@
     font-size: var(--font-size-base);
     color: var(--text);
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: var(--border-width) solid var(--border);
     border-radius: var(--radius-md);
     transition: all var(--transition-base);
     -webkit-appearance: none;
@@ -144,7 +144,7 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border: 2px solid var(--border);
+    border: var(--border-width) solid var(--border);
     background: var(--surface);
     transition: all var(--transition-base);
 }
@@ -205,7 +205,7 @@
     -moz-appearance: none;
     appearance: none;
     background: var(--surface-light);
-    border: 2px solid var(--border);
+    border: var(--border-width) solid var(--border);
     border-radius: var(--radius-full);
     position: relative;
     transition: all var(--transition-base);
