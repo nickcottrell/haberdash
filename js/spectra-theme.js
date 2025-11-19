@@ -50,11 +50,48 @@
       return outMin + ((value - inMin) / (inMax - inMin)) * (outMax - outMin);
     };
 
-    // === F1 ORIGIN: COLOR PALETTE ===
-    // F1.H → Primary hue
-    // F1.S → Color saturation strength
-    // F1.L → Dark/light mode detection
+    // Helper: Calculate circular hue distance (0-180°)
+    const hueDistance = (h1, h2) => {
+      const diff = Math.abs(h1 - h2);
+      return Math.min(diff, 360 - diff);
+    };
 
+    // === VARIANCE CALCULATIONS ===
+    // Extract all HSL values
+    const hues = [f1.h, f2.h, f3.h, f4.h];
+    const sats = [f1.s, f2.s, f3.s, f4.s];
+    const lights = [f1.l, f2.l, f3.l, f4.l];
+
+    // F1: Monochrome ←→ Polychrome (Hue variance)
+    // Calculate average hue distance between all pairs
+    let totalHueDistance = 0;
+    let pairCount = 0;
+    for (let i = 0; i < hues.length; i++) {
+      for (let j = i + 1; j < hues.length; j++) {
+        totalHueDistance += hueDistance(hues[i], hues[j]);
+        pairCount++;
+      }
+    }
+    const hueVariance = totalHueDistance / pairCount; // 0-180
+
+    // F2: Soft ←→ Sharp (Saturation variance for edges)
+    const satVariance = Math.max(...sats) - Math.min(...sats); // 0-100
+
+    // F3: Compact ←→ Spacious (Saturation variance for spacing)
+    // Same as F2 but mapped to spacing outputs
+    const spacingVariance = satVariance; // 0-100
+
+    // F4: Flat ←→ Dramatic (Lightness variance for hierarchy)
+    const lightVariance = Math.max(...lights) - Math.min(...lights); // 0-100
+
+    if (debug) console.log('📊 Variances:', {
+      hue: hueVariance.toFixed(1) + '° (0=mono, 180=poly)',
+      sat: satVariance.toFixed(1) + '% (edges & spacing)',
+      light: lightVariance.toFixed(1) + '% (hierarchy)'
+    });
+
+    // === F1: MONOCHROME ←→ POLYCHROME (COLOR PALETTE) ===
+    // Use F1 as primary color base
     const isDarkMode = f1.l < 50;
 
     if (isDarkMode) {
@@ -67,8 +104,11 @@
       root.style.setProperty('--color-primary-light', `hsl(${f1.h}, ${f1.s}%, ${Math.min(f1.l + 20, 80)}%)`);
     }
 
-    // Accent color
-    const accentHue = (f1.h + 30) % 360;
+    // Accent color: Use hue variance to determine accent shift
+    // High hue variance = use complementary/distant color
+    // Low hue variance = use subtle analogous shift
+    const accentShift = mapRange(hueVariance, 0, 180, 15, 90); // 15-90° shift
+    const accentHue = (f1.h + accentShift) % 360;
     const accentLightness = isDarkMode ? Math.min(f1.l + 55, 75) : Math.min(f1.l + 10, 70);
     root.style.setProperty('--color-accent', `hsl(${accentHue}, ${f1.s}%, ${accentLightness}%)`);
 
@@ -85,82 +125,65 @@
       root.style.setProperty('--color-text-dim', `hsl(${f1.h}, 8%, 50%)`);
     }
 
-    if (debug) console.log('🎨 F1 Palette:', { hue: f1.h, sat: f1.s, light: f1.l, darkMode: isDarkMode });
+    if (debug) console.log('🎨 F1 Polychrome:', { hueVariance: hueVariance.toFixed(1), accentShift: accentShift.toFixed(1), darkMode: isDarkMode });
 
-    // === F2 CONTRAST: EDGE DEFINITION ===
-    // F2.S → Border sharpness (0 = soft/round, 100 = sharp/defined)
-    // F2.L → Shadow depth (0 = deep shadows, 100 = light shadows)
-
-    // Border radius inversely proportional to saturation (high sat = sharp = small radius)
-    const borderRadiusBase = Math.round(mapRange(f2.s, 0, 100, 16, 4));
+    // === F2: SOFT ←→ SHARP (EDGE DEFINITION) ===
+    // Border radius inversely proportional to saturation variance
+    // High variance = sharp/defined = small radius
+    // Low variance = soft/diffuse = large radius
+    const borderRadiusBase = Math.round(mapRange(satVariance, 0, 100, 16, 4));
     root.style.setProperty('--border-radius-base', `${borderRadiusBase}px`);
     root.style.setProperty('--border-radius-lg', `${Math.round(borderRadiusBase * 1.5)}px`);
 
-    // Shadow blur based on lightness (high lightness = lighter/softer shadows)
-    const shadowBlur = Math.round(mapRange(f2.l, 0, 100, 24, 8));
+    // Shadow blur inversely proportional to variance
+    const shadowBlur = Math.round(mapRange(satVariance, 0, 100, 24, 8));
     root.style.setProperty('--shadow-sm', `0 2px ${shadowBlur}px rgba(0,0,0,0.1)`);
     root.style.setProperty('--shadow-md', `0 4px ${Math.round(shadowBlur * 1.5)}px rgba(0,0,0,0.15)`);
 
-    // Border opacity based on saturation (high sat = more defined borders)
-    const borderOpacity = mapRange(f2.s, 0, 100, 0.1, 0.6);
+    // Border opacity proportional to variance
+    const borderOpacity = mapRange(satVariance, 0, 100, 0.1, 0.6);
     root.style.setProperty('--border-opacity', borderOpacity.toFixed(2));
 
-    if (debug) console.log('✂️  F2 Contrast:', { sat: f2.s, light: f2.l, borderRadius: borderRadiusBase, shadowBlur });
+    if (debug) console.log('✂️  F2 Sharp:', { satVariance: satVariance.toFixed(1), borderRadius: borderRadiusBase, shadowBlur });
 
-    // === F3 DENSITY: SPATIAL FIELD ===
-    // F3.H → Spacing/margins (0° = tight, 360° = airy)
-    // F3.S → Padding (0% = minimal, 100% = generous)
-    // F3.L → Border radius override (additional roundness control)
-
-    // Spacing: 0.5rem (tight) to 1.5rem (airy)
-    const spaceUnit = mapRange(f3.h, 0, 360, 0.5, 1.5);
+    // === F3: COMPACT ←→ SPACIOUS (SPATIAL DENSITY) ===
+    // Spacing proportional to saturation variance
+    // High variance = diverse colors need breathing room = spacious
+    // Low variance = uniform colors = compact
+    const spaceUnit = mapRange(spacingVariance, 0, 100, 0.5, 1.5);
     root.style.setProperty('--space-unit', `${spaceUnit.toFixed(3)}rem`);
 
-    // Padding multiplier: 0.6× (minimal) to 1.4× (generous)
-    const paddingScale = mapRange(f3.s, 0, 100, 0.6, 1.4);
+    // Padding and gap scale with spacing
+    const paddingScale = mapRange(spacingVariance, 0, 100, 0.6, 1.4);
     root.style.setProperty('--padding-scale', paddingScale.toFixed(2));
 
-    // Gap multiplier tied to spacing
-    const gapScale = mapRange(f3.h, 0, 360, 0.8, 1.2);
+    const gapScale = mapRange(spacingVariance, 0, 100, 0.8, 1.2);
     root.style.setProperty('--gap-scale', gapScale.toFixed(2));
 
-    // F3.L can add extra roundness (combines with F2 for total roundness)
-    const extraRoundness = Math.round(mapRange(f3.l, 0, 100, 0, 8));
-    const totalBorderRadius = borderRadiusBase + extraRoundness;
-    root.style.setProperty('--border-radius-base', `${totalBorderRadius}px`);
-    root.style.setProperty('--border-radius-lg', `${Math.round(totalBorderRadius * 1.5)}px`);
-
-    if (debug) console.log('📏 F3 Density:', {
-      hue: f3.h,
-      sat: f3.s,
-      light: f3.l,
+    if (debug) console.log('📏 F3 Spacious:', {
+      spacingVariance: spacingVariance.toFixed(1),
       spaceUnit: spaceUnit.toFixed(3),
-      paddingScale: paddingScale.toFixed(2),
-      roundness: totalBorderRadius
+      paddingScale: paddingScale.toFixed(2)
     });
 
-    // === F4 HIERARCHY: VISUAL IMPACT ===
-    // F4.L → Type scale (0% = flat/uniform, 100% = dramatic)
-    // F4.S → Font weight variation (0% = uniform weights, 100% = bold contrast)
-
-    // Type step: Additive increments for rational scale
-    // Flat (0%) = 0.125rem steps → h1 = 1.5rem
-    // Dramatic (100%) = 0.5rem steps → h1 = 3rem
-    const typeStep = mapRange(f4.l, 0, 100, 0.125, 0.5);
+    // === F4: FLAT ←→ DRAMATIC (VISUAL HIERARCHY) ===
+    // Type step proportional to lightness variance
+    // High variance = dramatic contrast = big type scale
+    // Low variance = subtle differences = flat type scale
+    const typeStep = mapRange(lightVariance, 0, 100, 0.125, 0.5);
     root.style.setProperty('--type-step', `${typeStep.toFixed(3)}rem`);
 
-    // Keep ratio for backwards compatibility (derived from step size)
-    const typeRatio = 1 + (typeStep / 1); // Approximate ratio
+    // Keep ratio for backwards compatibility
+    const typeRatio = 1 + (typeStep / 1);
     root.style.setProperty('--type-ratio', typeRatio.toFixed(3));
 
-    // Font weight for headings: 400 (normal, flat) to 700 (bold, dramatic)
-    const fontWeightHeading = Math.round(mapRange(f4.s, 0, 100, 400, 700));
+    // Font weight variation proportional to lightness variance
+    const fontWeightHeading = Math.round(mapRange(lightVariance, 0, 100, 400, 700));
     root.style.setProperty('--font-weight-heading', fontWeightHeading);
     root.style.setProperty('--font-weight-body', 400);
 
-    if (debug) console.log('📐 F4 Hierarchy:', {
-      light: f4.l,
-      sat: f4.s,
+    if (debug) console.log('📐 F4 Dramatic:', {
+      lightVariance: lightVariance.toFixed(1),
       typeStep: `${typeStep.toFixed(3)}rem`,
       fontWeight: fontWeightHeading
     });
