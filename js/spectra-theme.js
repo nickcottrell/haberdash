@@ -91,11 +91,28 @@
     });
 
     // === DARK MODE DETECTION ===
-    // Based on average lightness of all 4 colors
+    // Sort all 4 colors by lightness to intelligently assign roles
+    const colorsByLightness = [
+      { ...f1, id: 'f1' },
+      { ...f2, id: 'f2' },
+      { ...f3, id: 'f3' },
+      { ...f4, id: 'f4' }
+    ].sort((a, b) => a.l - b.l);
+
+    const darkest = colorsByLightness[0];
+    const dark = colorsByLightness[1];
+    const light = colorsByLightness[2];
+    const lightest = colorsByLightness[3];
+
     const avgLightness = (f1.l + f2.l + f3.l + f4.l) / 4;
     const isDarkMode = avgLightness < 50;
 
-    if (debug) console.log('🌓 Dark Mode:', { avgLightness: avgLightness.toFixed(1), isDarkMode });
+    if (debug) console.log('🌓 Dark Mode:', {
+      avgLightness: avgLightness.toFixed(1),
+      isDarkMode,
+      darkest: darkest.l.toFixed(1),
+      lightest: lightest.l.toFixed(1)
+    });
 
     // === F1: MONOCHROME ←→ POLYCHROME (COLOR PALETTE) ===
     // Use F1 as primary color base
@@ -139,12 +156,12 @@
 
     // Shadow prominence proportional to variance
     // High variance = sharp/defined = dark prominent shadows
-    // Low variance = soft/diffuse = subtle or no shadows
-    const shadowOpacity = mapRange(satVariance, 0, 100, 0.02, 0.25);
+    // Low variance = soft/diffuse = invisible (no shadows)
+    const shadowOpacity = mapRange(satVariance, 0, 100, 0, 0.5);
     const shadowBlur = Math.round(mapRange(satVariance, 0, 100, 24, 8));
     root.style.setProperty('--shadow-sm', `0 2px ${shadowBlur}px rgba(0,0,0,${shadowOpacity.toFixed(3)})`);
-    root.style.setProperty('--shadow-md', `0 4px ${Math.round(shadowBlur * 1.5)}px rgba(0,0,0,${(shadowOpacity * 1.5).toFixed(3)})`);
-    root.style.setProperty('--shadow-lg', `0 8px ${Math.round(shadowBlur * 2)}px rgba(0,0,0,${(shadowOpacity * 2).toFixed(3)})`);
+    root.style.setProperty('--shadow-md', `0 4px ${Math.round(shadowBlur * 1.5)}px rgba(0,0,0,${(shadowOpacity * 0.8).toFixed(3)})`);
+    root.style.setProperty('--shadow-lg', `0 8px ${Math.round(shadowBlur * 2)}px rgba(0,0,0,${(shadowOpacity * 0.6).toFixed(3)})`);
 
     // Border opacity proportional to variance
     const borderOpacity = mapRange(satVariance, 0, 100, 0.1, 0.6);
@@ -156,19 +173,25 @@
     const borderWidth = mapRange(satVariance, 0, 100, 1, 3);
     root.style.setProperty('--border-width', `${borderWidth.toFixed(1)}px`);
 
-    // Background/text contrast proportional to variance
-    // High variance = sharp contrast between surfaces
-    // Low variance = subtle ambient backgrounds
+    // Background/surface assignment from sorted colors
+    // F2 Sharp controls contrast between bg and surface
+    // High variance = sharp contrast (bigger gap), Low variance = subtle (similar tones)
+    const contrastAmount = mapRange(satVariance, 0, 100, 2, 8); // Gap between bg and surface
+
     if (isDarkMode) {
-      const bgLightness = mapRange(satVariance, 0, 100, 15, 8); // Soft = lighter bg, Sharp = darker bg
-      const surfaceLightness = mapRange(satVariance, 0, 100, 18, 12);
-      root.style.setProperty('--color-background', `hsl(${f1.h}, ${Math.max(f1.s - 30, 5)}%, ${bgLightness}%)`);
-      root.style.setProperty('--color-surface', `hsl(${f1.h}, ${Math.max(f1.s - 25, 10)}%, ${surfaceLightness}%)`);
+      // Dark mode: Use darkest colors for backgrounds, lightest for text
+      // Background is darkest, surface is slightly lighter
+      const bgLightness = Math.max(darkest.l - contrastAmount, 5);
+      const surfaceLightness = Math.min(darkest.l + contrastAmount, 20);
+      root.style.setProperty('--color-background', `hsl(${darkest.h}, ${Math.max(darkest.s - 20, 5)}%, ${bgLightness}%)`);
+      root.style.setProperty('--color-surface', `hsl(${dark.h}, ${Math.max(dark.s - 15, 8)}%, ${surfaceLightness}%)`);
     } else {
-      const bgLightness = mapRange(satVariance, 0, 100, 96, 99); // Soft = darker bg, Sharp = brighter bg
-      const surfaceLightness = mapRange(satVariance, 0, 100, 92, 96);
-      root.style.setProperty('--color-background', `hsl(${f1.h}, ${Math.max(f1.s - 50, 5)}%, ${bgLightness}%)`);
-      root.style.setProperty('--color-surface', `hsl(${f1.h}, ${Math.max(f1.s - 45, 10)}%, ${surfaceLightness}%)`);
+      // Light mode: Use lightest colors for backgrounds, darkest for text
+      // Background is lightest, surface is slightly darker
+      const bgLightness = Math.min(lightest.l + contrastAmount, 99);
+      const surfaceLightness = Math.max(lightest.l - contrastAmount, 92);
+      root.style.setProperty('--color-background', `hsl(${lightest.h}, ${Math.max(lightest.s - 40, 5)}%, ${bgLightness}%)`);
+      root.style.setProperty('--color-surface', `hsl(${light.h}, ${Math.max(light.s - 35, 8)}%, ${surfaceLightness}%)`);
     }
 
     if (debug) console.log('✂️  F2 Sharp:', {
@@ -211,9 +234,21 @@
     root.style.setProperty('--type-ratio', typeRatio.toFixed(3));
 
     // Font weight variation proportional to lightness variance
-    // Default is bold (700), less hierarchy = lighter, more hierarchy = bolder
-    const fontWeightHeading = Math.round(mapRange(lightVariance, 0, 100, 300, 900));
-    root.style.setProperty('--font-weight-heading', fontWeightHeading);
+    // Low variance (flat) = all headings similar weight
+    // High variance (dramatic) = graduated weights h1=900 → h6=400
+    const weightMax = Math.round(mapRange(lightVariance, 0, 100, 600, 900)); // h1
+    const weightMin = Math.round(mapRange(lightVariance, 0, 100, 500, 400)); // h6
+    const weightRange = weightMax - weightMin;
+
+    root.style.setProperty('--font-weight-h1', weightMax); // Heaviest
+    root.style.setProperty('--font-weight-h2', Math.round(weightMax - weightRange * 0.2));
+    root.style.setProperty('--font-weight-h3', Math.round(weightMax - weightRange * 0.4));
+    root.style.setProperty('--font-weight-h4', Math.round(weightMax - weightRange * 0.6));
+    root.style.setProperty('--font-weight-h5', Math.round(weightMax - weightRange * 0.8));
+    root.style.setProperty('--font-weight-h6', weightMin); // Lightest
+
+    // Keep legacy variable for backwards compatibility
+    root.style.setProperty('--font-weight-heading', weightMax);
     root.style.setProperty('--font-weight-body', 400);
 
     // Text color boldness proportional to lightness variance

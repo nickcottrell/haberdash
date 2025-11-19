@@ -87,6 +87,14 @@
     --font-weight-semibold: 600;
     --font-weight-bold: var(--font-weight-heading);
 
+    /* Graduated heading weights (Spectra-driven) */
+    --font-weight-h1: 700; /* Default, overridden by Spectra (600-900) */
+    --font-weight-h2: 700; /* Default, overridden by Spectra */
+    --font-weight-h3: 700; /* Default, overridden by Spectra */
+    --font-weight-h4: 700; /* Default, overridden by Spectra */
+    --font-weight-h5: 700; /* Default, overridden by Spectra */
+    --font-weight-h6: 700; /* Default, overridden by Spectra (500-400) */
+
     --line-height-tight: 1.25;
     --line-height-normal: 1.5;
     --line-height-relaxed: 1.75;
