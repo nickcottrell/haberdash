@@ -1,0 +1,45 @@
+/* Button base structure - browser default appearance */
+
+.btn {
+  /* Structure with default browser button appearance */
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  border: 1px solid #000;
+  background: #f0f0f0;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+  line-height: inherit;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Size variants - structural only */
+.btn--sm {
+  padding: 0.125em 0.375em;
+  font-size: 0.875em;
+}
+
+.btn--lg {
+  padding: 0.5em 1em;
+  font-size: 1.125em;
+}
+
+.btn--xl {
+  padding: 0.75em 1.5em;
+  font-size: 1.25em;
+}
+
+/* Variant classes exist but do nothing in base layer */
+.btn--primary,
+.btn--secondary,
+.btn--tertiary,
+.btn--success,
+.btn--warning,
+.btn--error {
+  /* Theme layer will style these */
+}

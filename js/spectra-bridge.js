@@ -10,17 +10,26 @@
   let cssReady = false;
 
   // Function to apply Spectra theme to Haberdash
-  function applyTheme() {
+  function applyTheme(eventData) {
     if (!spectraReady) {
       console.log('⏳ Spectra Bridge: Waiting for Spectra theme...');
       return;
     }
 
-    console.log('🌈 Spectra theme loaded, applying to Haberdash...');
-
     // Remove old override if exists
     const oldStyle = document.getElementById('spectra-override');
     if (oldStyle) oldStyle.remove();
+
+    // Check if BASE theme is active
+    const isBaseTheme = eventData?.detail?.nodeId === 'BASE' ||
+                        document.documentElement.getAttribute('data-theme') === 'base';
+
+    if (isBaseTheme) {
+      console.log('🌈 Spectra Bridge: BASE theme detected - skipping style injection (Craigslist mode)');
+      return;
+    }
+
+    console.log('🌈 Spectra theme loaded, applying to Haberdash...');
 
     const root = document.documentElement;
     const computed = getComputedStyle(root);
@@ -115,7 +124,7 @@
   window.addEventListener('spectra-theme-loaded', (e) => {
     console.log('🌈 Spectra Bridge: Theme loaded event received!');
     spectraReady = true;
-    applyTheme();
+    applyTheme(e);
   });
 
   // Also apply after all CSS loads

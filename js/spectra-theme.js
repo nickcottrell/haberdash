@@ -20,6 +20,81 @@
 
   if (debug) console.log('🌈 Spectra Theme: Loading node', nodeId);
 
+  // Handle BASE theme as built-in preset (Craigslist mode)
+  if (nodeId.toUpperCase() === 'BASE') {
+    const root = document.documentElement;
+
+    if (debug) console.log('🌈 Spectra Theme: Applying BASE theme (Craigslist mode)');
+
+    // Minimal "Craigslist-like" theme - browser defaults with visible borders
+    root.style.setProperty('--primary', '#0000EE');
+    root.style.setProperty('--primary-hover', '#551A8B');
+    root.style.setProperty('--primary-light', '#0000EE');
+    root.style.setProperty('--background', '#ffffff');
+    root.style.setProperty('--surface', '#ffffff');
+    root.style.setProperty('--surface-light', '#f5f5f5');
+    root.style.setProperty('--surface-lighter', '#eeeeee');
+    root.style.setProperty('--text', '#000000');
+    root.style.setProperty('--text-heading', '#000000');
+    root.style.setProperty('--text-body', '#000000');
+    root.style.setProperty('--text-secondary', '#000000');
+    root.style.setProperty('--text-tertiary', '#000000');
+    root.style.setProperty('--border', '#000000');
+    root.style.setProperty('--border-light', '#cccccc');
+    root.style.setProperty('--border-focus', '#0000EE');
+    root.style.setProperty('--border-width', '1px');
+    root.style.setProperty('--radius-sm', '0px');
+    root.style.setProperty('--radius-md', '0px');
+    root.style.setProperty('--radius-lg', '0px');
+    root.style.setProperty('--radius-xl', '0px');
+    root.style.setProperty('--radius-full', '0px');
+    root.style.setProperty('--shadow-sm', 'none');
+    root.style.setProperty('--shadow-md', 'none');
+    root.style.setProperty('--shadow-lg', 'none');
+    root.style.setProperty('--shadow-xl', 'none');
+    root.style.setProperty('--space-unit', '1rem');
+    root.style.setProperty('--font-size-base', '1rem');
+    root.style.setProperty('--font-size-sm', '0.875rem');
+    root.style.setProperty('--font-size-xs', '0.75rem');
+    root.style.setProperty('--font-size-lg', '1.125rem');
+    root.style.setProperty('--font-size-xl', '1.25rem');
+    root.style.setProperty('--font-size-2xl', '1.5rem');
+    root.style.setProperty('--font-size-3xl', '1.875rem');
+    root.style.setProperty('--font-size-4xl', '2.25rem');
+    root.style.setProperty('--font-weight-heading', '700');
+    root.style.setProperty('--font-weight-body', '400');
+    root.style.setProperty('--line-height-normal', '1.5');
+    root.style.setProperty('--transition-base', '0ms');
+    root.style.setProperty('--transition-fast', '0ms');
+    root.style.setProperty('--transition-slow', '0ms');
+
+    // Semantic colors - browser defaults
+    root.style.setProperty('--success', '#008000');
+    root.style.setProperty('--warning', '#FF8C00');
+    root.style.setProperty('--error', '#FF0000');
+    root.style.setProperty('--info', '#0000EE');
+
+    document.documentElement.classList.add('spectra-theme-loaded');
+    document.documentElement.setAttribute('data-theme', 'base');
+
+    window.dispatchEvent(new CustomEvent('spectra-theme-loaded', {
+      detail: {
+        nodeId: 'BASE',
+        spectraData: {
+          metadata: {
+            'F1 Origin': { hsl: { h: 240, s: 100, l: 50 } },
+            'F2 Contrast': { hsl: { h: 0, s: 0, l: 0 } },
+            'F3 Density': { hsl: { h: 0, s: 0, l: 50 } },
+            'F4 Hierarchy': { hsl: { h: 0, s: 0, l: 50 } }
+          }
+        }
+      }
+    }));
+
+    if (debug) console.log('✅ Spectra Theme: BASE theme applied');
+    return;
+  }
+
   try {
     // Fetch Spectra node with cache-busting timestamp
     const cacheBuster = Date.now();
@@ -213,6 +288,7 @@
 
     // Add CSS class to indicate theme is loaded
     document.documentElement.classList.add('spectra-theme-loaded');
+    document.documentElement.setAttribute('data-theme', 'live');
 
     if (debug) console.log('✅ Spectra Theme: Applied successfully');
 

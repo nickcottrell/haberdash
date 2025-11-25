@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haberdash Theme Switcher Demo</title>
+
+  <!-- Haberdash CSS -->
+  <link rel="stylesheet" href="css/haberdash-base.css">
+  <link rel="stylesheet" href="css/themes/spectra.css">
+
+  <style>
+    body {
+      max-width: 1200px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+
+    .theme-switcher {
+      position: fixed;
+      top: 1em;
+      right: 1em;
+      z-index: 1000;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      padding: 1em;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .theme-switcher__title {
+      margin: 0 0 0.5em 0;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme Switcher Control Panel -->
+  <div class="theme-switcher">
+    <h3 class="theme-switcher__title">Theme Control</h3>
+    <div class="form-group">
+      <label for="theme-select" class="form__label">Select Theme:</label>
+      <select id="theme-select" class="form__select">
+        <option value="BASE">NO STYLE (Craigslist)</option>
+        <option value="haberdash-ui-theme" selected>Live Spectra Theme</option>
+        <option value="custom-node-id">Custom Node ID</option>
+      </select>
+    </div>
+    <div id="custom-input-group" class="form-group hidden">
+      <label for="custom-node-id" class="form__label">Custom Node ID:</label>
+      <input type="text" id="custom-node-id" class="form__input" placeholder="Enter node ID">
+    </div>
+    <button id="apply-theme" class="btn btn--primary">Apply Theme</button>
+    <div id="theme-status" class="mt-sm"></div>
+  </div>
+
+  <!-- Page Header -->
+  <header>
+    <h1>Haberdash Theme Switcher Demo</h1>
+    <p>Use the control panel in the top-right to switch between themes.</p>
+    <p><strong>Current Theme:</strong> <span id="current-theme">Loading...</span></p>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- Sample Components -->
+  <section>
+    <h2>Sample Components</h2>
+
+    <h3>Buttons</h3>
+    <div class="flex gap-sm flex--wrap mb-lg">
+      <button class="btn">Default</button>
+      <button class="btn btn--primary">Primary</button>
+      <button class="btn btn--success">Success</button>
+      <button class="btn btn--error">Error</button>
+    </div>
+
+    <h3>Form</h3>
+    <div class="form-group">
+      <label for="name" class="form__label">Name</label>
+      <input type="text" id="name" class="form__input" placeholder="Enter your name">
+    </div>
+
+    <h3>Badges</h3>
+    <div class="flex gap-sm flex--wrap mb-lg">
+      <span class="badge badge--success">Success</span>
+      <span class="badge badge--warning">Warning</span>
+      <span class="badge badge--error">Error</span>
+    </div>
+
+    <h3>Alert</h3>
+    <div class="alert alert--success">
+      <p class="alert__title">Success!</p>
+      <p class="alert__message">Your theme has been applied successfully.</p>
+    </div>
+  </section>
+
+  <!-- Spectra Theme Script - Will be dynamically reloaded -->
+  <script id="spectra-script" src="js/spectra-theme.js" data-node-id="haberdash-ui-theme" data-debug></script>
+  <script src="js/spectra-bridge.js"></script>
+
+  <!-- Theme Switcher Logic -->
+  <script>
+    const themeSelect = document.getElementById('theme-select');
+    const customInputGroup = document.getElementById('custom-input-group');
+    const customNodeInput = document.getElementById('custom-node-id');
+    const applyButton = document.getElementById('apply-theme');
+    const themeStatus = document.getElementById('theme-status');
+    const currentThemeDisplay = document.getElementById('current-theme');
+
+    // Show/hide custom input based on selection
+    themeSelect.addEventListener('change', () => {
+      if (themeSelect.value === 'custom-node-id') {
+        customInputGroup.classList.remove('hidden');
+      } else {
+        customInputGroup.classList.add('hidden');
+      }
+    });
+
+    // Apply theme button
+    applyButton.addEventListener('click', async () => {
+      let nodeId = themeSelect.value;
+
+      if (nodeId === 'custom-node-id') {
+        nodeId = customNodeInput.value.trim();
+        if (!nodeId) {
+          themeStatus.innerHTML = '<p class="text-error">Please enter a node ID</p>';
+          return;
+        }
+      }
+
+      themeStatus.innerHTML = '<p class="text-secondary">Loading theme...</p>';
+
+      try {
+        await loadTheme(nodeId);
+        themeStatus.innerHTML = '<p style="color: var(--success);">✓ Theme applied!</p>';
+      } catch (error) {
+        themeStatus.innerHTML = `<p class="text-error">✗ Failed to load theme: ${error.message}</p>`;
+      }
+    });
+
+    // Function to dynamically reload theme
+    async function loadTheme(nodeId) {
+      // Remove old script
+      const oldScript = document.getElementById('spectra-script');
+      if (oldScript) {
+        oldScript.remove();
+      }
+
+      // Remove old spectra overrides
+      const oldOverride = document.getElementById('spectra-override');
+      if (oldOverride) {
+        oldOverride.remove();
+      }
+
+      // Remove old theme class
+      document.documentElement.classList.remove('spectra-theme-loaded');
+      document.documentElement.removeAttribute('data-theme');
+
+      // Create new script element
+      const newScript = document.createElement('script');
+      newScript.id = 'spectra-script';
+      newScript.src = 'js/spectra-theme.js';
+      newScript.setAttribute('data-node-id', nodeId);
+      newScript.setAttribute('data-api', 'https://zf8klzvd4k.execute-api.us-east-2.amazonaws.com/prod/blend');
+      newScript.setAttribute('data-debug', '');
+
+      // Wait for theme to load
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          reject(new Error('Theme load timeout'));
+        }, 10000);
+
+        window.addEventListener('spectra-theme-loaded', function handler(event) {
+          clearTimeout(timeout);
+          window.removeEventListener('spectra-theme-loaded', handler);
+
+          const themeName = event.detail.nodeId === 'BASE' ? 'BASE (Craigslist Mode)' : event.detail.nodeId;
+          currentThemeDisplay.textContent = themeName;
+
+          resolve();
+        });
+
+        // Append script to trigger loading
+        document.body.appendChild(newScript);
+      });
+    }
+
+    // Display initial theme
+    window.addEventListener('spectra-theme-loaded', (event) => {
+      const themeName = event.detail.nodeId === 'BASE' ? 'BASE (Craigslist Mode)' : event.detail.nodeId;
+      currentThemeDisplay.textContent = themeName;
+    });
+  </script>
+</body>
+</html>
