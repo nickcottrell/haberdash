@@ -1,0 +1,75 @@
+/* Preset card base structure */
+
+.preset-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
+}
+
+/* Live theme - card-based selection */
+.preset-card {
+  display: block;
+  cursor: pointer;
+}
+
+.preset-card__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preset-card__inner {
+  background: #f0f0f0;
+  border: 2px solid #000;
+  padding: 1.25em;
+  text-align: center;
+}
+
+.preset-card__swatch {
+  display: inline-block;
+  width: 3em;
+  height: 3em;
+  border: 2px solid #000;
+  margin-bottom: 0.75em;
+}
+
+.preset-card__title {
+  font-weight: bold;
+  margin-bottom: 0.25em;
+}
+
+.preset-card__value {
+  font-size: 0.875em;
+  font-family: monospace;
+}
+
+/* BASE theme - inline radio selection */
+.preset-card--base {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+  cursor: pointer;
+  border: 2px solid #000;
+  padding: 1em;
+}
+
+.preset-card--base input[type="radio"] {
+  margin-top: 0.25em;
+}
+
+.preset-card__content {
+  flex: 1;
+}
+
+.preset-card__swatch--small {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  border: 1px solid #000;
+  margin-bottom: 0.5em;
+}
+
+.preset-card__value--small {
+  font-size: 0.75em;
+  font-family: monospace;
+}

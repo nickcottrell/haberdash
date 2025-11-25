@@ -1,0 +1,98 @@
+{
+  "colorSpace": "hsl",
+  "channels": [
+    {
+      "id": "h",
+      "name": "Hue",
+      "description": "Color tone on the spectrum",
+      "min": 0,
+      "max": 360,
+      "default": 0,
+      "labels": {
+        "min": "Red",
+        "max": "Red"
+      },
+      "valueLabels": [
+        { "threshold": 0, "label": "Red" },
+        { "threshold": 30, "label": "Orange" },
+        { "threshold": 60, "label": "Yellow" },
+        { "threshold": 120, "label": "Green" },
+        { "threshold": 180, "label": "Cyan" },
+        { "threshold": 240, "label": "Blue" },
+        { "threshold": 300, "label": "Magenta" },
+        { "threshold": 330, "label": "Pink" }
+      ]
+    },
+    {
+      "id": "s",
+      "name": "Saturation",
+      "description": "Color intensity",
+      "min": 0,
+      "max": 100,
+      "default": 100,
+      "labels": {
+        "min": "Gray",
+        "max": "Vivid"
+      },
+      "valueLabels": [
+        { "threshold": 0, "label": "Grayscale" },
+        { "threshold": 25, "label": "Muted" },
+        { "threshold": 50, "label": "Moderate" },
+        { "threshold": 75, "label": "Saturated" },
+        { "threshold": 90, "label": "Vivid" }
+      ]
+    },
+    {
+      "id": "l",
+      "name": "Lightness",
+      "description": "Brightness level",
+      "min": 0,
+      "max": 100,
+      "default": 50,
+      "labels": {
+        "min": "Black",
+        "max": "White"
+      },
+      "valueLabels": [
+        { "threshold": 0, "label": "Black" },
+        { "threshold": 20, "label": "Very Dark" },
+        { "threshold": 40, "label": "Dark" },
+        { "threshold": 60, "label": "Light" },
+        { "threshold": 80, "label": "Very Light" },
+        { "threshold": 95, "label": "White" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pure Red",
+      "hex": "#FF0000",
+      "values": { "h": 0, "s": 100, "l": 50 }
+    },
+    {
+      "name": "Pure Green",
+      "hex": "#00FF00",
+      "values": { "h": 120, "s": 100, "l": 50 }
+    },
+    {
+      "name": "Pure Blue",
+      "hex": "#0000FF",
+      "values": { "h": 240, "s": 100, "l": 50 }
+    },
+    {
+      "name": "Pastel Pink",
+      "hex": "#FFB6C1",
+      "values": { "h": 351, "s": 100, "l": 86 }
+    },
+    {
+      "name": "Forest Green",
+      "hex": "#228B22",
+      "values": { "h": 120, "s": 61, "l": 34 }
+    },
+    {
+      "name": "Sky Blue",
+      "hex": "#87CEEB",
+      "values": { "h": 197, "s": 71, "l": 73 }
+    }
+  ]
+}

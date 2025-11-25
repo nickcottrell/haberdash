@@ -1,0 +1,72 @@
+/* File upload base structure */
+
+.upload {
+  display: block;
+  border: 2px dashed #000;
+  padding: 2em;
+  text-align: center;
+  position: relative;
+}
+
+.upload__input {
+  display: none;
+}
+
+.upload__label {
+  display: block;
+  cursor: pointer;
+}
+
+.upload__icon {
+  font-size: 3em;
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.upload__text {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.upload__hint {
+  display: block;
+  font-size: 0.875em;
+  margin-bottom: 1em;
+}
+
+.upload__button {
+  margin-top: 0.5em;
+  pointer-events: auto;
+}
+
+.upload--dragover {
+  border-style: solid;
+}
+
+.upload__file-list {
+  margin-top: 1em;
+  text-align: left;
+}
+
+.upload__file {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em;
+  border-bottom: 1px solid #ccc;
+}
+
+.upload__file-name {
+  flex: 1;
+}
+
+.upload__file-size {
+  font-size: 0.875em;
+}
+
+.upload__file-remove {
+  background: none;
+  border: 1px solid #000;
+  cursor: pointer;
+  padding: 0.25em 0.5em;
+}

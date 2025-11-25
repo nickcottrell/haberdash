@@ -1,0 +1,27 @@
+/* Spinner base structure */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  border: 0.25em solid #ccc;
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.spinner--sm {
+  width: 1em;
+  height: 1em;
+  border-width: 0.125em;
+}
+
+.spinner--lg {
+  width: 3em;
+  height: 3em;
+  border-width: 0.375em;
+}

@@ -1,0 +1,32 @@
+/* Badge base structure - browser default with border */
+
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  border: 1px solid #000;
+  font-size: 0.75em;
+  font-weight: bold;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Badge variants - structure only */
+.badge--primary,
+.badge--success,
+.badge--warning,
+.badge--error,
+.badge--info,
+.badge--neutral {
+  /* Theme layer will style these */
+}
+
+/* Rank badges */
+.badge--rank {
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}

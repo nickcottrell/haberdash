@@ -1,0 +1,9 @@
+/* Text utilities - base structure */
+
+.text-secondary {
+  color: #666;
+}
+
+.text-error {
+  color: #cc0000;
+}

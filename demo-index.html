@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="live">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haberdash - Demo Index</title>
+
+  <!-- Haberdash CSS - makes this page themable -->
+  <link rel="stylesheet" href="css/haberdash-base.css">
+  <link rel="stylesheet" href="css/themes/spectra.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 900px;
+      background: white;
+      border-radius: 1em;
+      padding: 3em;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.25em;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 1.25em;
+      color: #666;
+      margin-bottom: 2em;
+    }
+
+    .intro {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 1.5em;
+      margin-bottom: 2em;
+      border-radius: 0.5em;
+    }
+
+    .intro p {
+      margin-bottom: 0.5em;
+    }
+
+    .intro p:last-child {
+      margin-bottom: 0;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      margin: 2em 0 1em 0;
+      color: #333;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5em;
+      margin-bottom: 2em;
+    }
+
+    .demo-card {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      border: 2px solid #e0e0e0;
+      border-radius: 0.75em;
+      padding: 1.5em;
+      text-decoration: none;
+      color: inherit;
+      transition: all 200ms;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .demo-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 200ms;
+    }
+
+    .demo-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .demo-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .demo-card h3 {
+      font-size: 1.25em;
+      margin-bottom: 0.5em;
+      color: #333;
+    }
+
+    .demo-card p {
+      color: #666;
+      font-size: 0.9em;
+      line-height: 1.5;
+    }
+
+    .demo-card .badge {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 0.25em 0.75em;
+      border-radius: 1em;
+      font-size: 0.75em;
+      font-weight: 600;
+      margin-top: 0.75em;
+    }
+
+    .demo-card.featured {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-color: #764ba2;
+    }
+
+    .demo-card.featured h3,
+    .demo-card.featured p {
+      color: white;
+    }
+
+    .demo-card.featured .badge {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .architecture {
+      background: #f8f9fa;
+      padding: 1.5em;
+      border-radius: 0.5em;
+      margin-top: 2em;
+    }
+
+    .architecture h3 {
+      margin-bottom: 1em;
+      color: #333;
+    }
+
+    .architecture ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .architecture li {
+      padding: 0.5em 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .architecture li:last-child {
+      border-bottom: none;
+    }
+
+    .architecture code {
+      background: white;
+      padding: 0.25em 0.5em;
+      border-radius: 0.25em;
+      font-family: monospace;
+      font-size: 0.9em;
+      color: #667eea;
+    }
+
+    footer {
+      margin-top: 3em;
+      padding-top: 2em;
+      border-top: 2px solid #e0e0e0;
+      text-align: center;
+      color: #666;
+    }
+
+    footer a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 Haberdash</h1>
+    <p class="subtitle">Semantic UI Components with Color-Space Theme Encoding</p>
+
+    <div class="intro">
+      <p><strong>Welcome to the Haberdash demo suite!</strong></p>
+      <p>This design system operates in multiple modes to demonstrate clean separation between structure and style.</p>
+      <p>Choose a demo below to explore different aspects of the architecture.</p>
+    </div>
+
+    <h2>🖼️ Demo Pages</h2>
+
+    <div class="demo-grid">
+      <a href="craigslist.html" class="demo-card">
+        <h3>📋 Craigslist Mode</h3>
+        <p>BASE theme preset via Spectra. Minimal styling with no animations, shadows, or rounded corners. Browser-default aesthetic.</p>
+        <span class="badge">BASE THEME</span>
+      </a>
+
+      <a href="spectra-live.html" class="demo-card featured">
+        <h3>🌈 Live Spectra</h3>
+        <p>Dynamic color-space theme encoding. Design tokens generated from 4D color data via API. Real-time theme updates.</p>
+        <span class="badge">LIVE API</span>
+      </a>
+
+      <a href="theme-switcher-demo.html" class="demo-card">
+        <h3>🎛️ Theme Switcher</h3>
+        <p>Interactive demo showing real-time theme switching between BASE (no style) and any Spectra node. Control panel in top-right corner.</p>
+        <span class="badge">INTERACTIVE</span>
+      </a>
+    </div>
+
+    <div class="architecture">
+      <h3>🏗️ Architecture Overview</h3>
+      <ul>
+        <li><strong>HTML:</strong> Semantic structure using native elements (<code>&lt;button&gt;</code>, <code>&lt;input type="radio"&gt;</code>, etc.)</li>
+        <li><strong>Base Layer:</strong> Structural CSS only - layout, spacing relationships, no colors</li>
+        <li><strong>Theme Layer:</strong> Visual styling via CSS variables - colors, shadows, typography scales</li>
+        <li><strong>Spectra System:</strong> Color-space encoding for dynamic theme generation (optional)</li>
+        <li><strong>JavaScript:</strong> Behavior enhancement - auto-init, interactive components (optional)</li>
+      </ul>
+    </div>
+
+    <h2>🧪 What to Explore</h2>
+
+    <div class="demo-grid">
+      <div style="background: #f8f9fa; padding: 1.5em; border-radius: 0.75em;">
+        <h3 style="margin-bottom: 0.5em;">🔍 Inspect the HTML</h3>
+        <p style="color: #666; font-size: 0.9em;">
+          Notice how all three modes use identical markup. Open DevTools and compare <code>craigslist.html</code> vs <code>spectra-live.html</code>.
+        </p>
+      </div>
+
+      <div style="background: #f8f9fa; padding: 1.5em; border-radius: 0.75em;">
+        <h3 style="margin-bottom: 0.5em;">🎨 Change the Node ID</h3>
+        <p style="color: #666; font-size: 0.9em;">
+          In <code>spectra-live.html</code>, modify the <code>data-node-id</code> attribute to load different color themes from the Spectra API.
+        </p>
+      </div>
+
+      <div style="background: #f8f9fa; padding: 1.5em; border-radius: 0.75em;">
+        <h3 style="margin-bottom: 0.5em;">♿ Test Accessibility</h3>
+        <p style="color: #666; font-size: 0.9em;">
+          Try keyboard navigation (<kbd>Tab</kbd>, <kbd>Enter</kbd>, <kbd>Space</kbd>). Test with a screen reader. Semantic HTML ensures it works.
+        </p>
+      </div>
+
+      <div style="background: #f8f9fa; padding: 1.5em; border-radius: 0.75em;">
+        <h3 style="margin-bottom: 0.5em;">🔧 Disable JavaScript</h3>
+        <p style="color: #666; font-size: 0.9em;">
+          Components still work! Forms submit, buttons click, sliders slide. JS only adds enhancement.
+        </p>
+      </div>
+    </div>
+
+    <footer>
+      <p><strong>Haberdash</strong> • Semantic-first UI components</p>
+      <p style="margin-top: 0.5em;">
+        <a href="ARCHITECTURE.md">Read Architecture Docs</a> •
+        <a href="https://github.com/anthropics/haberdash">GitHub</a>
+      </p>
+    </footer>
+
+    <!-- Theme Switcher -->
+    <div style="margin-top: 3em; padding: 1.5em; background: #f8f9fa; border-radius: 0.75em; border: 2px solid #e0e0e0;">
+      <h3 style="margin-bottom: 0.75em; font-size: 1.25em;">🎨 Try Different Themes</h3>
+      <p style="color: #666; font-size: 0.9em; margin-bottom: 1em;">
+        Switch themes to see this page styled differently. All styles are powered by Spectra.
+      </p>
+      <div style="display: flex; gap: 0.75em; align-items: center; flex-wrap: wrap;">
+        <select id="theme-select" style="padding: 0.5em; border-radius: 0.5em; border: 2px solid #e0e0e0; font-size: 1em;">
+          <option value="BASE">BASE (Craigslist)</option>
+          <option value="haberdash-ui-theme" selected>Default Theme</option>
+          <option value="custom">Custom Node ID...</option>
+        </select>
+        <input type="text" id="custom-node-input" placeholder="Enter node ID" style="padding: 0.5em; border-radius: 0.5em; border: 2px solid #e0e0e0; font-size: 1em; display: none;">
+        <button onclick="applyTheme()" style="padding: 0.5em 1.5em; background: #667eea; color: white; border: none; border-radius: 0.5em; font-size: 1em; cursor: pointer; font-weight: 600;">Apply Theme</button>
+      </div>
+      <p id="current-theme" style="margin-top: 0.75em; font-size: 0.875em; color: #667eea; font-weight: 600;">
+        <!-- Will be populated by JS -->
+      </p>
+    </div>
+  </div>
+
+  <!-- Spectra Integration -->
+  <script src="js/spectra-theme.js" data-node-id="haberdash-ui-theme"></script>
+  <script src="js/spectra-bridge.js"></script>
+
+  <!-- Theme Switcher Logic -->
+  <script>
+    const themeSelect = document.getElementById('theme-select');
+    const customInput = document.getElementById('custom-node-input');
+    const currentThemeDisplay = document.getElementById('current-theme');
+
+    // Show/hide custom input based on selection
+    themeSelect.addEventListener('change', () => {
+      if (themeSelect.value === 'custom') {
+        customInput.style.display = 'inline-block';
+        customInput.focus();
+      } else {
+        customInput.style.display = 'none';
+      }
+    });
+
+    // Apply theme by reloading with URL parameter
+    function applyTheme() {
+      let nodeId = themeSelect.value;
+
+      if (nodeId === 'custom') {
+        nodeId = customInput.value.trim();
+        if (!nodeId) {
+          alert('Please enter a node ID');
+          return;
+        }
+      }
+
+      // Reload page with new theme
+      window.location.href = `?theme=${encodeURIComponent(nodeId)}`;
+    }
+
+    // Load theme from URL parameter on page load
+    const urlParams = new URLSearchParams(window.location.search);
+    const themeFromUrl = urlParams.get('theme');
+
+    if (themeFromUrl) {
+      // Check if it's a known theme
+      const option = Array.from(themeSelect.options).find(opt => opt.value === themeFromUrl);
+
+      if (option) {
+        themeSelect.value = themeFromUrl;
+      } else {
+        // Custom theme
+        themeSelect.value = 'custom';
+        customInput.value = themeFromUrl;
+        customInput.style.display = 'inline-block';
+      }
+
+      // Update data-theme attribute based on URL
+      if (themeFromUrl.toUpperCase() === 'BASE') {
+        document.documentElement.setAttribute('data-theme', 'base');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'live');
+      }
+    }
+
+    // Display current theme after Spectra loads
+    window.addEventListener('spectra-theme-loaded', (event) => {
+      const { nodeId } = event.detail;
+      currentThemeDisplay.textContent = `Current theme: ${nodeId}`;
+    });
+
+    // Allow Enter key in custom input
+    customInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        applyTheme();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+/* Form base structure - Craigslist mode (native elements) */
+
+.form-group {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.form__label {
+  display: block;
+  margin-bottom: 0.25em;
+}
+
+.form__input,
+.form__textarea,
+.form__select {
+  display: block;
+  width: 100%;
+  padding: 0.25em 0.5em;
+  border: 1px solid #000;
+  background: #fff;
+  font: inherit;
+}
+
+.form__textarea {
+  min-height: 6em;
+  resize: vertical;
+}
+
+.form__input:focus,
+.form__textarea:focus,
+.form__select:focus {
+  outline: 2px solid;
+  outline-offset: 2px;
+}
+
+.form__input:disabled,
+.form__textarea:disabled,
+.form__select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form__hint {
+  display: block;
+  margin-top: 0.25em;
+  font-size: 0.875em;
+}
+
+.form__error {
+  display: block;
+  margin-top: 0.25em;
+  font-size: 0.875em;
+}
+
+.form__error:empty {
+  display: none;
+}
+
+/* Native checkbox and radio */
+.form__choice {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.form__choice input[type="checkbox"],
+.form__choice input[type="radio"] {
+  width: auto;
+  margin: 0;
+}
+
+/* Fieldset for radio groups */
+.form__fieldset {
+  border: 1px solid #000;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+.form__legend {
+  padding: 0 0.5em;
+}
+
+/* States - structure only */
+.form__input.has-error,
+.form__textarea.has-error,
+.form__select.has-error {
+  /* Theme layer will style */
+}

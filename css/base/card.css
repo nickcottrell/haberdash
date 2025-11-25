@@ -1,0 +1,47 @@
+/* Card base structure - browser default with border */
+
+.card {
+  display: block;
+  border: 1px solid #000;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.card__icon {
+  font-size: 1.5em;
+}
+
+.card__title {
+  margin: 0;
+  font-size: 1.125em;
+  font-weight: bold;
+}
+
+.card__body {
+  margin-bottom: 0.5em;
+}
+
+.card__description {
+  margin: 0;
+}
+
+.card__actions {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+/* Card variants - structure only */
+.card--dashboard,
+.card--dimension,
+.card--result,
+.card--list {
+  /* Theme layer will style these */
+}
