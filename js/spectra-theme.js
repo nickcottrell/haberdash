@@ -106,6 +106,19 @@
     const spectraData = await response.json();
     if (debug) console.log('🌈 Spectra Theme: Data received', spectraData);
 
+    // Check if user has saved theme_mode preference
+    if (spectraData.theme_mode === 'none') {
+      if (debug) console.log('🌈 Spectra Theme: NO STYLE mode detected, removing theme');
+      document.documentElement.removeAttribute('data-theme');
+      document.documentElement.classList.add('spectra-theme-none');
+
+      window.dispatchEvent(new CustomEvent('spectra-theme-loaded', {
+        detail: { spectraData, nodeId, themeMode: 'none' }
+      }));
+
+      return; // Exit early, don't apply theme
+    }
+
     // Extract color metadata (D1-D4)
     const metadata = spectraData.metadata;
     const root = document.documentElement;
