@@ -183,13 +183,13 @@
     const isDarkMode = f1.l < 50;
 
     if (isDarkMode) {
-      root.style.setProperty('--color-primary', `hsl(${f1.h}, ${Math.min(f1.s + 30, 100)}%, ${Math.min(f1.l + 50, 70)}%)`);
-      root.style.setProperty('--color-primary-dark', `hsl(${f1.h}, ${Math.min(f1.s + 20, 90)}%, ${Math.min(f1.l + 40, 60)}%)`);
-      root.style.setProperty('--color-primary-light', `hsl(${f1.h}, ${Math.min(f1.s + 40, 100)}%, ${Math.min(f1.l + 65, 85)}%)`);
+      root.style.setProperty('--primary', `hsl(${f1.h}, ${Math.min(f1.s + 30, 100)}%, ${Math.min(f1.l + 50, 70)}%)`);
+      root.style.setProperty('--primary-dark', `hsl(${f1.h}, ${Math.min(f1.s + 20, 90)}%, ${Math.min(f1.l + 40, 60)}%)`);
+      root.style.setProperty('--primary-light', `hsl(${f1.h}, ${Math.min(f1.s + 40, 100)}%, ${Math.min(f1.l + 65, 85)}%)`);
     } else {
-      root.style.setProperty('--color-primary', `hsl(${f1.h}, ${f1.s}%, ${Math.max(f1.l, 40)}%)`);
-      root.style.setProperty('--color-primary-dark', `hsl(${f1.h}, ${f1.s}%, ${Math.max(f1.l - 15, 30)}%)`);
-      root.style.setProperty('--color-primary-light', `hsl(${f1.h}, ${f1.s}%, ${Math.min(f1.l + 20, 80)}%)`);
+      root.style.setProperty('--primary', `hsl(${f1.h}, ${f1.s}%, ${Math.max(f1.l, 40)}%)`);
+      root.style.setProperty('--primary-dark', `hsl(${f1.h}, ${f1.s}%, ${Math.max(f1.l - 15, 30)}%)`);
+      root.style.setProperty('--primary-light', `hsl(${f1.h}, ${f1.s}%, ${Math.min(f1.l + 20, 80)}%)`);
     }
 
     // Accent color: Use hue variance to determine accent shift
@@ -198,19 +198,19 @@
     const accentShift = mapRange(hueVariance, 0, 180, 15, 90); // 15-90° shift
     const accentHue = (f1.h + accentShift) % 360;
     const accentLightness = isDarkMode ? Math.min(f1.l + 55, 75) : Math.min(f1.l + 10, 70);
-    root.style.setProperty('--color-accent', `hsl(${accentHue}, ${f1.s}%, ${accentLightness}%)`);
+    root.style.setProperty('--secondary', `hsl(${accentHue}, ${f1.s}%, ${accentLightness}%)`);
 
     // Background/surface
     if (isDarkMode) {
-      root.style.setProperty('--color-background', `hsl(${f1.h}, ${Math.max(f1.s - 30, 5)}%, ${f1.l + 2}%)`);
-      root.style.setProperty('--color-surface', `hsl(${f1.h}, ${Math.max(f1.s - 25, 10)}%, ${f1.l + 6}%)`);
-      root.style.setProperty('--color-text', `hsl(${f1.h}, 10%, 95%)`);
-      root.style.setProperty('--color-text-dim', `hsl(${f1.h}, 8%, 70%)`);
+      root.style.setProperty('--background', `hsl(${f1.h}, ${Math.max(f1.s - 30, 5)}%, ${f1.l + 2}%)`);
+      root.style.setProperty('--surface', `hsl(${f1.h}, ${Math.max(f1.s - 25, 10)}%, ${f1.l + 6}%)`);
+      root.style.setProperty('--text', `hsl(${f1.h}, 10%, 95%)`);
+      root.style.setProperty('--text-secondary', `hsl(${f1.h}, 8%, 70%)`);
     } else {
-      root.style.setProperty('--color-background', `hsl(${f1.h}, ${Math.max(f1.s - 50, 5)}%, 98%)`);
-      root.style.setProperty('--color-surface', `hsl(${f1.h}, ${Math.max(f1.s - 45, 10)}%, 95%)`);
-      root.style.setProperty('--color-text', `hsl(${f1.h}, 10%, 20%)`);
-      root.style.setProperty('--color-text-dim', `hsl(${f1.h}, 8%, 50%)`);
+      root.style.setProperty('--background', `hsl(${f1.h}, ${Math.max(f1.s - 50, 5)}%, 98%)`);
+      root.style.setProperty('--surface', `hsl(${f1.h}, ${Math.max(f1.s - 45, 10)}%, 95%)`);
+      root.style.setProperty('--text', `hsl(${f1.h}, 10%, 20%)`);
+      root.style.setProperty('--text-secondary', `hsl(${f1.h}, 8%, 50%)`);
     }
 
     if (debug) console.log('🎨 F1 Polychrome:', { hueVariance: hueVariance.toFixed(1), accentShift: accentShift.toFixed(1), darkMode: isDarkMode });
@@ -220,8 +220,8 @@
     // High variance = sharp/defined = small radius
     // Low variance = soft/diffuse = large radius
     const borderRadiusBase = Math.round(mapRange(satVariance, 0, 100, 16, 4));
-    root.style.setProperty('--border-radius-base', `${borderRadiusBase}px`);
-    root.style.setProperty('--border-radius-lg', `${Math.round(borderRadiusBase * 1.5)}px`);
+    root.style.setProperty('--radius-md', `${borderRadiusBase}px`);
+    root.style.setProperty('--radius-lg', `${Math.round(borderRadiusBase * 1.5)}px`);
 
     // Shadow blur inversely proportional to variance
     const shadowBlur = Math.round(mapRange(satVariance, 0, 100, 24, 8));
