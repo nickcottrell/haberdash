@@ -16,8 +16,14 @@
 (async function() {
   const scriptTag = document.currentScript;
   const nodeId = scriptTag?.getAttribute('data-node-id') || 'haberdash-ui-theme';
-  const nodeApiEndpoint = scriptTag?.getAttribute('data-node-api') || 'http://localhost:8888/api/node';
-  const tokenApiEndpoint = scriptTag?.getAttribute('data-token-api') || 'http://localhost:8888/api/generate';
+
+  // Auto-detect environment: use localhost if on localhost, otherwise use production
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const defaultNodeApi = isLocal ? 'http://localhost:8888/api/node' : 'https://zf8klzvd4k.execute-api.us-east-2.amazonaws.com/prod/api/node';
+  const defaultTokenApi = isLocal ? 'http://localhost:8888/api/generate' : 'https://zf8klzvd4k.execute-api.us-east-2.amazonaws.com/prod/api/generate';
+
+  const nodeApiEndpoint = scriptTag?.getAttribute('data-node-api') || defaultNodeApi;
+  const tokenApiEndpoint = scriptTag?.getAttribute('data-token-api') || defaultTokenApi;
   const debug = scriptTag?.hasAttribute('data-debug');
 
   if (debug) console.log('🌈 VRGB Theme Loader: Starting...', { nodeId, nodeApiEndpoint, tokenApiEndpoint });

@@ -855,11 +855,9 @@
   </script>
 
   <!-- VRGB THEME LOADER - Uses token_generator.py for consistent theming with builder -->
+  <!-- Auto-detects localhost vs production - no hardcoded URLs needed -->
   <script src="js/vrgb-theme-loader.js"
-          data-node-id="haberdash-ui-theme"
-          data-node-api="http://localhost:8888/api/node"
-          data-token-api="http://localhost:8888/api/generate"
-          data-debug>
+          data-node-id="haberdash-ui-theme">
   </script>
   <script src="js/spectra-bridge.js"></script>
 
