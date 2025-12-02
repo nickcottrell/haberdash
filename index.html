@@ -9,6 +9,29 @@
   <link rel="stylesheet" href="css/haberdash-base.css">
   <link rel="stylesheet" href="css/themes/spectra.css">
   <link rel="stylesheet" href="css/showcase.css">
+
+  <!-- Unstyled mode CSS -->
+  <style>
+    html[data-unstyled="true"] {
+      --background: #fff !important;
+      --surface: #fff !important;
+      --text: #000 !important;
+      --text-heading: #000 !important;
+      --border: #000 !important;
+      --primary: blue !important;
+      --radius-sm: 0px !important;
+      --radius-md: 0px !important;
+      --radius-lg: 0px !important;
+      --shadow-sm: none !important;
+      --shadow-md: none !important;
+      --shadow-lg: none !important;
+    }
+
+    html[data-unstyled="true"] * {
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+  </style>
 </head>
 <body>
   <div class="loading-indicator" id="loading">
@@ -17,21 +40,9 @@
 
   <div class="loaded-content" id="content">
     <header>
-      <h1>🎨 Haberdash + Live Spectra</h1>
+      <h1>🎨 Haberdash UI Elements</h1>
       <p class="subtitle">Dynamic Color-Space Theme Encoding</p>
-      <span class="mode-badge">✨ Live Spectra Node Active</span>
     </header>
-
-    <div class="spectra-info">
-      <h3>🌈 Spectra Integration Active</h3>
-      <p>This page is using <strong>live color-space data</strong> from the Spectra API to dynamically generate all design tokens.</p>
-      <p class="mt-sm">
-        <strong>Node ID:</strong> <code id="node-id">haberdash-ui-theme</code>
-      </p>
-      <p class="mt-sm">
-        <strong>How it works:</strong> Four color dimensions (F1-F4) encode design parameters. HSL components of each dimension control specific aspects of the UI.
-      </p>
-    </div>
 
     <!-- Buttons Section -->
     <section>
@@ -843,31 +854,27 @@
     });
   </script>
 
-  <!-- SPECTRA INTEGRATION -->
-  <script src="js/spectra-theme.js"
+  <!-- VRGB THEME LOADER - Uses token_generator.py for consistent theming with builder -->
+  <script src="js/vrgb-theme-loader.js"
           data-node-id="haberdash-ui-theme"
-          data-api="https://zf8klzvd4k.execute-api.us-east-2.amazonaws.com/prod/blend"
+          data-node-api="http://localhost:8888/api/node"
+          data-token-api="http://localhost:8888/api/generate"
           data-debug>
   </script>
   <script src="js/spectra-bridge.js"></script>
 
   <!-- Display Spectra data -->
   <script>
-    // Listen for Spectra theme loaded event
-    window.addEventListener('spectra-theme-loaded', (event) => {
-      const { nodeId } = event.detail;
-
-      // Update node ID display
-      document.getElementById('node-id').textContent = nodeId;
-
+    // Listen for VRGB theme loaded event
+    window.addEventListener('vrgb-theme-loaded', (event) => {
       // Hide loading, show content
       document.getElementById('loading').classList.add('hidden');
       document.getElementById('content').classList.add('visible');
     });
 
-    // Fallback timeout in case Spectra fails to load
+    // Fallback timeout in case theme fails to load
     setTimeout(() => {
-      if (!document.documentElement.classList.contains('spectra-theme-loaded')) {
+      if (!document.documentElement.classList.contains('vrgb-theme-loaded')) {
         document.getElementById('loading').innerHTML = `
           <p class="text-error">❌ Failed to load Spectra data</p>
           <p class="text-secondary mt-sm">
