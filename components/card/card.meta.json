@@ -1,0 +1,5 @@
+{
+  "name": "Cards",
+  "description": "Container component for grouped content with header, body, and action areas",
+  "category": "Layout"
+}

@@ -1,0 +1,54 @@
+/*
+ * Card Component
+ * Container for grouped content with header, body, and actions
+ */
+
+.card {
+  background: var(--surface, #f5f5f5);
+  border: 1px solid var(--border, #d4d4d4);
+  border-radius: var(--radius-md, 8px);
+  overflow: hidden;
+  transition: all var(--transition-base, 200ms);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md, 0 4px 6px rgba(0,0,0,0.1));
+  transform: translateY(-2px);
+}
+
+.card__header {
+  padding: var(--space-lg, 1rem);
+  border-bottom: 1px solid var(--border-light, #e5e5e5);
+}
+
+.card__icon {
+  font-size: var(--font-size-2xl, 1.5rem);
+  margin-bottom: var(--space-sm, 0.5rem);
+}
+
+.card__title {
+  font-size: var(--font-size-lg, 1.125rem);
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--text-heading, #000);
+  margin: 0;
+}
+
+.card__body {
+  padding: var(--space-lg, 1rem);
+}
+
+.card__description {
+  color: var(--text-secondary, #666);
+  margin: 0;
+}
+
+.card__actions {
+  padding: var(--space-lg, 1rem);
+  border-top: 1px solid var(--border-light, #e5e5e5);
+  display: flex;
+  gap: var(--space-sm, 0.5rem);
+}
+
+.card--dashboard {
+  /* Variant for dashboard cards */
+}
