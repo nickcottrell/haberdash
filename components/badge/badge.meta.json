@@ -1,0 +1,6 @@
+{
+  "name": "Badges",
+  "description": "Small status indicators and labels with contextual colors",
+  "category": "Display",
+  "variants": ["default", "primary", "success", "warning", "error", "info", "neutral", "rank"]
+}

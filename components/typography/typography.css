@@ -1,0 +1,30 @@
+/*
+ * Typography Component
+ * Heading and text styles
+ */
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-heading, #000);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: var(--line-height-tight, 1.25);
+  margin-bottom: var(--space-md, 0.75rem);
+}
+
+h1 { font-size: var(--font-size-3xl, 1.875rem); }
+h2 { font-size: var(--font-size-2xl, 1.5rem); }
+h3 { font-size: var(--font-size-xl, 1.25rem); }
+h4 { font-size: var(--font-size-lg, 1.125rem); }
+h5 { font-size: var(--font-size-base, 1rem); }
+h6 { font-size: var(--font-size-sm, 0.875rem); }
+
+p {
+  margin-bottom: var(--space-lg, 1rem);
+  line-height: var(--line-height-normal, 1.5);
+}
+
+.text--gradient {
+  background: linear-gradient(135deg, var(--primary, #3b82f6), var(--secondary, #8b5cf6));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

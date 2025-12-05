@@ -1,0 +1,52 @@
+/*
+ * Progress & Loading Component
+ * Progress bars and loading spinners
+ */
+
+.spinner {
+  border: 3px solid var(--border-light, #e5e5e5);
+  border-top-color: var(--primary, #3b82f6);
+  border-radius: var(--radius-full, 9999px);
+  width: 2rem;
+  height: 2rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner--sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 2px;
+}
+
+.spinner--lg {
+  width: 3rem;
+  height: 3rem;
+  border-width: 4px;
+}
+
+.progress {
+  width: 100%;
+  height: 0.5rem;
+  background: var(--surface, #f5f5f5);
+  border-radius: var(--radius-full, 9999px);
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  background: var(--primary, #3b82f6);
+  border-radius: var(--radius-full, 9999px);
+  transition: width var(--transition-slow, 300ms);
+}
+
+.progress--success .progress__bar {
+  background: var(--success, #22c55e);
+}
+
+.progress--warning .progress__bar {
+  background: var(--warning, #eab308);
+}
