@@ -1,0 +1,7 @@
+{
+  "name": "Button",
+  "description": "Versatile button component with multiple variants and sizes",
+  "category": "Actions",
+  "variants": ["default", "primary", "secondary", "success", "warning", "error"],
+  "sizes": ["sm", "md", "lg", "xl"]
+}
