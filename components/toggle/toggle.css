@@ -18,8 +18,8 @@
 
 .toggle__track {
   position: relative;
-  width: 48px;
-  height: 24px;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
   background: var(--border, #d4d4d4);
   border-radius: var(--radius-full, 9999px);
   transition: background var(--transition-fast, 150ms);
@@ -31,18 +31,18 @@
 
 .toggle__thumb {
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 20px;
-  height: 20px;
-  background: white;
+  top: var(--toggle-thumb-offset);
+  left: var(--toggle-thumb-offset);
+  width: var(--toggle-thumb-size);
+  height: var(--toggle-thumb-size);
+  background: var(--color-white);
   border-radius: var(--radius-full, 9999px);
   transition: transform var(--transition-fast, 150ms);
   box-shadow: var(--shadow-sm, 0 1px 2px rgba(0,0,0,0.05));
 }
 
 .toggle__input:checked + .toggle__track .toggle__thumb {
-  transform: translateX(24px);
+  transform: translateX(calc(var(--toggle-width) - var(--toggle-thumb-size) - var(--toggle-thumb-offset) * 2));
 }
 
 .toggle__label {

@@ -41,4 +41,6 @@ temp/
 .cache/
 
 # Build output
-dist/
+preview/
+haberdash.css
+index.html

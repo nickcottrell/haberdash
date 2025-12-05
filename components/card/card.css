@@ -5,7 +5,7 @@
 
 .card {
   background: var(--surface, #f5f5f5);
-  border: 1px solid var(--border, #d4d4d4);
+  border: var(--border-width-sm) solid var(--border, #d4d4d4);
   border-radius: var(--radius-md, 8px);
   overflow: hidden;
   transition: all var(--transition-base, 200ms);
@@ -13,12 +13,12 @@
 
 .card:hover {
   box-shadow: var(--shadow-md, 0 4px 6px rgba(0,0,0,0.1));
-  transform: translateY(-2px);
+  transform: translateY(var(--hover-lift-lg));
 }
 
 .card__header {
   padding: var(--space-lg, 1rem);
-  border-bottom: 1px solid var(--border-light, #e5e5e5);
+  border-bottom: var(--border-width-sm) solid var(--border-light, #e5e5e5);
 }
 
 .card__icon {
@@ -44,11 +44,7 @@
 
 .card__actions {
   padding: var(--space-lg, 1rem);
-  border-top: 1px solid var(--border-light, #e5e5e5);
+  border-top: var(--border-width-sm) solid var(--border-light, #e5e5e5);
   display: flex;
   gap: var(--space-sm, 0.5rem);
-}
-
-.card--dashboard {
-  /* Variant for dashboard cards */
 }

@@ -20,7 +20,7 @@
 
 .slider__input {
   width: 100%;
-  height: 8px;
+  height: var(--slider-track-height);
   border-radius: var(--radius-sm, 4px);
   background: var(--surface, #f5f5f5);
   outline: none;
@@ -30,8 +30,8 @@
 
 .slider__input::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
   border-radius: var(--radius-full, 9999px);
   background: var(--primary, #3b82f6);
   cursor: pointer;
@@ -39,8 +39,8 @@
 }
 
 .slider__input::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
   border-radius: var(--radius-full, 9999px);
   background: var(--primary, #3b82f6);
   cursor: pointer;

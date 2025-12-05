@@ -12,12 +12,12 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 LIB_DIR = ROOT / 'lib'
 COMPONENTS_DIR = ROOT / 'components'
-DIST_DIR = ROOT / 'dist'
+PREVIEW_DIR = ROOT / 'preview'
 
-def ensure_dist():
-    """Create dist directory if it doesn't exist"""
-    DIST_DIR.mkdir(exist_ok=True)
-    print(f'✓ Created {DIST_DIR}')
+def ensure_preview_dir():
+    """Create preview directory if it doesn't exist"""
+    PREVIEW_DIR.mkdir(exist_ok=True)
+    print(f'✓ Created {PREVIEW_DIR}')
 
 def bundle_css():
     """Bundle all CSS files into a single stylesheet"""
@@ -31,7 +31,7 @@ def bundle_css():
     css_parts.append('')
 
     # 1. Load global styles (lib/)
-    lib_files = ['tokens.css', 'base.css', 'utilities.css']
+    lib_files = ['tokens.css', 'reset.css', 'utilities.css']
     for filename in lib_files:
         file_path = LIB_DIR / filename
         if file_path.exists():
@@ -53,7 +53,7 @@ def bundle_css():
             print(f'  ✓ Loaded component: {component_dir.name}')
 
     # 3. Write bundled CSS
-    output_file = DIST_DIR / 'haberdash.css'
+    output_file = ROOT / 'haberdash.css'
     output_file.write_text('\n'.join(css_parts))
 
     print(f'✓ Bundled CSS → {output_file}')
@@ -85,6 +85,284 @@ def get_components():
 
     return components
 
+def generate_component_page(component):
+    """Generate individual component preview page"""
+    html_parts = []
+
+    html_parts.append('<!DOCTYPE html>')
+    html_parts.append('<html lang="en">')
+    html_parts.append('<head>')
+    html_parts.append('  <meta charset="UTF-8">')
+    html_parts.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
+    html_parts.append(f'  <title>{component["meta"].get("name", component["name"].title())} - Haberdash</title>')
+    html_parts.append('  <link rel="stylesheet" href="../haberdash.css">')
+    html_parts.append('  <style>')
+    html_parts.append('    .component-preview {')
+    html_parts.append('      max-width: 1200px;')
+    html_parts.append('      margin: 0 auto;')
+    html_parts.append('      padding: var(--space-2xl, 2rem);')
+    html_parts.append('    }')
+    html_parts.append('    .component-header {')
+    html_parts.append('      margin-bottom: var(--space-2xl, 2rem);')
+    html_parts.append('      padding-bottom: var(--space-lg, 1rem);')
+    html_parts.append('      border-bottom: 1px solid var(--border, #d4d4d4);')
+    html_parts.append('    }')
+    html_parts.append('    .component-title {')
+    html_parts.append('      margin: 0 0 var(--space-sm, 0.5rem) 0;')
+    html_parts.append('      color: var(--text-heading, #000);')
+    html_parts.append('    }')
+    html_parts.append('    .component-description {')
+    html_parts.append('      margin: 0 0 var(--space-lg, 1rem) 0;')
+    html_parts.append('      color: var(--text-secondary, #666);')
+    html_parts.append('    }')
+    html_parts.append('    .component-meta {')
+    html_parts.append('      display: flex;')
+    html_parts.append('      gap: var(--space-sm, 0.5rem);')
+    html_parts.append('      flex-wrap: wrap;')
+    html_parts.append('    }')
+    html_parts.append('    .component-links {')
+    html_parts.append('      display: flex;')
+    html_parts.append('      gap: var(--space-sm, 0.5rem);')
+    html_parts.append('      margin-top: var(--space-md, 0.75rem);')
+    html_parts.append('    }')
+    html_parts.append('    .component-link {')
+    html_parts.append('      display: inline-flex;')
+    html_parts.append('      align-items: center;')
+    html_parts.append('      gap: 0.25rem;')
+    html_parts.append('      padding: 0.375rem 0.75rem;')
+    html_parts.append('      font-size: 0.875rem;')
+    html_parts.append('      background: var(--surface, #f5f5f5);')
+    html_parts.append('      border: 1px solid var(--border, #d4d4d4);')
+    html_parts.append('      border-radius: var(--radius-sm, 4px);')
+    html_parts.append('      color: var(--text, #333);')
+    html_parts.append('      text-decoration: none;')
+    html_parts.append('      transition: all 200ms;')
+    html_parts.append('      cursor: pointer;')
+    html_parts.append('      font-family: inherit;')
+    html_parts.append('    }')
+    html_parts.append('    .component-link:hover {')
+    html_parts.append('      background: var(--primary-light, #dbeafe);')
+    html_parts.append('      border-color: var(--primary, #3b82f6);')
+    html_parts.append('      color: var(--primary, #3b82f6);')
+    html_parts.append('    }')
+    html_parts.append('    .component-content {')
+    html_parts.append('      padding: var(--space-xl, 1.5rem);')
+    html_parts.append('      background: var(--background, #fafafa);')
+    html_parts.append('      border-radius: var(--radius-md, 8px);')
+    html_parts.append('    }')
+    html_parts.append('  </style>')
+    html_parts.append('</head>')
+    html_parts.append('<body>')
+    html_parts.append('  <div class="component-preview">')
+    html_parts.append('    <div class="component-header">')
+    html_parts.append(f'      <h1 class="component-title">{component["meta"].get("name", component["name"].title())}</h1>')
+    if component["meta"].get("description"):
+        html_parts.append(f'      <p class="component-description">{component["meta"]["description"]}</p>')
+    html_parts.append('      <div class="component-meta">')
+    if component["meta"].get("category"):
+        html_parts.append(f'        <span class="badge">{component["meta"]["category"]}</span>')
+    html_parts.append('      </div>')
+    html_parts.append('      <div class="component-links">')
+    html_parts.append(f'        <button class="component-link" data-file="components/{component["name"]}/{component["name"]}.html">📄 HTML</button>')
+    html_parts.append(f'        <button class="component-link" data-file="components/{component["name"]}/{component["name"]}.css">🎨 CSS</button>')
+    html_parts.append(f'        <button class="component-link" data-file="components/{component["name"]}/{component["name"]}.meta.json">⚙️ JSON</button>')
+    html_parts.append('        <a href="index.html" class="component-link">← Back to System</a>')
+    html_parts.append('      </div>')
+    html_parts.append('      <div id="file-path-display" style="display: none; margin-top: var(--space-md, 0.75rem); padding: var(--space-md, 0.75rem); background: var(--surface, #f5f5f5); border-radius: var(--radius-sm, 4px); font-family: monospace; font-size: 0.875rem; color: var(--text-secondary, #666);"></div>')
+    html_parts.append('    </div>')
+    html_parts.append('    <div class="component-content">')
+    html_parts.append(component['html'])
+    html_parts.append('    </div>')
+    html_parts.append('  </div>')
+    html_parts.append('  <script>')
+    html_parts.append('    const fileButtons = document.querySelectorAll("button.component-link[data-file]");')
+    html_parts.append('    const pathDisplay = document.getElementById("file-path-display");')
+    html_parts.append('    ')
+    html_parts.append('    fileButtons.forEach(button => {')
+    html_parts.append('      button.addEventListener("click", () => {')
+    html_parts.append('        const filePath = button.getAttribute("data-file");')
+    html_parts.append('        pathDisplay.style.display = "block";')
+    html_parts.append('        pathDisplay.innerHTML = `<strong>File path:</strong> ${filePath}<br><small>Click to copy</small>`;')
+    html_parts.append('        pathDisplay.style.cursor = "pointer";')
+    html_parts.append('        ')
+    html_parts.append('        pathDisplay.onclick = () => {')
+    html_parts.append('          navigator.clipboard.writeText(filePath).then(() => {')
+    html_parts.append('            pathDisplay.innerHTML = `<strong>✓ Copied:</strong> ${filePath}`;')
+    html_parts.append('            setTimeout(() => {')
+    html_parts.append('              pathDisplay.innerHTML = `<strong>File path:</strong> ${filePath}<br><small>Click to copy</small>`;')
+    html_parts.append('            }, 2000);')
+    html_parts.append('          });')
+    html_parts.append('        };')
+    html_parts.append('      });')
+    html_parts.append('    });')
+    html_parts.append('  </script>')
+    html_parts.append('</body>')
+    html_parts.append('</html>')
+
+    output_file = PREVIEW_DIR / f'{component["name"]}.html'
+    output_file.write_text('\n'.join(html_parts))
+
+    return output_file
+
+def generate_preview_index(components):
+    """Generate preview/index.html - portfolio-style 3-column showcase"""
+    html_parts = []
+
+    html_parts.append('<!DOCTYPE html>')
+    html_parts.append('<html lang="en">')
+    html_parts.append('<head>')
+    html_parts.append('  <meta charset="UTF-8">')
+    html_parts.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
+    html_parts.append('  <title>Haberdash - System Showcase</title>')
+    html_parts.append('  <link rel="stylesheet" href="../haberdash.css">')
+    html_parts.append('  <style>')
+    html_parts.append('    body {')
+    html_parts.append('      margin: 0;')
+    html_parts.append('      padding: 0;')
+    html_parts.append('      overflow: hidden;')
+    html_parts.append('      display: flex;')
+    html_parts.append('      align-items: center;')
+    html_parts.append('      justify-content: center;')
+    html_parts.append('      min-height: 100vh;')
+    html_parts.append('      background: var(--background);')
+    html_parts.append('    }')
+    html_parts.append('')
+    html_parts.append('    .showcase-container {')
+    html_parts.append('      position: relative;')
+    html_parts.append('      width: 100vw;')
+    html_parts.append('      height: 56.25vw;')
+    html_parts.append('      max-height: 100vh;')
+    html_parts.append('      max-width: 177.78vh;')
+    html_parts.append('      background: var(--background);')
+    html_parts.append('      overflow: hidden;')
+    html_parts.append('    }')
+    html_parts.append('')
+    html_parts.append('    .showcase-content {')
+    html_parts.append('      position: absolute;')
+    html_parts.append('      top: 0;')
+    html_parts.append('      left: 0;')
+    html_parts.append('      width: 1920px;')
+    html_parts.append('      height: 1080px;')
+    html_parts.append('      transform-origin: top left;')
+    html_parts.append('      padding: 40px;')
+    html_parts.append('      box-sizing: border-box;')
+    html_parts.append('      overflow-y: auto;')
+    html_parts.append('      overflow-x: hidden;')
+    html_parts.append('    }')
+    html_parts.append('')
+    html_parts.append('    .showcase-grid {')
+    html_parts.append('      display: grid;')
+    html_parts.append('      grid-template-columns: repeat(3, 1fr);')
+    html_parts.append('      gap: 40px;')
+    html_parts.append('      height: 100%;')
+    html_parts.append('      align-items: start;')
+    html_parts.append('    }')
+    html_parts.append('')
+    html_parts.append('    .showcase-column {')
+    html_parts.append('      display: flex;')
+    html_parts.append('      flex-direction: column;')
+    html_parts.append('      gap: 32px;')
+    html_parts.append('    }')
+    html_parts.append('')
+    html_parts.append('    .showcase-section {')
+    html_parts.append('      display: flex;')
+    html_parts.append('      flex-direction: column;')
+    html_parts.append('      gap: 12px;')
+    html_parts.append('    }')
+    html_parts.append('')
+    html_parts.append('    .showcase-section h3 {')
+    html_parts.append('      margin: 0;')
+    html_parts.append('      font-size: 18px;')
+    html_parts.append('      color: var(--text-heading);')
+    html_parts.append('      flex-shrink: 0;')
+    html_parts.append('    }')
+    html_parts.append('')
+    html_parts.append('    .showcase-section h3 a {')
+    html_parts.append('      color: inherit;')
+    html_parts.append('      text-decoration: none;')
+    html_parts.append('      transition: color 200ms;')
+    html_parts.append('    }')
+    html_parts.append('')
+    html_parts.append('    .showcase-section h3 a:hover {')
+    html_parts.append('      color: var(--primary);')
+    html_parts.append('    }')
+    html_parts.append('  </style>')
+    html_parts.append('</head>')
+    html_parts.append('<body>')
+    html_parts.append('  <div class="showcase-container">')
+    html_parts.append('    <div class="showcase-content" id="showcase-content">')
+    html_parts.append('      <div class="showcase-grid">')
+    html_parts.append('')
+
+    # Column 1
+    html_parts.append('        <!-- COLUMN 1 -->')
+    html_parts.append('        <div class="showcase-column">')
+    for comp in components:
+        if comp['name'] in ['button', 'form', 'badge']:
+            html_parts.append('          <div class="showcase-section">')
+            html_parts.append(f'            <h3><a href="{comp["name"]}.html">{comp["meta"].get("name", comp["name"].title())}</a></h3>')
+            html_parts.append('            <div class="showcase-section-content">')
+            html_parts.append(comp['html'])
+            html_parts.append('            </div>')
+            html_parts.append('          </div>')
+    html_parts.append('        </div>')
+    html_parts.append('')
+
+    # Column 2
+    html_parts.append('        <!-- COLUMN 2 -->')
+    html_parts.append('        <div class="showcase-column">')
+    for comp in components:
+        if comp['name'] in ['card', 'slider', 'progress', 'alert']:
+            html_parts.append('          <div class="showcase-section">')
+            html_parts.append(f'            <h3><a href="{comp["name"]}.html">{comp["meta"].get("name", comp["name"].title())}</a></h3>')
+            html_parts.append('            <div class="showcase-section-content">')
+            html_parts.append(comp['html'])
+            html_parts.append('            </div>')
+            html_parts.append('          </div>')
+    html_parts.append('        </div>')
+    html_parts.append('')
+
+    # Column 3
+    html_parts.append('        <!-- COLUMN 3 -->')
+    html_parts.append('        <div class="showcase-column">')
+    for comp in components:
+        if comp['name'] in ['result-card', 'typography', 'upload', 'toggle', 'list-card']:
+            html_parts.append('          <div class="showcase-section">')
+            html_parts.append(f'            <h3><a href="{comp["name"]}.html">{comp["meta"].get("name", comp["name"].title())}</a></h3>')
+            html_parts.append('            <div class="showcase-section-content">')
+            html_parts.append(comp['html'])
+            html_parts.append('            </div>')
+            html_parts.append('          </div>')
+    html_parts.append('        </div>')
+    html_parts.append('')
+
+    html_parts.append('      </div>')
+    html_parts.append('    </div>')
+    html_parts.append('  </div>')
+    html_parts.append('')
+    html_parts.append('  <script>')
+    html_parts.append('    function scaleShowcase() {')
+    html_parts.append('      const container = document.querySelector(".showcase-container");')
+    html_parts.append('      const content = document.getElementById("showcase-content");')
+    html_parts.append('      const containerWidth = container.offsetWidth;')
+    html_parts.append('      const containerHeight = container.offsetHeight;')
+    html_parts.append('      const scaleX = containerWidth / 1920;')
+    html_parts.append('      const scaleY = containerHeight / 1080;')
+    html_parts.append('      const scale = Math.min(scaleX, scaleY);')
+    html_parts.append('      content.style.transform = `scale(${scale})`;')
+    html_parts.append('    }')
+    html_parts.append('    window.addEventListener("load", scaleShowcase);')
+    html_parts.append('    window.addEventListener("resize", scaleShowcase);')
+    html_parts.append('    scaleShowcase();')
+    html_parts.append('  </script>')
+    html_parts.append('</body>')
+    html_parts.append('</html>')
+
+    output_file = PREVIEW_DIR / 'index.html'
+    output_file.write_text('\n'.join(html_parts))
+
+    return output_file
+
 def generate_index(components):
     """Generate index.html showcase page"""
     html_parts = []
@@ -113,7 +391,7 @@ def generate_index(components):
     html_parts.append('</body>')
     html_parts.append('</html>')
 
-    output_file = DIST_DIR / 'index.html'
+    output_file = ROOT / 'index.html'
     output_file.write_text('\n'.join(html_parts))
 
     print(f'✓ Generated index.html → {output_file}')
@@ -123,8 +401,8 @@ def main():
     """Main build process"""
     print('🎨 Building Haberdash...\n')
 
-    # Ensure dist directory exists
-    ensure_dist()
+    # Ensure preview directory exists
+    ensure_preview_dir()
     print()
 
     # Bundle CSS
@@ -140,12 +418,25 @@ def main():
     # Generate pages
     print('📄 Generating pages...')
     generate_index(components)
+
+    # Generate preview showcase page
+    generate_preview_index(components)
+    print('  ✓ Generated preview/index.html')
+
+    # Generate individual component pages
+    for component in components:
+        generate_component_page(component)
+        print(f'  ✓ Generated preview/{component["name"]}.html')
     print()
 
     print('✅ Build complete!')
-    print(f'\n📂 Output: {DIST_DIR}/')
+    print(f'\n📂 Output:')
     print(f'   - haberdash.css')
-    print(f'   - index.html')
+    print(f'   - index.html (simple component list)')
+    print(f'   - preview/')
+    print(f'     - index.html (system showcase)')
+    for component in components:
+        print(f'     - {component["name"]}.html')
 
 if __name__ == '__main__':
     main()
