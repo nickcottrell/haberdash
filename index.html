@@ -9,16 +9,7 @@
   <link rel="stylesheet" href="haberdash.css">
 </head>
 <body>
-  <div class="loading-indicator" id="loading">
-    <p>🌈 Loading Spectra color-space data...</p>
-  </div>
-
-  <div class="loaded-content" id="content">
-    <header>
-      <h1>🎨 Haberdash UI Elements</h1>
-      <p class="subtitle">Dynamic Color-Space Theme Encoding</p>
-    </header>
-
+  <div class="loaded-content visible" id="content">
     <!-- Buttons Section -->
     <section>
       <h2>Buttons</h2>
@@ -617,21 +608,14 @@
     </section>
 
     <footer>
-      <p class="mb-sm">
-        <strong>Live Spectra Integration:</strong> All design tokens dynamically generated
-      </p>
-      <p class="text-secondary">
-        Change the Spectra node ID to see different themes instantly.
-      </p>
-      <div class="footer-links">
-        <a href="demo-index.html">← Demo Index</a>
-        <a href="craigslist.html">Craigslist Mode (BASE)</a>
-      </div>
     </footer>
   </div>
 
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
+
+  <!-- NOTE: Spectra theme loading temporarily disabled -->
+  <!-- TODO: Refactor theme injection mechanism for proper node-based theming -->
 
   <!-- Toast Notification JavaScript -->
   <script>
@@ -829,39 +813,13 @@
     });
   </script>
 
-  <!-- VRGB THEME LOADER - Uses token_generator.py for consistent theming with builder -->
-  <!-- Auto-detects localhost vs production - no hardcoded URLs needed -->
+  <!-- VRGB THEME LOADER - DISABLED FOR NOW -->
+  <!-- TODO: Refactor to use proper theme injection mechanism -->
+  <!--
   <script src="js/vrgb-theme-loader.js"
           data-node-id="haberdash-ui-theme">
   </script>
-  <script src="js/spectra-bridge.js?v=81a7c6e"></script>
-
-  <!-- Display Spectra data -->
-  <script>
-    // Listen for VRGB theme loaded event
-    window.addEventListener('vrgb-theme-loaded', (event) => {
-      // Hide loading, show content
-      document.getElementById('loading').classList.add('hidden');
-      document.getElementById('content').classList.add('visible');
-    });
-
-    // Fallback timeout in case theme fails to load
-    setTimeout(() => {
-      if (!document.documentElement.classList.contains('vrgb-theme-loaded')) {
-        document.getElementById('loading').innerHTML = `
-          <p class="text-error">❌ Failed to load Spectra data</p>
-          <p class="text-secondary mt-sm">
-            Check console for errors. The API might be unavailable or the node ID might not exist.
-          </p>
-        `;
-
-        // Still show content with fallback theme
-        setTimeout(() => {
-          document.getElementById('loading').classList.add('hidden');
-          document.getElementById('content').classList.add('visible');
-        }, 2000);
-      }
-    }, 5000);
-  </script>
+  <script src="js/spectra-bridge.js?v=1c4b693"></script>
+  -->
 </body>
 </html>
