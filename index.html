@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Haberdash - Live Spectra Integration</title>
 
-  <!-- BASE LAYER + THEME LAYER -->
-  <link rel="stylesheet" href="css/haberdash-base.css">
-  <link rel="stylesheet" href="css/themes/spectra.css">
-  <link rel="stylesheet" href="css/showcase.css">
+  <!-- CONSOLIDATED HABERDASH STYLESHEET -->
+  <link rel="stylesheet" href="haberdash.css">
 </head>
 <body>
   <div class="loading-indicator" id="loading">
@@ -17,21 +15,9 @@
 
   <div class="loaded-content" id="content">
     <header>
-      <h1>🎨 Haberdash + Live Spectra</h1>
+      <h1>🎨 Haberdash UI Elements</h1>
       <p class="subtitle">Dynamic Color-Space Theme Encoding</p>
-      <span class="mode-badge">✨ Live Spectra Node Active</span>
     </header>
-
-    <div class="spectra-info">
-      <h3>🌈 Spectra Integration Active</h3>
-      <p>This page is using <strong>live color-space data</strong> from the Spectra API to dynamically generate all design tokens.</p>
-      <p class="mt-sm">
-        <strong>Node ID:</strong> <code id="node-id">haberdash-ui-theme</code>
-      </p>
-      <p class="mt-sm">
-        <strong>How it works:</strong> Four color dimensions (F1-F4) encode design parameters. HSL components of each dimension control specific aspects of the UI.
-      </p>
-    </div>
 
     <!-- Buttons Section -->
     <section>
@@ -843,31 +829,25 @@
     });
   </script>
 
-  <!-- SPECTRA INTEGRATION -->
-  <script src="js/spectra-theme.js?v=6489f12"
-          data-node-id="haberdash-ui-theme"
-          data-api="https://zf8klzvd4k.execute-api.us-east-2.amazonaws.com/prod/blend"
-          data-debug>
+  <!-- VRGB THEME LOADER - Uses token_generator.py for consistent theming with builder -->
+  <!-- Auto-detects localhost vs production - no hardcoded URLs needed -->
+  <script src="js/vrgb-theme-loader.js"
+          data-node-id="haberdash-ui-theme">
   </script>
-  <script src="js/spectra-bridge.js?v=6489f12"></script>
+  <script src="js/spectra-bridge.js?v=81a7c6e"></script>
 
   <!-- Display Spectra data -->
   <script>
-    // Listen for Spectra theme loaded event
-    window.addEventListener('spectra-theme-loaded', (event) => {
-      const { nodeId } = event.detail;
-
-      // Update node ID display
-      document.getElementById('node-id').textContent = nodeId;
-
+    // Listen for VRGB theme loaded event
+    window.addEventListener('vrgb-theme-loaded', (event) => {
       // Hide loading, show content
       document.getElementById('loading').classList.add('hidden');
       document.getElementById('content').classList.add('visible');
     });
 
-    // Fallback timeout in case Spectra fails to load
+    // Fallback timeout in case theme fails to load
     setTimeout(() => {
-      if (!document.documentElement.classList.contains('spectra-theme-loaded')) {
+      if (!document.documentElement.classList.contains('vrgb-theme-loaded')) {
         document.getElementById('loading').innerHTML = `
           <p class="text-error">❌ Failed to load Spectra data</p>
           <p class="text-secondary mt-sm">
