@@ -1,0 +1,84 @@
+/*
+ * File Upload Component
+ * Drag and drop file upload area
+ */
+
+.upload {
+  border: var(--border-width-md) dashed var(--border, #d4d4d4);
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-2xl, 2rem);
+  text-align: center;
+  transition: all var(--transition-base, 200ms);
+}
+
+.upload--dragover {
+  border-color: var(--primary, #3b82f6);
+  background: var(--primary-light, #dbeafe);
+}
+
+.upload__input {
+  display: none;
+}
+
+.upload__label {
+  display: block;
+  cursor: pointer;
+}
+
+.upload__icon {
+  font-size: var(--icon-size-3xl);
+  display: block;
+  margin-bottom: var(--space-sm, 0.5rem);
+}
+
+.upload__text {
+  display: block;
+  font-weight: var(--font-weight-medium, 500);
+  margin-bottom: var(--space-xs, 0.25rem);
+}
+
+.upload__hint {
+  display: block;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--text-secondary, #666);
+  margin-bottom: var(--space-lg, 1rem);
+}
+
+.upload__button {
+  pointer-events: none;
+}
+
+.upload__file-list {
+  margin-top: var(--space-lg, 1rem);
+}
+
+.upload__file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm, 0.5rem);
+  background: var(--surface, #f5f5f5);
+  border-radius: var(--radius-sm, 4px);
+  margin-bottom: var(--space-sm, 0.5rem);
+}
+
+.upload__file-name {
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.upload__file-size {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--text-secondary, #666);
+}
+
+.upload__file-remove {
+  background: none;
+  border: none;
+  font-size: var(--icon-size-md);
+  line-height: 1;
+  cursor: pointer;
+  color: var(--error, #ef4444);
+  padding: 0;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+}

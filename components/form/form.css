@@ -18,9 +18,9 @@
 .form__select,
 .form__textarea {
   width: 100%;
-  padding: 0.5rem 0.75rem;
-  background: white;
-  border: 1px solid var(--border, #d4d4d4);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--input-bg);
+  border: var(--border-width-sm) solid var(--border, #d4d4d4);
   border-radius: var(--radius-md, 8px);
   font-size: var(--font-size-base, 1rem);
   transition: border-color var(--transition-fast, 150ms);
@@ -31,11 +31,11 @@
 .form__textarea:focus {
   outline: none;
   border-color: var(--primary, #3b82f6);
-  box-shadow: 0 0 0 3px hsla(210, 70%, 50%, 0.1);
+  box-shadow: var(--focus-ring-shadow);
 }
 
 .form__textarea {
-  min-height: 100px;
+  min-height: var(--textarea-min-height);
   resize: vertical;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .form__fieldset {
-  border: 1px solid var(--border, #d4d4d4);
+  border: var(--border-width-sm) solid var(--border, #d4d4d4);
   border-radius: var(--radius-md, 8px);
   padding: var(--space-lg, 1rem);
   margin-bottom: var(--space-lg, 1rem);
@@ -69,7 +69,7 @@
 
 .form__choice input[type="checkbox"],
 .form__choice input[type="radio"] {
-  width: 1.125rem;
-  height: 1.125rem;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
   cursor: pointer;
 }

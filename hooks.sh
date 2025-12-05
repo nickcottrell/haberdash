@@ -75,12 +75,12 @@ start_server() {
   echo "📦 Serving Haberdash component showcase"
   echo ""
   echo "Open in your browser:"
-  echo -e "  ${GREEN}http://localhost:8080/dist/${NC}"
+  echo -e "  ${GREEN}http://localhost:8080/${NC}"
   echo ""
   echo "Press Ctrl+C to stop"
   echo ""
 
-  cd dist && python3 -m http.server 8080
+  python3 -m http.server 8080
 }
 
 deploy_github() {
@@ -98,12 +98,6 @@ deploy_github() {
     print_error "Build failed"
     exit 1
   fi
-
-  echo ""
-  print_step "Copying dist/ to root for GitHub Pages..."
-  cp dist/haberdash.css ./
-  cp dist/index.html ./
-  print_success "Files copied to root"
 
   echo ""
   if [[ -n $(git status -s) ]]; then

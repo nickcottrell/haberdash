@@ -1,0 +1,82 @@
+/*
+ * List Card Component
+ * Display lists of items with status
+ */
+
+.list-card {
+  background: var(--surface, #f5f5f5);
+  border: var(--border-width-sm) solid var(--border, #d4d4d4);
+  border-radius: var(--radius-md, 8px);
+  overflow: hidden;
+}
+
+.list-card__header {
+  padding: var(--space-lg, 1rem);
+  border-bottom: var(--border-width-sm) solid var(--border-light, #e5e5e5);
+}
+
+.list-card__title {
+  font-size: var(--font-size-lg, 1.125rem);
+  font-weight: var(--font-weight-bold, 700);
+  margin: 0;
+}
+
+.list-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-card__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg, 1rem);
+  border-bottom: var(--border-width-sm) solid var(--border-light, #e5e5e5);
+}
+
+.list-card__item:last-child {
+  border-bottom: none;
+}
+
+.list-card__item-content {
+  flex: 1;
+}
+
+.list-card__item-title {
+  font-weight: var(--font-weight-medium, 500);
+  margin-bottom: var(--space-xs, 0.25rem);
+}
+
+.list-card__item-subtitle {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--text-secondary, #666);
+  margin: 0;
+}
+
+.list-card__item-meta {
+  margin-left: var(--space-lg, 1rem);
+}
+
+.list-card__item-status {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-medium, 500);
+  border-radius: var(--radius-sm, 4px);
+}
+
+.list-card__item-status--success {
+  background: var(--success-bg);
+  color: var(--success, #22c55e);
+}
+
+.list-card__item-status--warning {
+  background: var(--warning-bg);
+  color: var(--warning, #eab308);
+}
+
+.list-card__item-status--error {
+  background: var(--error-bg);
+  color: var(--error, #ef4444);
+}

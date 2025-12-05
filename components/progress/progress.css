@@ -4,11 +4,11 @@
  */
 
 .spinner {
-  border: 3px solid var(--border-light, #e5e5e5);
+  border: var(--border-width-lg) solid var(--border-light, #e5e5e5);
   border-top-color: var(--primary, #3b82f6);
   border-radius: var(--radius-full, 9999px);
-  width: 2rem;
-  height: 2rem;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
   animation: spin 1s linear infinite;
 }
 
@@ -17,20 +17,20 @@
 }
 
 .spinner--sm {
-  width: 1rem;
-  height: 1rem;
-  border-width: 2px;
+  width: var(--spinner-size-sm);
+  height: var(--spinner-size-sm);
+  border-width: var(--border-width-md);
 }
 
 .spinner--lg {
-  width: 3rem;
-  height: 3rem;
-  border-width: 4px;
+  width: var(--spinner-size-lg);
+  height: var(--spinner-size-lg);
+  border-width: var(--border-width-xl);
 }
 
 .progress {
   width: 100%;
-  height: 0.5rem;
+  height: var(--progress-height);
   background: var(--surface, #f5f5f5);
   border-radius: var(--radius-full, 9999px);
   overflow: hidden;
@@ -49,4 +49,13 @@
 
 .progress--warning .progress__bar {
   background: var(--warning, #eab308);
+}
+
+/* Example width classes for demonstration */
+.progress__bar--45 {
+  width: 45%;
+}
+
+.progress__bar--75 {
+  width: 75%;
 }

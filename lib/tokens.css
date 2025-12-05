@@ -27,12 +27,14 @@
 
   /* Spacing */
   --space-unit: 1rem;
+  --space-2xs: 0.125rem;
   --space-xs: calc(var(--space-unit) * 0.25);
   --space-sm: calc(var(--space-unit) * 0.5);
   --space-md: calc(var(--space-unit) * 0.75);
   --space-lg: var(--space-unit);
   --space-xl: calc(var(--space-unit) * 1.5);
   --space-2xl: calc(var(--space-unit) * 2);
+  --space-3xl: calc(var(--space-unit) * 2.5);
 
   /* Border radius */
   --radius-sm: 4px;
@@ -66,4 +68,62 @@
   --transition-fast: 150ms ease;
   --transition-base: 200ms ease;
   --transition-slow: 300ms ease;
+
+  /* Border widths */
+  --border-width-sm: 1px;
+  --border-width-md: 2px;
+  --border-width-lg: 3px;
+  --border-width-xl: 4px;
+
+  /* Z-index scale */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-overlay: 500;
+  --z-modal: 800;
+  --z-toast: 1000;
+
+  /* Interaction states */
+  --opacity-hover: 0.9;
+  --opacity-disabled: 0.5;
+  --hover-lift: -1px;
+  --hover-lift-lg: -2px;
+
+  /* Component-specific sizing */
+  --checkbox-size: 1.125rem;
+  --radio-size: 1.125rem;
+  --toggle-width: 48px;
+  --toggle-height: 24px;
+  --toggle-thumb-size: 20px;
+  --toggle-thumb-offset: 2px;
+  --slider-track-height: 8px;
+  --slider-thumb-size: 18px;
+  --spinner-size: 2rem;
+  --spinner-size-sm: 1.25rem;
+  --spinner-size-lg: 3rem;
+  --progress-height: 0.5rem;
+  --badge-rank-size: 2rem;
+  --icon-size-sm: 1rem;
+  --icon-size-md: 1.5rem;
+  --icon-size-lg: 2rem;
+  --icon-size-xl: 2.5rem;
+  --icon-size-2xl: 3rem;
+  --icon-size-3xl: 3rem;
+
+  /* Semantic colors - extended */
+  --color-white: white;
+  --success-bg: hsl(140, 60%, 95%);
+  --success-text: hsl(140, 60%, 25%);
+  --warning-bg: hsl(45, 90%, 95%);
+  --warning-text: hsl(45, 90%, 25%);
+  --error-bg: hsl(0, 70%, 95%);
+  --error-text: hsl(0, 70%, 25%);
+  --info-bg: hsl(200, 70%, 95%);
+  --info-text: hsl(200, 70%, 25%);
+
+  /* Layout constraints */
+  --toast-max-width: 400px;
+  --input-bg: white;
+  --textarea-min-height: 100px;
+  --metric-min-width: 150px;
+  --focus-ring-shadow: 0 0 0 3px hsla(210, 70%, 50%, 0.1);
 }
