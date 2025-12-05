@@ -60,18 +60,27 @@ check_port() {
 start_server() {
   print_header "HABERDASH COMPONENT LIBRARY"
 
+  print_step "Building components..."
+  if python3 build.py; then
+    print_success "Build complete"
+  else
+    print_error "Build failed"
+    exit 1
+  fi
+
+  echo ""
   check_port 8080
 
   echo ""
   echo "📦 Serving Haberdash component showcase"
   echo ""
   echo "Open in your browser:"
-  echo -e "  ${GREEN}http://localhost:8080${NC}"
+  echo -e "  ${GREEN}http://localhost:8080/dist/${NC}"
   echo ""
   echo "Press Ctrl+C to stop"
   echo ""
 
-  python3 -m http.server 8080
+  cd dist && python3 -m http.server 8080
 }
 
 deploy_github() {
@@ -82,6 +91,21 @@ deploy_github() {
     exit 1
   fi
 
+  print_step "Building components..."
+  if python3 build.py; then
+    print_success "Build complete"
+  else
+    print_error "Build failed"
+    exit 1
+  fi
+
+  echo ""
+  print_step "Copying dist/ to root for GitHub Pages..."
+  cp dist/haberdash.css ./
+  cp dist/index.html ./
+  print_success "Files copied to root"
+
+  echo ""
   if [[ -n $(git status -s) ]]; then
     print_error "You have uncommitted changes"
     echo ""
@@ -97,8 +121,8 @@ deploy_github() {
 
   print_success "Deployed to GitHub!"
   echo ""
-  echo "Your stylesheet will be available at:"
-  echo -e "  ${GREEN}https://nickcottrell.github.io/haberdash/haberdash.css${NC}"
+  echo "Your site will be available at:"
+  echo -e "  ${GREEN}https://nickcottrell.github.io/haberdash/${NC}"
   echo ""
   echo "💡 GitHub Pages may take 1-2 minutes to update"
 }

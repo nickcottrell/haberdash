@@ -1,0 +1,44 @@
+/*
+ * Alert Component
+ * Notification messages with contextual variants
+ */
+
+.alert {
+  padding: var(--space-lg, 1rem);
+  border-radius: var(--radius-md, 8px);
+  border-left: 4px solid;
+  margin-bottom: var(--space-lg, 1rem);
+}
+
+.alert__title {
+  font-weight: var(--font-weight-bold, 700);
+  margin-bottom: var(--space-sm, 0.5rem);
+}
+
+.alert__message {
+  margin: 0;
+}
+
+.alert--success {
+  background: hsl(140, 60%, 95%);
+  border-color: var(--success, #22c55e);
+  color: hsl(140, 60%, 25%);
+}
+
+.alert--warning {
+  background: hsl(45, 90%, 95%);
+  border-color: var(--warning, #eab308);
+  color: hsl(45, 90%, 25%);
+}
+
+.alert--error {
+  background: hsl(0, 70%, 95%);
+  border-color: var(--error, #ef4444);
+  color: hsl(0, 70%, 25%);
+}
+
+.alert--info {
+  background: hsl(200, 70%, 95%);
+  border-color: var(--info, #3b82f6);
+  color: hsl(200, 70%, 25%);
+}

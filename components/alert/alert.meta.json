@@ -1,0 +1,6 @@
+{
+  "name": "Alerts",
+  "description": "Contextual feedback messages for user actions",
+  "category": "Feedback",
+  "variants": ["success", "warning", "error", "info"]
+}

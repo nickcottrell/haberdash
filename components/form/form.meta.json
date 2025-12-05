@@ -1,0 +1,6 @@
+{
+  "name": "Forms",
+  "description": "Input fields, selects, textareas, checkboxes, and radio buttons",
+  "category": "Forms",
+  "elements": ["input", "select", "textarea", "checkbox", "radio", "fieldset"]
+}

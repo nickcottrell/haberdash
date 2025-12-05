@@ -1,0 +1,94 @@
+/*
+ * Button Component
+ * Versatile button styles with variants and sizes
+ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-size: var(--font-size-base, 1rem);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 1.5;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md, 8px);
+  cursor: pointer;
+  transition: all var(--transition-base, 200ms ease);
+  background: var(--surface, hsl(0, 0%, 95%));
+  color: var(--text, hsl(0, 0%, 10%));
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primary variant */
+.btn--primary {
+  background: var(--primary, hsl(210, 70%, 50%));
+  color: white;
+  border-color: var(--primary, hsl(210, 70%, 50%));
+}
+
+.btn--primary:hover {
+  background: var(--primary-hover, hsl(210, 70%, 60%));
+}
+
+/* Secondary variant */
+.btn--secondary {
+  background: var(--secondary, hsl(0, 0%, 40%));
+  color: white;
+  border-color: var(--secondary, hsl(0, 0%, 40%));
+}
+
+.btn--secondary:hover {
+  background: var(--secondary-hover, hsl(0, 0%, 50%));
+}
+
+/* Success variant */
+.btn--success {
+  background: var(--success, hsl(140, 60%, 50%));
+  color: white;
+  border-color: var(--success, hsl(140, 60%, 50%));
+}
+
+/* Warning variant */
+.btn--warning {
+  background: var(--warning, hsl(45, 90%, 55%));
+  color: hsl(0, 0%, 10%);
+  border-color: var(--warning, hsl(45, 90%, 55%));
+}
+
+/* Error variant */
+.btn--error {
+  background: var(--error, hsl(0, 70%, 55%));
+  color: white;
+  border-color: var(--error, hsl(0, 70%, 55%));
+}
+
+/* Size variants */
+.btn--sm {
+  padding: 0.375rem 0.75rem;
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.btn--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: var(--font-size-lg, 1.125rem);
+}
+
+.btn--xl {
+  padding: 1rem 2rem;
+  font-size: var(--font-size-xl, 1.25rem);
+}

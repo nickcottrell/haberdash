@@ -1,0 +1,69 @@
+/*
+ * Haberdash Design Tokens
+ * CSS Custom Properties for theming
+ */
+
+:root {
+  /* Colors */
+  --primary: hsl(210, 70%, 50%);
+  --primary-hover: hsl(210, 70%, 60%);
+  --primary-light: hsl(210, 70%, 90%);
+  --secondary: hsl(0, 0%, 40%);
+  --secondary-hover: hsl(0, 0%, 50%);
+  --background: hsl(0, 0%, 98%);
+  --surface: hsl(0, 0%, 95%);
+  --surface-light: hsl(0, 0%, 97%);
+  --text: hsl(0, 0%, 10%);
+  --text-heading: hsl(0, 0%, 5%);
+  --text-secondary: hsl(0, 0%, 40%);
+  --border: hsl(0, 0%, 80%);
+  --border-light: hsl(0, 0%, 85%);
+
+  /* Feedback colors */
+  --success: hsl(140, 60%, 50%);
+  --warning: hsl(45, 90%, 55%);
+  --error: hsl(0, 70%, 55%);
+  --info: hsl(200, 70%, 55%);
+
+  /* Spacing */
+  --space-unit: 1rem;
+  --space-xs: calc(var(--space-unit) * 0.25);
+  --space-sm: calc(var(--space-unit) * 0.5);
+  --space-md: calc(var(--space-unit) * 0.75);
+  --space-lg: var(--space-unit);
+  --space-xl: calc(var(--space-unit) * 1.5);
+  --space-2xl: calc(var(--space-unit) * 2);
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+
+  /* Typography */
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+}
