@@ -15,6 +15,9 @@ A modular CSS component library with clean separation of concerns. Pure HTML and
 - **Pure CSS** → No JavaScript required
 - **Themable** → Change one variable, update entire system
 
+no frills:
+**https://nickcottrell.github.io/haberdash/**
+
 ## Quick Start
 
 ### Installation
@@ -334,14 +337,14 @@ Click component names in the system showcase to view isolated.
 
 This builds and commits to your repo. Enable GitHub Pages in repo settings, then your site is live at:
 
-**https://yourusername.github.io/haberdash/**
+**https://nickcottrell.github.io/haberdash/**
 
 ### CDN
 
 Use the bundled CSS directly:
 
 ```html
-<link rel="stylesheet" href="https://yourusername.github.io/haberdash/haberdash.css">
+<link rel="stylesheet" href="https://nickcottrell.github.io/haberdash/haberdash.css">
 ```
 
 ### NPM (Coming Soon)
@@ -566,7 +569,7 @@ Change meaning → new surface.
 
 ### **Install**
 ```bash
-git clone https://github.com/yourusername/haberdash.git
+git clone https://github.com/nickcottrell/haberdash.git
 cd haberdash
 ./hooks.sh serve
 ```
