@@ -99,22 +99,52 @@
   --transition-slow: calc(var(--transition-base) * 1.6);
 
   /* ==================================== */
-  /* 8. EVERYTHING ELSE — keep your existing values as fallbacks */
+  /* 8. SEMANTIC FEEDBACK COLORS */
   /* ==================================== */
   --success: hsl(140, 60%, 50%);
   --warning: hsl(45, 90%, 55%);
   --error: hsl(0, 70%, 55%);
   --info: hsl(200, 70%, 55%);
 
+  /* ==================================== */
+  /* 9. COMPONENT INFRASTRUCTURE — Required by component API */
+  /* ==================================== */
+  /* Form controls */
+  --checkbox-size: 1.125rem;
+  --radio-size: 1.125rem;
+  --toggle-width: 48px;
+  --toggle-height: 24px;
+  --toggle-thumb-size: 20px;
+  --toggle-thumb-offset: 2px;
+  --slider-track-height: 8px;
+  --slider-thumb-size: 18px;
+
+  /* Loading indicators */
+  --spinner-size: 2rem;
+  --spinner-size-sm: 1.25rem;
+  --spinner-size-lg: 3rem;
+  --progress-height: 0.5rem;
+
+  /* Badges and icons */
+  --badge-rank-size: 2rem;
+  --icon-size-sm: 1rem;
+  --icon-size-md: 1.5rem;
+  --icon-size-lg: 2rem;
+  --icon-size-xl: 2.5rem;
+  --icon-size-2xl: 3rem;
+  --icon-size-3xl: 3rem;
+
+  /* ==================================== */
+  /* 10. INTERACTION UTILITIES */
+  /* ==================================== */
+  --color-white: white;
   --border-width-sm: 1px;
   --border-width-md: 2px;
   --border-width-lg: 3px;
   --border-width-xl: 4px;
-
   --opacity-hover: 0.92;
   --opacity-disabled: 0.5;
   --hover-lift: -1px;
   --hover-lift-lg: -2px;
-
   --focus-ring-shadow: 0 0 0 3px hsla(var(--d1_h), 70%, 50%, 0.25);
 }
